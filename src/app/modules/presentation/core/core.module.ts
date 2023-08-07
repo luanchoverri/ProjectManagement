@@ -12,6 +12,10 @@ import { MainComponent } from './main/main.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    HeaderComponent,
+    MainComponent
   ]
 })
 export class CoreModule { }
