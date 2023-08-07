@@ -11,14 +11,14 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './modules/material/material.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
-import { HeaderComponent } from './core/header/header.component';
+
+import { CoreModule } from './modules/presentation/core/core.module';
 
 registerLocaleData(localeEsAr, 'es-AR');
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,6 +34,7 @@ registerLocaleData(localeEsAr, 'es-AR');
       }
     }),
     PresentationModule,
+    CoreModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' }
