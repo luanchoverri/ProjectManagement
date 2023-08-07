@@ -11,12 +11,14 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './modules/material/material.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
+import { HeaderComponent } from './core/header/header.component';
 
 registerLocaleData(localeEsAr, 'es-AR');
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
     AppRoutingModule,
