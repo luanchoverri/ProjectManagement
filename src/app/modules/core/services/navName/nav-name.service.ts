@@ -5,7 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class NavNameService {
 
-  name$ = new EventEmitter<string>();
+  name$ = new EventEmitter<String>();
 
   constructor() { }
 }

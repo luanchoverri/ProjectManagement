@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class IconButtonComponent {
   @Input() name="";
-  baseUrl = "../../../../assets/images/";
+  baseUrl = "../assets/images/";
 }

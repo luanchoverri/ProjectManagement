@@ -1,0 +1,9 @@
+<mat-toolbar class="wrapper" [class.openMenu]=openMenu>
+    <app-icon-button name={{iconName}} (click)="toggleMenu()"></app-icon-button>
+    <span>{{navName}}</span>
+</mat-toolbar>
+
+<mat-sidenav mode="side" [(opened)]=openMenu>
+    <app-icon-button class="closeMenu" name="close" (click)="toggleMenu()"></app-icon-button>
+    <app-menu></app-menu>
+</mat-sidenav>
