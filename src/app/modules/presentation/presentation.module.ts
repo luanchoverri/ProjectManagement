@@ -9,7 +9,7 @@ import { LabelComponent } from './components/label/label.component';
 	LabelComponent],
 	imports: [
 		CommonModule,
-		FlexLayoutModule,
+		FlexLayoutModule
 	],
 	exports: [
 		FlexLayoutModule,

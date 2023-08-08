@@ -13,6 +13,8 @@ import { MaterialModule } from './modules/material/material.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
 
 import { CoreModule } from './modules/presentation/core/core.module';
+import { SharedModule } from './modules/presentation/shared/shared.module';
+import { FeatureModule } from './modules/presentation/feature/feature.module';
 
 registerLocaleData(localeEsAr, 'es-AR');
 
@@ -34,7 +36,9 @@ registerLocaleData(localeEsAr, 'es-AR');
       }
     }),
     PresentationModule,
-    CoreModule
+    CoreModule, 
+    FeatureModule,
+    SharedModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' }
