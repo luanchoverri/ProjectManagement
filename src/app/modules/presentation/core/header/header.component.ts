@@ -9,7 +9,7 @@ import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.s
 })
 export class HeaderComponent implements OnInit, OnDestroy{
 
-  opened: boolean =true;
+
   openMenu: boolean =false;
   navName:String;
   navNameSuscription: Subscription;
@@ -28,14 +28,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
 
-
   toggleMenu(){
     this.openMenu = !this.openMenu;
-    console.log(this.opened);
+
   }
-
-
-
 
   ngOnDestroy(){
     this.navNameSuscription.unsubscribe();
