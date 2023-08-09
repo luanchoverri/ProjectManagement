@@ -8,14 +8,14 @@ import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.s
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy{
+
+  opened: boolean =true;
   openMenu: boolean =false;
-  iconName:String;
   navName:String;
   navNameSuscription: Subscription;
 
   constructor( private navNameService : NavNameService) { 
-    this.openMenu = false;
-    this.iconName = 'menu';
+    this.openMenu = true;
     this.navName = 'Home';
     this.navNameSuscription = new Subscription();
   }
@@ -27,13 +27,20 @@ export class HeaderComponent implements OnInit, OnDestroy{
     });
   }
 
+
+
   toggleMenu(){
-    //esta parte del iconName es para vistas de segundo nivel o mas
-    this.iconName = this.iconName === 'menu' ? 'arrow_back' : 'menu';
     this.openMenu = !this.openMenu;
+    console.log(this.opened);
   }
+
+
+
 
   ngOnDestroy(){
     this.navNameSuscription.unsubscribe();
   }
+
+
+ 
 }

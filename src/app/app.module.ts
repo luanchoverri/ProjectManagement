@@ -11,10 +11,8 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './modules/material/material.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
-
 import { CoreModule } from './modules/presentation/core/core.module';
-import { SharedModule } from './modules/presentation/shared/shared.module';
-import { FeatureModule } from './modules/presentation/feature/feature.module';
+import { ViewsModule } from './modules/presentation/views/views.module';
 
 registerLocaleData(localeEsAr, 'es-AR');
 
@@ -37,8 +35,7 @@ registerLocaleData(localeEsAr, 'es-AR');
     }),
     PresentationModule,
     CoreModule, 
-    FeatureModule,
-    SharedModule
+    ViewsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' }
