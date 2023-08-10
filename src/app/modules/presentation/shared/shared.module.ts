@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IconButtonComponent } from './icon-button/icon-button.component';
 import { DetailInfoCardComponent } from './detail-info-card/detail-info-card.component';
 import { MaterialModule } from '../../material/material.module';
+import { CardListComponent } from './card-list/card-list.component';
 
 
 
@@ -11,13 +12,16 @@ import { MaterialModule } from '../../material/material.module';
   declarations: [
     IconButtonComponent,
     DetailInfoCardComponent,
+    CardListComponent,
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [
-    IconButtonComponent
+    IconButtonComponent,
+    DetailInfoCardComponent,
+    CardListComponent
   ]
 })
 export class SharedModule { }

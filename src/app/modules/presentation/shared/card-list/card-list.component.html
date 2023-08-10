@@ -1,0 +1,11 @@
+<ul>
+    <li *ngFor="let subElement of list" class="list-item">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>{{ subElement.name }}</mat-card-title>
+                <mat-card-subtitle>{{ subElement.description }}</mat-card-subtitle>
+    
+            </mat-card-header>
+        </mat-card>
+    </li>
+</ul>
