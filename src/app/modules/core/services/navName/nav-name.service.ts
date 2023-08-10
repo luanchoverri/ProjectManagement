@@ -8,4 +8,8 @@ export class NavNameService {
   name$ = new EventEmitter<String>();
 
   constructor() { }
+
+  changeName(name: String){
+    this.name$.emit(name);
+  }
 }

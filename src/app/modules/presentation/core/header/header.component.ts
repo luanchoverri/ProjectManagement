@@ -8,14 +8,13 @@ import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.s
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy{
-
-
+  
   openMenu: boolean =false;
   navName:String;
   navNameSuscription: Subscription;
 
   constructor( private navNameService : NavNameService) { 
-    this.openMenu = true;
+    this.openMenu = false;
     this.navName = 'Home';
     this.navNameSuscription = new Subscription();
   }
