@@ -1,0 +1,28 @@
+<mat-card class="card">
+  <mat-card-content>
+    <div class="shared-info">
+      <h2>{{ element.name }}</h2>
+      <p>Description: {{ element.description }}</p>
+      <!-- atributos compartidos que se renderizan si o si -->
+    </div>
+
+    <div *ngIf="element.type === 'Project'">
+      <mat-divider></mat-divider>
+      <h4>Members: {{ element.members.join(", ") }}</h4>
+      <!-- otros atributos del projecto-->
+    </div>
+
+    <div *ngIf="element.type === 'Epic'">
+      <mat-divider></mat-divider>
+      <h4>Project: {{ element.project }}</h4>
+      <!-- otros atributos de la epica -->
+    </div>
+
+    <div *ngIf="element.type === 'Story'">
+      <mat-divider></mat-divider>
+      <h4>Owner: {{ element.owner }}</h4>
+      <h4>AssignedTo: {{ element.assignedTo.join(", ") }}</h4>
+      <!-- otros atributos de la user story -->
+    </div>
+  </mat-card-content>
+</mat-card>
