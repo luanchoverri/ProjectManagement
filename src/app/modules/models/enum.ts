@@ -1,8 +1,8 @@
 export enum Type{
     Project,
-    Task,
     Epic,
-    Story
+    Story,
+    Task
 }
 
 export enum State {

@@ -7,6 +7,7 @@ import { NavComponent } from './menu/nav/nav.component';
 import { LogoHeaderComponent } from './menu/logo-header/logo-header.component';
 import { UserSettingsFooterComponent } from './menu/user-settings-footer/user-settings-footer.component';
 import { RouterModule } from '@angular/router';
+import { StoryTasksComponent } from './story-tasks/story-tasks.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
     MenuComponent,
     LogoHeaderComponent,
     NavComponent,
-    UserSettingsFooterComponent
+    UserSettingsFooterComponent,
+    StoryTasksComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,9 @@ import { RouterModule } from '@angular/router';
     SharedModule
   ],
   exports: [
-    MenuComponent
+    MenuComponent,
+    StoryTasksComponent
+
   ]
 })
 export class FeatureModule { }
