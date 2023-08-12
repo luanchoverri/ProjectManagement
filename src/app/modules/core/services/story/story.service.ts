@@ -13,23 +13,23 @@ export class StoryService implements ListService<Story> {
   //datos mock
   storyList: Story[] = [
     new Story(
-      'Story 1',
-      'description 1 ',
-      'Epica A',
+      "Enhance User Onboarding Process",
+      "Revamp the user onboarding process to improve user engagement.",
+      "User Engagement",
       undefined,
-      ['Luciana'],
-      3,
-      new Date(),
-      new Date(),
-      new Date(),
-      new Date(),
-      State.Running
-    ),
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined
+  ),
     new Story(
       'Upgrade Security System',
       'Implement advanced security measures to protect user data.',
       'Security Initiatives',
-      'JohnDoe',
+      'Owner',
       ['Alice', 'Bob'],
       8,
       new Date('2023-09-01'),
@@ -55,9 +55,9 @@ export class StoryService implements ListService<Story> {
       'Create Language Translation Module',
       'Develop a module for automatic language translation in the application.',
       'Global Expansion',
-      'LinguistPro',
+      'Owner',
       ['Sophia', 'Lucas'],
-      6,
+      3,
       new Date('2023-07-01'),
       new Date('2023-08-10'),
       new Date('2023-07-05'),
@@ -70,7 +70,7 @@ export class StoryService implements ListService<Story> {
       'Operational Efficiency',
       'InventoryMaster',
       ['Grace', 'David'],
-      10,
+      1,
       new Date('2023-10-10'),
       new Date('2023-11-15'),
       new Date('2023-10-12'),
@@ -87,7 +87,7 @@ export class StoryService implements ListService<Story> {
   }
 
   getItems(): Observable<Story[]> {
-    return this.ls.getItem<Story[]>('Storys').pipe(map((data) => data || []));
+    return this.ls.getItem<Story[]>('stories').pipe(map((data) => data || []));
   }
 
   createItem(item: Story): Observable<Story> {
