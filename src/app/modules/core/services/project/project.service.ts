@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 
 @Injectable({
@@ -16,17 +16,16 @@ export class ProjectService implements ListService<Project>{
     new Project('Project 4', ['User 1', 'User 2'], 'Description 4', 'icon'),
   ];
 
-  projectsList$ = new Observable<Project[] | undefined>();
+  projectsList$ = new Observable<Project[]>();
 
   constructor(private ls: LocalStorageService) {
     //carga de datos mock
     this.ls.updateItem('projects', this.projectsList);
   }
 
-  //tube que agregar undefined en ListService por que el LocalStorageService que nos dieron
-  //devuelve un observable de tipo T | undefined.. 
-  getItems(): Observable<Project[]| undefined> {
-    return this.ls.getItem('projects');
+  getItems(): Observable<Project[]> {
+    return this.ls.getItem<Project[]>('projects')
+      .pipe(map(data => data || []) );
   }
 
   createItem(item: Project): Observable<Project> {

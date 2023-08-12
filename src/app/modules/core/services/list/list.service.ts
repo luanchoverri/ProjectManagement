@@ -10,7 +10,7 @@ export class ListService<T extends Item> {
 
   constructor() { }
 
-  getItems(): Observable<T[] | undefined> {
+  getItems(): Observable<T[]> {
     // Lógica para obtener elementos desde la API
     return new Observable<T[]>;
   }
