@@ -1,0 +1,23 @@
+.list{
+    list-style: none;
+    padding-left: 0px;
+    margin: 1rem 3rem;
+   
+   
+    .list-item{
+        transition: box-shadow 0.3s ease, transform 0.2s ease; /* Transiciones para sombra y transformación */
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+
+    }
+    .list-item:hover{
+        box-shadow: 0 2px 4px rgba(63, 81, 181, 0.692); /* Añade una sombra suave al pasar el cursor */
+        transform: scale(1.02); /* Escala el elemento al pasar el cursor sobre él */
+    }
+
+}
+
+.item-header{
+    margin-bottom: 0.25rem;
+
+}

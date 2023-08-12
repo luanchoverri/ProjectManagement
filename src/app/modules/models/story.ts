@@ -14,13 +14,13 @@ export class Story extends Item {
         name: string,
         description: string,
         private _epic: string,   //to-do por ahora referencia al nombre de la epica
-        private _owner?: string,  //to-do reemplazar por user / nombre de usuario / id usuario
+        private _owner?: string | undefined,  //to-do reemplazar por user / nombre de usuario / id usuario
         private _assignedTo: string[] = [],
-        private _points?: number,
+        private _points: number = 0,
         private _created: Date = new Date(),
-        private _due?: Date,
-        private _started?: Date,
-        private _finished?: Date,
+        private _due?: Date| undefined,
+        private _started?: Date| undefined,
+        private _finished?: Date | undefined,
         private _status: State = State.Todo
     ) {
 
@@ -39,8 +39,8 @@ export class Story extends Item {
         return this._epic
     }
 
-    public get owner(): string | null {
-        return this._owner ?? null;
+    public get owner(): string | undefined{
+        return this._owner ;
     }
     public get assignedTo(): string[] {
         return this._assignedTo ?? [];
@@ -52,15 +52,15 @@ export class Story extends Item {
     public get created(): Date {
         return this._created;
     }
-    public get due(): Date | null {
-        return this._due ?? null;
+    public get due(): Date | undefined {
+        return this._due;
     }
-    public get started(): Date | null {
-        return this._started ?? null;
+    public get started(): Date | undefined {
+        return this._started ;
     }
 
-    public get finished(): Date | null {
-        return this._finished ?? null;
+    public get finished(): Date | undefined {
+        return this._finished ;
     }
     public get status(): State {
         return this._status;
@@ -68,7 +68,7 @@ export class Story extends Item {
 
     //Setters
 
-    public set owner(newOwner: string) {
+    public set owner(newOwner: string | undefined) {
         this._owner = newOwner;
     }
     public addAssignedTo(newUser: string): void {
@@ -82,15 +82,15 @@ export class Story extends Item {
             console.log("Points value must be between 0 and 5.");
         }
     }
-    public set due(newDate: Date) {
+    public set due(newDate: Date | undefined) {
         this._due = newDate;
     }
 
-    public set started(newDate: Date) {
+    public set started(newDate: Date | undefined) {
         this._started = newDate;
     }
 
-    public set finished(newDate: Date) {
+    public set finished(newDate: Date | undefined) {
         this._finished = newDate;
     }
 

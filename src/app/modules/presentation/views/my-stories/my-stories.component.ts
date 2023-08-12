@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Story } from 'src/app/modules/models/story';
 
 @Component({
