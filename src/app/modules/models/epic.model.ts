@@ -2,11 +2,13 @@ import { Item } from "./item.model";
 import { Project } from "./project.model";
 
 export class Epic extends Item {
+    type: string;
     private _project: Project;
     private _icon: string | undefined;
 
     constructor(name: string, description: string, project: Project, icon?: string) {
         super(name, description);
+        this.type = 'Epic';
         this._project = project;
         this._icon = icon;
     }
