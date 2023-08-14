@@ -24,7 +24,7 @@ export class EpicService {
     this.storage.updateItem(this.EPIC_KEY, this.epicsList);  
   }
 
-  public getEpicsByProjectId(projectId: string): Observable<Epic[]> {
+  public getEpicsByProjectId(projectId: Number): Observable<Epic[]> {
     return this.storage.getItem<Epic[]>(this.EPIC_KEY).pipe(
       map((epics: Epic[] | undefined) => {
         if (epics) {

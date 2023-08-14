@@ -4,9 +4,9 @@ import { Project } from "./project.model";
 export class Epic extends Item {
     type: string;
     private _project: Project;
-    private _icon: string | undefined;
+    private _icon: string ;
 
-    constructor(name: string, description: string, project: Project, icon?: string) {
+    constructor(name: string, description: string, project: Project, icon: string) {
         super(name, description);
         this.type = 'Epic';
         this._project = project;
@@ -17,7 +17,7 @@ export class Epic extends Item {
         return this._project;
     }
 
-    get icon(): string | undefined {
+    get icon(): string {
         return this._icon;
     }
 

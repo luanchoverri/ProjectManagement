@@ -18,19 +18,15 @@ export class ItemCardComponent {
     //si estoy en una vista anidada, el tamaño del arreglo de la ruta es mayor a 1, 
     //concateno todo y agrego el id del item al final
     this.linkSize = this.route.snapshot.url.length;
+    console.log(this.linkSize);
     for (let i = 0; i < this.linkSize; i++) {
       this.currentLink += this.route.snapshot.url[i].path + '/';
-      
     }
     this.currentLink += this.item.id;
   }
 
   ngOnInit(): void {
     
-  }
-
-  showNextView() {
-    console.log(this.currentLink);
   }
 
 }

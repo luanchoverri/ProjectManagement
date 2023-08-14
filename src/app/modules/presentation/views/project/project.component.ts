@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
-import { ListService } from 'src/app/modules/core/services/list/list.service';
-import { Epic } from 'src/app/modules/models/epic.model';
+import { ProjectService } from 'src/app/modules/core/services/project/project.service';
+import { Project } from 'src/app/modules/models/project.model';
 
 @Component({
   selector: 'app-project',
@@ -10,25 +10,34 @@ import { Epic } from 'src/app/modules/models/epic.model';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent {
-  epics: Epic[];
-  epics$: Subscription;
+  projectId: string | null;
+  projects: Project[];
+  projects$: Subscription;
+  p !: Project | undefined;
 
-  constructor(private es: ListService<Epic>) {
-    this.epics = new Array<Epic>();
-    this.epics$ = new Subscription();
+  constructor(private projectService: ProjectService, private route: ActivatedRoute) {
+    this.projectId = this.route.snapshot.paramMap.get('project-id');
+    if (this.projectId){
+      this.p = this.projectService.getItemById(parseInt(this.projectId));
+    }
+    console.log(this.p);
+    this.projects = new Array<Project>();
+    this.projects$ = new Subscription();
   }
 
   ngOnInit(): void {
-    this.epics$ = this.es.getItems().subscribe(data => {
+    this.projects$ = this.projectService.getItems().subscribe(data => {
       if (data) {
-        this.epics = data;
-        console.log(this.epics);
+        this.projects = data;
       }
       else {
-        this.epics = new Array<Epic>();
-        console.log(this.epics);
+        this.projects = new Array<Project>();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.projects$.unsubscribe();
   }
 
 

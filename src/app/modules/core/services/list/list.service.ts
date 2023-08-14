@@ -6,7 +6,7 @@ import { Item } from 'src/app/modules/models/item.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ListService<T extends Item> {
+export abstract class ListService<T extends Item> {
 
   constructor() { }
 
@@ -34,6 +34,7 @@ export class ListService<T extends Item> {
 
   // getViewDetails(id: string): Observable<T> {
   //   // Lógica para obtener los detalles de un elemento a mostrar desde la API
-  //   return new Observable<T>;
   // }
+
+  //  abstract getItemById(id: number): Item;
 }

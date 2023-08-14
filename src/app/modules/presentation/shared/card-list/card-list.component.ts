@@ -9,11 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 export class CardListComponent{
  
   @Input() list : any[] | undefined;
-  parentRoute : string = '';
+
   
-  constructor( private route: ActivatedRoute) { 
-    this.parentRoute = this.route.snapshot.url[0].path;
-    console.log(this.parentRoute);
+  constructor( ) { 
+
   }
 
 }

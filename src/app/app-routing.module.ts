@@ -10,11 +10,11 @@ const routes: Routes = [
   {path: 'home', component:HomeComponent},
   {path: 'my-projects/:project-id', component: ProjectComponent, pathMatch: 'full' },
   {path: 'my-projects', component: MyProjectsComponent, 
-  //   children: [
-  //     { path: 'my-projects/:project-id/:epic-id/:task-id/:story-id', component: TasksComponent, pathMatch: 'full'},
-  //     { path: 'my-projects/:project-id/:epic-id/:task-id', component: StoriesComponent, pathMatch: 'full'},
+    // children: [
+  //     { path: 'my-projects/:project-id/:epic-id/:story-id/:task-id', component: TasksComponent, pathMatch: 'full'},
+  //     { path: 'my-projects/:project-id/:epic-id/:story-id', component: StoriesComponent, pathMatch: 'full'},
   //     { path: 'my-projects/:project-id/:epic-id', component: EpicsComponent, pathMatch: 'full'},
-  //     { path: 'my-projects/:project-id', component: ProjectComponent, pathMatch: 'full' },
+  //     { path: ':project-id', component: ProjectComponent},
   // ]
   },
   {path: 'my-stories', component:MyStoriesComponent},
