@@ -19,7 +19,7 @@ export class CardListComponent implements OnInit{
   linkSize: number = 0;
   routerLink : string = '/'
   currentLink!: string 
-  loading: boolean = false;
+  loading: boolean = true;
 
 
   constructor( private route: ActivatedRoute, private listService: ListService<any>) { 
@@ -35,10 +35,20 @@ export class CardListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // this.listService.getItems().subscribe((response) => {
-    //     this.list = response;
-    //     this.loading = false;
-    // });  
+    this.simulateLoading();
+    this.loadList();
+  }
+
+  simulateLoading() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  }
+
+  loadList() {
+    this.listService.getItems().subscribe((response) => {
+      this.list = response;
+    });
   }
 
   getCurrentRoute(item: Project | Story | Epic): string{
