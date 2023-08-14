@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconButtonComponent } from './icon-button/icon-button.component';
-import { DetailInfoCardComponent } from './detail-info-card/detail-info-card.component';
 import { MaterialModule } from '../../material/material.module';
 import { CardListComponent } from './card-list/card-list.component';
-
-
+import { ItemCardComponent } from './item-card/item-card.component';
+import { ItemDetailsCardComponent } from './item-details-card/item-details-card.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
-    IconButtonComponent,
-    DetailInfoCardComponent,
     CardListComponent,
+    ItemCardComponent,
+    ItemDetailsCardComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    RouterModule
   ],
   exports: [
-    IconButtonComponent,
-    DetailInfoCardComponent,
-    CardListComponent
+    CardListComponent,
+    ItemCardComponent,
+    ItemDetailsCardComponent
   ]
 })
 export class SharedModule { }

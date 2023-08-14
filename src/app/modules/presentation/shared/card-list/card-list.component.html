@@ -1,16 +1,8 @@
-<ul class="list">
-    <li *ngFor="let subElement of list"  class="list-item">
-        <mat-card class="item">
-            <mat-card-header class="item-header">
-                <mat-card-title id="title">{{ subElement.name }}</mat-card-title>
-            </mat-card-header>
-            
-            <mat-card-content class="item-content">  
-                <mat-card-subtitle id="subtitle">{{ subElement.description }}</mat-card-subtitle>
-            </mat-card-content>
-            
-    
-            
-        </mat-card>
-    </li>
-</ul>
+<section>
+    <ul>
+        <li *ngFor="let item of list"   class="list-item">
+            <app-item-card [item]=item></app-item-card>
+        </li>
+    </ul>
+</section>
+
