@@ -36,4 +36,8 @@ export class Project extends Item{
         return this.icon;
     }
 
+
+    get type(): Type {
+        return Type.Project;
+    }
 }

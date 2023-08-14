@@ -19,14 +19,14 @@ export class MyEpicsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const projectId = params.get('projectId');
-      if (projectId) {
-        this.epics$ = this.epicService.getEpicsByProjectId(parseInt(projectId)).subscribe(data => {
-          this.epics = data;
-        });
-      }
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   const projectId = params.get('projectId');
+    //   if (projectId) {
+    //     this.epics$ = this.epicService.getEpicsByProjectId(parseInt(projectId)).subscribe(data => {
+    //       this.epics = data;
+    //     });
+    //   }
+    // });
   }
 
   ngOnDestroy(): void {

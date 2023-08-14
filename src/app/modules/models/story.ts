@@ -9,11 +9,12 @@ import { State, Type } from './enum';
 
 
 export class Story extends Item {
+    static Type: Type;
 
     constructor(
         name: string,
         description: string,
-        private _epic: string,   //to-do por ahora referencia al nombre de la epica
+        private _epic: number,   //to-do por ahora referencia al nombre de la epica
         private _owner?: string | undefined,  //to-do reemplazar por user / nombre de usuario / id usuario
         private _assignedTo: string[] = [],
         private _points: number = 0,
@@ -27,10 +28,15 @@ export class Story extends Item {
         super(name, description);
     }
 
+    // Abstract method
+
+    get type(): Type {
+        return Type.Story;
+    }
 
     // Getters
 
-    public get epic(): string {
+    public get epic(): number {
         return this._epic
     }
 

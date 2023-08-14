@@ -9,6 +9,8 @@ import { MyStoriesComponent } from './my-stories/my-stories.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyEpicsComponent } from './my-epics/my-epics.component';
 import { ProjectComponent } from './project/project.component';
+import { EpicComponent } from './epic/epic.component';
+import { StoryComponent } from './story/story.component';
 
 
 
@@ -19,7 +21,9 @@ import { ProjectComponent } from './project/project.component';
     MyStoriesComponent,
     SettingsComponent,
     MyEpicsComponent,
-    ProjectComponent
+    ProjectComponent,
+    EpicComponent,
+    StoryComponent
   ],
   imports: [
     CommonModule,

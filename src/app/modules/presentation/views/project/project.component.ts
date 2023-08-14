@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
+import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
 
 @Component({
@@ -9,37 +11,42 @@ import { Project } from 'src/app/modules/models/project.model';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent {
-  projectId: string | null;
+export class ProjectComponent implements OnInit, OnDestroy {
+  navId: string | null | undefined;
+  projectId !: number;
   // projects: Project[];
   // projects$: Subscription;
   p !: Project | undefined;
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) {
-    this.projectId = this.route.snapshot.paramMap.get('project-id');
-    console.log("este es project-id", this.projectId);
-    if (this.projectId){
-      this.p = this.projectService.getItemById(parseInt(this.projectId));
-    }
-    console.log("este es p", this.p);
+  constructor(private projectService: ProjectService, private route: ActivatedRoute,  private epicService: EpicService) {
+   
     // this.projects = new Array<Project>();
     // this.projects$ = new Subscription();
   }
 
-  // ngOnInit(): void {
-  //   this.projects$ = this.projectService.getItems().subscribe(data => {
-  //     if (data) {
-  //       this.projects = data;
-  //     }
-  //     else {
-  //       this.projects = new Array<Project>();
-  //     }
-  //   });
-  // }
+  epics: Epic[] = [];
+  epics$: Subscription = new Subscription;
 
-  // ngOnDestroy(): void {
-  //   this.projects$.unsubscribe();
-  // }
+  ngOnInit(): void {
 
+
+     this.navId = this.route.snapshot.paramMap.get('project-id');
+    console.log("este es project-id", this.navId);
+    if (this.navId){
+      this.projectId = parseInt(this.navId);
+      this.p = this.projectService.getItemById(this.projectId);
+      this.epics = this.epicService.getEpicsByProjectId(this.projectId);
+    }
+
+
+        
+      console.log("data epicas", this.epics);
+
+
+  }
+
+  ngOnDestroy(): void {
+    this.epics$.unsubscribe();
+  }
 
 }

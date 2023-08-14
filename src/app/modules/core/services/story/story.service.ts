@@ -10,12 +10,13 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class StoryService implements ListService<Story> {
+
   //datos mock
   storyList: Story[] = [
     new Story(
       "Enhance User Onboarding Process",
       "Revamp the user onboarding process to improve user engagement.",
-      "User Engagement",
+      8,
       undefined,
       undefined,
       undefined,
@@ -28,7 +29,7 @@ export class StoryService implements ListService<Story> {
     new Story(
       'Upgrade Security System',
       'Implement advanced security measures to protect user data.',
-      'Security Initiatives',
+      7,
       'Owner',
       ['Alice', 'Bob'],
       8,
@@ -41,7 +42,7 @@ export class StoryService implements ListService<Story> {
     new Story(
       'Develop Personalized Recommendations',
       'Create an algorithm to provide personalized product recommendations to users.',
-      'Enhanced User Experience',
+      7,
       'TechWizard',
       ['Elena', 'Oliver'],
       5,
@@ -54,7 +55,7 @@ export class StoryService implements ListService<Story> {
     new Story(
       'Create Language Translation Module',
       'Develop a module for automatic language translation in the application.',
-      'Global Expansion',
+      6,
       'Owner',
       ['Sophia', 'Lucas'],
       3,
@@ -67,7 +68,7 @@ export class StoryService implements ListService<Story> {
     new Story(
       'Optimize Inventory Management',
       'Implement an AI-based solution to streamline inventory management.',
-      'Operational Efficiency',
+      6,
       'InventoryMaster',
       ['Grace', 'David'],
       1,
@@ -100,5 +101,15 @@ export class StoryService implements ListService<Story> {
 
   deleteItem(id: string): Observable<Story> {
     throw new Error('Method not implemented.');
+  }
+
+
+  getItemById(id: number): Story | undefined{
+    return this.storyList.find((item) => item.id == id);
+  }
+
+
+  getStoriesByEpicId(id : number): Story[] {
+    return this.storyList.filter(story => story.epic === id);
   }
 }

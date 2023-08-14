@@ -3,11 +3,12 @@
 
     <ul *ngIf="!loading">
         <li *ngFor="let item of list"   class="list-item">
-            <a [routerLink]= "getCurrentRoute(item.id)" >
+            <a [routerLink]= "getCurrentRoute(item)" >
                 <app-item-card [item]=item></app-item-card>
              </a>
             
         </li>
     </ul>
 </section>
+
 
