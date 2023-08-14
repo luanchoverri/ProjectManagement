@@ -1,4 +1,12 @@
-<ul>
+<section>
+    <ul>
+        <li *ngFor="let item of list">
+            <app-item-card [item]=item></app-item-card>
+        </li>
+    </ul>
+</section>
+
+<!-- <ul>
     <li *ngFor="let subElement of list" class="list-item">
         <mat-card class="card">
             <mat-card-header>
@@ -8,4 +16,4 @@
             </mat-card-header>
         </mat-card>
     </li>
-</ul>
+</ul> -->

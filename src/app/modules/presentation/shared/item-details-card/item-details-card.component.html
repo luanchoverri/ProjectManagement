@@ -1,0 +1,28 @@
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+
+        <section class="title-description">
+            <mat-panel-title>
+                {{item.name}}
+            </mat-panel-title>
+
+            <mat-divider></mat-divider>
+
+            <mat-panel-description>
+                {{item.description}}
+            </mat-panel-description>
+        </section>
+
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider>
+    
+    <!-- Usando el pipe keyvalue para mostrar los atributos del item, 
+        listamos todos los atributos del modelo pasado por parametro.
+        Se podria añadir un ngIf para seleccionar cuales mostrar segun x condicion -->
+
+    <ul *ngFor="let atribute of item | keyvalue">
+        <li> {{atribute.key}} : {{atribute.value}}</li>
+    </ul>
+
+</mat-expansion-panel>

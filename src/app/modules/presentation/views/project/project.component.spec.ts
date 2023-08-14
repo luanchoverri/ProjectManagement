@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailInfoCardComponent } from './detail-info-card.component';
+import { ProjectComponent } from './project.component';
 
-describe('DetailInfoCardComponent', () => {
-  let component: DetailInfoCardComponent;
-  let fixture: ComponentFixture<DetailInfoCardComponent>;
+describe('ProjectComponent', () => {
+  let component: ProjectComponent;
+  let fixture: ComponentFixture<ProjectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetailInfoCardComponent ]
+      declarations: [ ProjectComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DetailInfoCardComponent);
+    fixture = TestBed.createComponent(ProjectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
