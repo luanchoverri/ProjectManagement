@@ -1,5 +1,7 @@
 <section>
-    <ul>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <ul *ngIf="!loading">
         <li *ngFor="let item of list"   class="list-item">
             <a [routerLink]= "getCurrentRoute(item.id)" >
                 <app-item-card [item]=item></app-item-card>
