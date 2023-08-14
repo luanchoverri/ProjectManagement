@@ -11,11 +11,11 @@ import { Item } from 'src/app/modules/models/item.model';
 export class ProjectService implements ListService<Project> {
   //datos mock
   projectsList: Project[] = [
-    new Project('Project 1', ['User 1', 'User 2'], 'Description 1', 'icon'),
-    new Project('Project 2', ['User 1', 'User 2'], 'Description 2', 'icon'),
-    new Project('Project 3', ['User 1', 'User 2'], 'Description 3', 'icon'),
-    new Project('Project 4', ['User 1', 'User 2'], 'Description 4', 'icon'),
-    new Project('Project 5', ['User 1', 'User 2'], 'Description 5', 'icon'),
+    new Project('Project 0', ['Fulanito', 'Pepito'], 'Holaa soy una descripcion', 'icon'),
+    new Project('Project 1', ['User 1', 'Jose'],    'Holaa soy una descripcion', 'icon'),
+    new Project('Project 2', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
+    new Project('Project 3', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
+    new Project('Project 4', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
   ];
 
   // projectsList$ = new Observable<Project[]>();

@@ -13,12 +13,6 @@ export class Project extends Item{
         this.icon = icon;
     }
 
-
-    override get type(): Type {
-        return Type.Project;
-    }
-  
-
     addMember(member: string): void {
         this.members.push(member);
     }

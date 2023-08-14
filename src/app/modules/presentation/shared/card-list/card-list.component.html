@@ -1,7 +1,10 @@
 <section>
     <ul>
         <li *ngFor="let item of list"   class="list-item">
-            <app-item-card [item]=item></app-item-card>
+            <a [routerLink]= "getCurrentRoute(item.id)" >
+                <app-item-card [item]=item></app-item-card>
+             </a>
+            
         </li>
     </ul>
 </section>

@@ -27,11 +27,6 @@ export class Story extends Item {
         super(name, description);
     }
 
-    // Abstract method
-
-    override get type(): Type {
-        return Type.Story;
-    }
 
     // Getters
 

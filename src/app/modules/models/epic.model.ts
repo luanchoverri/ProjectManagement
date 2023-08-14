@@ -15,10 +15,6 @@ export class Epic extends Item {
     }
     
 
-    override get type(): Type {
-        return Type.Epic;
-    }
-
     get project(): Project {
         return this._project;
     }

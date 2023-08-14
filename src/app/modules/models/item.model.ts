@@ -1,6 +1,6 @@
 import { Type } from "./enum";
 
-export abstract class Item {
+export  class Item {
     static nextId: number = 0;
     id: number;
     // to-do agregar icon?
@@ -17,7 +17,7 @@ export abstract class Item {
     }
 
 
-    abstract get type(): Type
+    // abstract get type(): Type
 
 
 
