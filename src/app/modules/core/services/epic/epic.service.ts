@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { Epic } from 'src/app/modules/models/epic.model';
-import { Project } from 'src/app/modules/models/project.model';
+// import { Project } from 'src/app/modules/models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class EpicService {
   private readonly EPIC_KEY = 'epics';
   private epicsList$ = new Observable<Epic[]>();
 
-  private project1 = new Project('Project 1', ['User 1', 'User 2'], 'Description 1', 'icon');
+  // private project1 = new Project('Project 1', ['User 1', 'User 2'], 'Description 1', 'icon');
 
   epicsList: Epic[] = [
     new Epic('Epic - Increase User Engagement', 'Develop new features to enhance user engagement and interaction with the platform.', 1, 'icon'),
