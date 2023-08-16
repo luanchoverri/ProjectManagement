@@ -1,31 +1,48 @@
+import { Type } from "./enum";
 import { Item } from "./item.model";
 import { Project } from "./project.model";
 
 export class Epic extends Item {
-    type: string;
-    private _project: Project;
-    private _icon: string | undefined;
+ 
 
-    constructor(name: string, description: string, project: Project, icon?: string) {
+    // private _project: Project; 
+    private _project: number;
+    private _icon: string ;
+
+    // constructor(name: string, description: string, project: Project, icon: string) {
+    //     super(name, description);
+    //     this._project = project;
+    //     this._icon = icon;
+    // }
+
+    constructor(name: string, description: string, project: number, icon: string) {
         super(name, description);
-        this.type = 'Epic';
         this._project = project;
         this._icon = icon;
     }
-    
-    get project(): Project {
+
+    // get project(): Project {
+    //     return this._project;
+    // }
+
+    get project(): number{
         return this._project;
     }
 
-    get icon(): string | undefined {
+
+    get icon(): string {
         return this._icon;
     }
 
-    set project(project: Project) {
-        this._project = project;
-    }
+    // set project(project: Project) {
+    //     this._project = project;
+    // }
 
     set icon(icon: string | undefined) {
         this._icon = icon;
+    }
+
+    get type(): Type {
+        return Type.Epic;
     }
 }

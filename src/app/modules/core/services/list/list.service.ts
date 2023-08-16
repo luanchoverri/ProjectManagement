@@ -6,7 +6,7 @@ import { Item } from 'src/app/modules/models/item.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ListService<T extends Item> {
+export abstract class ListService<T extends Item> {
 
   constructor() { }
 
@@ -29,4 +29,12 @@ export class ListService<T extends Item> {
     // Lógica para eliminar un elemento desde la API
     return new Observable<T>;
   }
+
+  //Llamar a esta funcion desde el item-detail-card y filtar que datos del total muestra la vista
+
+  // getViewDetails(id: string): Observable<T> {
+  //   // Lógica para obtener los detalles de un elemento a mostrar desde la API
+  // }
+
+  //  abstract getItemById(id: number): Item;
 }

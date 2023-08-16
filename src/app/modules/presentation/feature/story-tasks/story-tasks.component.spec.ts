@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IconButtonComponent } from './icon-button.component';
+import { StoryTasksComponent } from './story-tasks.component';
 
-describe('IconButtonComponent', () => {
-  let component: IconButtonComponent;
-  let fixture: ComponentFixture<IconButtonComponent>;
+describe('StoryTasksComponent', () => {
+  let component: StoryTasksComponent;
+  let fixture: ComponentFixture<StoryTasksComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconButtonComponent ]
+      declarations: [ StoryTasksComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IconButtonComponent);
+    fixture = TestBed.createComponent(StoryTasksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

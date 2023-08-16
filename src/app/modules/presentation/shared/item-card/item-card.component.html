@@ -1,0 +1,21 @@
+
+  <mat-card class="list-item">
+
+    <mat-card-header class="item-header">
+      <mat-card-title>{{item.name}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <p>{{item.description}}</p>
+    </mat-card-content>
+
+
+    <!-- <a routerLink="/my-stories"> se puede cambiar por el dialog de editar/borrar --> 
+    <mat-card-actions align="end">
+      <button mat-button><mat-icon>edit</mat-icon></button>
+      <button mat-button><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+    <!-- </a> -->
+  </mat-card>

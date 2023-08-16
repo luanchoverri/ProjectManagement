@@ -1,11 +1,14 @@
-<ul>
-    <li *ngFor="let subElement of list" class="list-item">
-        <mat-card class="card">
-            <mat-card-header>
-                <mat-card-title>{{ subElement.name }}</mat-card-title>
-                <mat-card-subtitle>{{ subElement.description }}</mat-card-subtitle>
-    
-            </mat-card-header>
-        </mat-card>
-    </li>
-</ul>
+<section>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <ul *ngIf="!loading">
+        <li *ngFor="let item of list"   class="list-item">
+            <a [routerLink]= "getCurrentRoute(item)" >
+                <app-item-card [item]=item></app-item-card>
+             </a>
+            
+        </li>
+    </ul>
+</section>
+
+

@@ -1,13 +1,25 @@
-export class Item {
-    static nextId: number = 1;
+import { Type } from "./enum";
+
+export  class Item {
+    static nextId: number = 0;
     id: number;
+    // to-do agregar icon?
+
     name: string;
     description: string;
 
     constructor(name: string, description: string) {
-        this.id = Item.nextId;
         this.name = name;
         this.description = description;
-        Item.nextId++;
+       this.id = Item.nextId;
+       Item.nextId++;
+
     }
+
+
+    // abstract get type(): Type
+
+
+
+
 }
