@@ -31,7 +31,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 
      this.navId = this.route.snapshot.paramMap.get('project-id');
-    console.log("este es project-id", this.navId);
+     console.log("este es project-id", this.navId);
     if (this.navId){
       this.projectId = parseInt(this.navId);
       this.p = this.projectService.getItemById(this.projectId);

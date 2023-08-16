@@ -12,7 +12,7 @@ export abstract class ListService<T extends Item> {
 
   getItems(): Observable<T[]> {
     // Lógica para obtener elementos desde la API
-    return new Observable<T[]>;
+    return new Observable<[]>;
   }
 
   createItem(item: T): Observable<T> {

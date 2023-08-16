@@ -6,7 +6,7 @@ export class Project extends Item{
     members: string[] ;
     icon: string = '';
 
-    constructor(name: string, members: string[], description: string, icon: string ) {
+    constructor(name: string, members: string[], description: string, icon: string) {
         super(name, description);
         
         this.members = members;

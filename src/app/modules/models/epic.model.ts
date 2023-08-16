@@ -38,7 +38,7 @@ export class Epic extends Item {
     //     this._project = project;
     // }
 
-    set icon(icon: string | undefined) {
+    set icon(icon: string ) {
         this._icon = icon;
     }
 
