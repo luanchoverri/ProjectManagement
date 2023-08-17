@@ -2,3 +2,8 @@
 <app-item-details-card [item]="story"></app-item-details-card>
 
 <!-- ACA IRIA LISTA DE TAREAS -->
+<ul>
+  <li *ngFor="let task of tasks"> 
+    {{ task.name }}
+  </li>
+</ul>

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
+import { TaskService } from 'src/app/modules/core/services/task/task.service';
 import { Story } from 'src/app/modules/models/story';
+import { Task } from 'src/app/modules/models/task.model';
 
 @Component({
   selector: 'app-story',
@@ -13,7 +15,7 @@ export class StoryComponent {
   IdFromNav: string | null | undefined;
   id !: number;
   story !: Story | undefined;
-
+  tasks!: Task[];
 
 
   
@@ -21,7 +23,8 @@ export class StoryComponent {
   constructor(
 
     private route: ActivatedRoute,
-    private storyService: StoryService
+    private storyService: StoryService,
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +34,9 @@ export class StoryComponent {
     if (this.IdFromNav) {
       this.id = parseInt(this.IdFromNav);
       this.story = this.storyService.getItemById(this.id);
-      // this.tasks = this.taskService.getTasksByStory(this.id);
+      this.tasks = this.taskService.getTasksByStoryId(this.id);
     }
+
 
   }
 
