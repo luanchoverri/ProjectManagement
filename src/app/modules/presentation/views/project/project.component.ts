@@ -13,10 +13,11 @@ import { Project } from 'src/app/modules/models/project.model';
 })
 export class ProjectComponent implements OnInit, OnDestroy {
   navId: string | null | undefined;
-  projectId !: number;
+  projectId !: string;
   // projects: Project[];
   // projects$: Subscription;
-  p !: Project | undefined;
+  loading = true;
+  clickedProject !: Project ;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute,  private epicService: EpicService) {
    
@@ -29,21 +30,28 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    //  this.navId = this.route.snapshot.paramMap.get('project-id');
+    //  console.log("este es project-id", this.navId);
+    // if (this.navId){
+    //   this.projectId = this.navId;
+    
+    // }
 
-     this.navId = this.route.snapshot.paramMap.get('project-id');
-     console.log("este es project-id", this.navId);
-    if (this.navId){
-      this.projectId = parseInt(this.navId);
-      this.p = this.projectService.getItemById(this.projectId);
-      this.epics = this.epicService.getEpicsByProjectId(this.projectId);
-    }
-
-
-        
-      console.log("data epicas", this.epics);
-
-
+    this.route.paramMap.subscribe(params => {
+    const projectId = params.get('project-id'); // Obtén el ID del parámetro de la URL
+      if (projectId) {
+        this.projectService.getProjectById(projectId).subscribe(
+          project => {
+            console.log(project);
+            this.clickedProject = project;
+            this.loading = false;
+          }  
+        );
+      }
+    });
   }
+
+  
 
   ngOnDestroy(): void {
     this.epics$.unsubscribe();

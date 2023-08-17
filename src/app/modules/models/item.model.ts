@@ -1,9 +1,8 @@
 import { Type } from "./enum";
 
 export  class Item {
-    static nextId: number = 0;
-    private _id: string;
- 
+
+     _id: string;
 
     name: string;
     description: string;
@@ -11,15 +10,20 @@ export  class Item {
     constructor(name: string, description: string, _id: string) {
         this.name = name;
         this.description = description;
-       this.id = Item.nextId;
-       Item.nextId++;
+       this._id = _id;
+    
 
     }
 
 
     // abstract get type(): Type
 
-
+    /**
+     * name
+     */
+    public get nombre():string {
+        return this.name;
+    }
 
 
 }

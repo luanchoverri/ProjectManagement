@@ -15,13 +15,13 @@ export class ProjectService implements ListService<Project> {
   url:string = "https://lamansysfaketaskmanagerapi.onrender.com/api"
 
   //datos mock
-  projectsList: Project[] = [
-    new Project('Project 0', ['Fulanito', 'Pepito'], 'Holaa soy una descripcion', 'icon'),
-    new Project('Project 1', ['User 1', 'Jose'],    'Holaa soy una descripcion', 'icon'),
-    new Project('Project 2', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
-    new Project('Project 3', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
-    new Project('Project 4', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
-  ];
+  // projectsList: Project[] = [
+  //   new Project('Project 0', ['Fulanito', 'Pepito'], 'Holaa soy una descripcion', 'icon'),
+  //   new Project('Project 1', ['User 1', 'Jose'],    'Holaa soy una descripcion', 'icon'),
+  //   new Project('Project 2', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
+  //   new Project('Project 3', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
+  //   new Project('Project 4', ['User 1', 'User 2'], 'Holaa soy una descripcion', 'icon'),
+  // ];
   isLoggedIn: boolean = false;
  
 
@@ -30,6 +30,10 @@ export class ProjectService implements ListService<Project> {
   constructor(private ls: LocalStorageService, private http:HttpClient, private authService: AuthService) {
     //carga de datos mock
     // this.ls.updateItem('projects', this.projectsList);
+
+    this.authService.loggedIn$.subscribe(value => {
+      this.isLoggedIn = value;
+    });
   }
 
   getItems(): Observable<Project[]> {
@@ -52,12 +56,22 @@ export class ProjectService implements ListService<Project> {
     throw new Error('Method not implemented.');
   }
 
-  getItemById(id: number): Project | undefined{
-    let item: Project | undefined;
-    item = this.projectsList.find((item) => item.id == id);
-    return item;
-  }
+  // getItemById(id: number): Project | undefined{
+  //   let item: Project | undefined;
+  //   item = this.projectsList.find((item) => item.id == id);
+  //   return item;
+  // }
 
+  getProjectById(id: string): Observable<Project> {
+
+    // if (this.isLoggedIn) {
+ 
+      const headers = this.authService.getHeaders();
+      return this.http.get<ApiResponse>(`${this.url}/projects/${id}`, { headers }).pipe(
+        map(response => response.data)
+      );
+
+  }
   
 
 

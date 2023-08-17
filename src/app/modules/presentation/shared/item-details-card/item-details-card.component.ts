@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Item } from 'src/app/modules/models/item.model';
+import { Project } from 'src/app/modules/models/project.model';
 
 
 @Component({
@@ -8,7 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ItemDetailsCardComponent {
   panelOpenState = false;
-  @Input() item!: any;
+  @Input() item!: Item  ;
 
   constructor() {
   }

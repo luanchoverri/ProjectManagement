@@ -11,8 +11,8 @@ import { Story } from 'src/app/modules/models/story';
 export class StoryComponent {
  
   IdFromNav: string | null | undefined;
-  id !: number;
-  story !: Story | undefined;
+  id !: string;
+  story !: Story ;
 
 
 
@@ -29,8 +29,8 @@ export class StoryComponent {
 
 
     if (this.IdFromNav) {
-      this.id = parseInt(this.IdFromNav);
-      this.story = this.storyService.getItemById(this.id);
+      this.id = (this.IdFromNav);
+      // this.story = this.storyService.getItemById(this.id);
       // this.tasks = this.taskService.getTasksByStory(this.id);
     }
 

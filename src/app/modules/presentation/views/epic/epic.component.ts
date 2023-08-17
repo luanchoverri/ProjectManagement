@@ -14,8 +14,8 @@ import { Story } from 'src/app/modules/models/story';
 export class EpicComponent implements OnInit, OnDestroy {
  
   epicIdFromNav: string | null | undefined;
-  id !: number;
-  epic !: Epic | undefined;
+  id !: string;
+  epic !: Epic ;
 
 
 
@@ -35,9 +35,9 @@ export class EpicComponent implements OnInit, OnDestroy {
     console.log('este es epic-id', this.epicIdFromNav);
 
     if (this.epicIdFromNav) {
-      this.id = parseInt(this.epicIdFromNav);
-      this.epic = this.epicService.getItemById(this.id);
-      this.stories = this.storyService.getStoriesByEpicId(this.id);
+      this.id = (this.epicIdFromNav);
+      // this.epic = this.epicService.getItemById(this.id);
+      // this.stories = this.storyService.getStoriesByEpicId(this.id);
     }
 
     console.log('data epicas', this.stories);

@@ -1,5 +1,15 @@
-<h1>Soy project component!</h1>
-<app-item-details-card [item] = p></app-item-details-card>
+
+<ng-container *ngIf="loading; else content">
+    <div class="loading-progress">
+        <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+      
+    </div>
+</ng-container>
+
+<ng-template #content>
+    <app-item-details-card [item] = clickedProject></app-item-details-card>
+    <app-card-list [list]="epics"></app-card-list>
+</ng-template>
+
 <!-- <app-card-list [list] = projectList></app-card-list> -->
 
-<app-card-list [list]="epics"></app-card-list>

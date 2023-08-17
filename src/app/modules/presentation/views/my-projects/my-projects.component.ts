@@ -13,10 +13,9 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
 
   projects$: Subscription;
-
+  loading = true;
   constructor(
     private projectService: ProjectService,
-    private authService: AuthService
   ) {
     this.projects$ = new Subscription();
   }
@@ -29,7 +28,8 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
 
   loadProjects(): void {
     this.projectService.getAllProjects().subscribe((projects) => {
-      this.projects = projects;
+      this.projects = projects
+      this.loading = false;
       console.log(projects);
     });
   }

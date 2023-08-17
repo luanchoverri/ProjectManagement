@@ -6,8 +6,8 @@ export class Project extends Item{
     members: string[] ;
     icon: string = '';
 
-    constructor(name: string, members: string[], description: string, icon: string) {
-        super(name, description);
+    constructor(name: string, members: string[], description: string, icon: string, _id:string) {
+        super(name, description, _id);
         
         this.members = members;
         this.icon = icon;

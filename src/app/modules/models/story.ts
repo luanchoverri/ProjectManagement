@@ -14,7 +14,8 @@ export class Story extends Item {
     constructor(
         name: string,
         description: string,
-        private _epic: number,   //to-do por ahora referencia al nombre de la epica
+        _id: string,
+        private _epic: string,   //to-do por ahora referencia al nombre de la epica
         private _owner?: string | undefined,  //to-do reemplazar por user / nombre de usuario / id usuario
         private _assignedTo: string[] = [],
         private _points: number = 0,
@@ -25,7 +26,7 @@ export class Story extends Item {
         private _status: State = State.Todo
     ) {
 
-        super(name, description);
+        super(name, description, _id);
     }
 
     // Abstract method
@@ -36,7 +37,7 @@ export class Story extends Item {
 
     // Getters
 
-    public get epic(): number {
+    public get epic(): string {
         return this._epic
     }
 

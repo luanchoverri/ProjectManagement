@@ -15,8 +15,8 @@ export class Epic extends Item {
     //     this._icon = icon;
     // }
 
-    constructor(name: string, description: string, project: number, icon: string) {
-        super(name, description);
+    constructor(name: string, description: string, project: number, icon: string, _id:string) {
+        super(name, description, _id);
         this._project = project;
         this._icon = icon;
     }
