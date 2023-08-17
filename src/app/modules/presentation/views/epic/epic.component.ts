@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Epic } from 'src/app/modules/models/epic.model';
@@ -12,38 +12,57 @@ import { Story } from 'src/app/modules/models/story';
   styleUrls: ['./epic.component.scss'],
 })
 export class EpicComponent implements OnInit, OnDestroy {
- 
-  epicIdFromNav: string | null | undefined;
-  id !: string;
-  epic !: Epic ;
 
+  epicId!: string;
+  epic!: Epic ;
 
+  loading: boolean = true;
 
   // observables/ suscripcion lista de historias
   stories: Story[] = [];
   stories$: Subscription = new Subscription();
 
-
   constructor(
     private epicService: EpicService,
-    private route: ActivatedRoute,
-    private storyService: StoryService
-  ) {}
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    this.epicIdFromNav = this.route.snapshot.paramMap.get('epic-id');
-    console.log('este es epic-id', this.epicIdFromNav);
+    this.route.paramMap.subscribe((params) => {
+      const epicId = params.get('epic-id'); // Obtén el ID del parámetro de la URL
 
-    if (this.epicIdFromNav) {
-      this.id = (this.epicIdFromNav);
-      // this.epic = this.epicService.getItemById(this.id);
-      // this.stories = this.storyService.getStoriesByEpicId(this.id);
-    }
+      if (epicId) {
+        const getSpecifications$ = this.getEpicSpecificationsById(epicId);
+        const getStories$ = this.getStories(epicId);
 
-    console.log('data epicas', this.stories);
+        forkJoin([getSpecifications$, getStories$]).subscribe(
+          ([specifications, stories]) => {
+            this.epic = specifications;
+            this.stories = stories;
+            this.loading = false;
+          }
+        );
+      }
+    });
+  }
+
+
+  getEpicSpecificationsById(id: string) {
+    return this.epicService.getEpicById(id);
+  }
+
+  getStories(id: string) {
+    return this.epicService.getStoriesByEpic(id);
   }
 
   ngOnDestroy(): void {
     this.stories$.unsubscribe();
   }
+
+
+  
+
+
+
+  
 }

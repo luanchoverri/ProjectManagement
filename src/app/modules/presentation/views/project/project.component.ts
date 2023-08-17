@@ -9,25 +9,25 @@ import { Project } from 'src/app/modules/models/project.model';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss']
+  styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent implements OnInit, OnDestroy {
   navId: string | null | undefined;
-  projectId !: string;
+  projectId!: string;
   // projects: Project[];
   // projects$: Subscription;
   loading = true;
-  clickedProject !: Project;
-
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) {
-  }
-
+  project!: Project;
   epics: Epic[] = [];
-  epics$: Subscription = new Subscription;
-  project$: Subscription = new Subscription;
+  epics$: Subscription = new Subscription();
+  project$: Subscription = new Subscription();
+
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-
     //  this.navId = this.route.snapshot.paramMap.get('project-id');
     //  console.log("este es project-id", this.navId);
     // if (this.navId){
@@ -35,7 +35,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
     // }
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const projectId = params.get('project-id'); // Obtén el ID del parámetro de la URL
 
       if (projectId) {
@@ -44,7 +44,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
         forkJoin([getSpecifications$, getEpics$]).subscribe(
           ([specifications, epics]) => {
-            this.clickedProject = specifications;
+            this.project = specifications;
             this.epics = epics;
             this.loading = false;
           }
@@ -52,8 +52,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
-
 
   getProjectSpecificationsById(id: string) {
     return this.projectService.getProjectById(id);
@@ -63,12 +61,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return this.projectService.getEpicsByProject(id);
   }
 
-
-
   ngOnDestroy(): void {
     this.epics$.unsubscribe();
   }
-
 
   // getProjectSpecificationsById(id :string ){
   //   this.projectService.getProjectById(id).subscribe(
@@ -76,7 +71,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   //       console.log(project);
   //       this.clickedProject = project;
   //       this.loading = false;
-  //     }  
+  //     }
   //   );
   // }
 
@@ -85,8 +80,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   //     epics => {
   //       console.log(epics);
   //       this.epics = epics;
-  //     }  
+  //     }
   //   );
 }
-
-

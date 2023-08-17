@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators'
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
+import { Story } from 'src/app/modules/models/story';
+import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 // import { Project } from 'src/app/modules/models/project.model';
 
 @Injectable({
@@ -32,7 +34,26 @@ export class EpicService {
 
 
   // API 
+  getEpicById(id: string): Observable<Epic> {
 
+    // if (this.isLoggedIn) {
+ 
+      const headers = this.authService.getHeaders();
+      return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`, { headers }).pipe(
+        map(response => response.data)
+      );
+
+  }
+  
+  getStoriesByEpic(id: string): Observable<Story[]> {
+
+    const headers = this.authService.getHeaders();
+    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/stories`, { headers }).pipe(
+      map(response => response.data),
+      catchError(() => of([])) 
+    );
+  
+  }
 
 
   // STORAGE
