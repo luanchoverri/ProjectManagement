@@ -6,9 +6,9 @@ export class Task extends Item {
 
     // private _story: Story; 
     private _story: number;
-    private _created: Date;
+    private _created?: Date;
     private _dueDate?: Date;
-    private _done: boolean;
+    private _done?: boolean;
     private static Type: Type;
 
     constructor(name: string, description: string, story: number, created?: Date, dueDate?: Date, done?: boolean) {
@@ -45,15 +45,15 @@ export class Task extends Item {
         this._story = value;
     }
 
-    set created(value: Date) {
+    set created(value: Date | undefined) {
         this._created = value;
     }
 
-    set dueDate(value: Date) {
+    set dueDate(value: Date | undefined) {
         this._dueDate = value;
     }
 
-    set done(value: boolean) {
+    set done(value: boolean | undefined ) {
         this._done = value;
     }
 
