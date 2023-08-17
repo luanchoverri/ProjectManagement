@@ -6,13 +6,16 @@ import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
+import { Epic } from 'src/app/modules/models/epic.model';
+import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService implements ListService<Project> {
 
-  url:string = "https://lamansysfaketaskmanagerapi.onrender.com/api"
+ 
 
   //datos mock
   // projectsList: Project[] = [
@@ -67,12 +70,21 @@ export class ProjectService implements ListService<Project> {
     // if (this.isLoggedIn) {
  
       const headers = this.authService.getHeaders();
-      return this.http.get<ApiResponse>(`${this.url}/projects/${id}`, { headers }).pipe(
+      return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`, { headers }).pipe(
         map(response => response.data)
       );
 
   }
   
+  getEpicsByProject(id: string): Observable<Epic[]> {
+
+    const headers = this.authService.getHeaders();
+    return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}/epics`, { headers }).pipe(
+      map(response => response.data),
+      catchError(() => of([])) 
+    );
+  
+  }
 
 
   getAllProjects(): Observable<Project[]> {
@@ -85,7 +97,7 @@ export class ProjectService implements ListService<Project> {
     if (loggedIn) {
       console.log("estoy logueada y voy a ir a buscar los proyectos")
       const headers = this.authService.getHeaders();
-      return this.http.get<ApiResponse>(`${this.url}/projects`, { headers }).pipe(
+      return this.http.get<ApiResponse>(PathRest.GET_PROJECTS, { headers }).pipe(
         map(response => response.data),
         catchError(() => of([])) // Manejar error y devolver lista vacía
       );
