@@ -27,7 +27,7 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
   }
 
   loadProjects(): void {
-    this.projectService.getAllProjects().subscribe((projects) => {
+    this.projectService.getAll().subscribe((projects) => {
       this.projects = projects
       this.loading = false;
       console.log(projects);

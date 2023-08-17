@@ -87,7 +87,7 @@ export class ProjectService implements ListService<Project> {
   }
 
 
-  getAllProjects(): Observable<Project[]> {
+  getAll(): Observable<Project[]> {
     let loggedIn = false;
 
     this.authService.loggedIn$.subscribe(value => {

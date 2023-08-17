@@ -10,25 +10,36 @@ import { Story } from 'src/app/modules/models/story';
 })
 export class MyStoriesComponent {
 
-
-    stories: Story[];
-    stories$: Subscription;
+    loading:boolean = true;
+    stories: Story[] = [];
+    stories$: Subscription = new Subscription()
 
     constructor(private storyService: StoryService) {
-      this.stories = new Array<Story>();
-      this.stories$ = new Subscription();
+    
     }
 
     ngOnInit(): void {
-      this.stories$ = this.storyService.getItems().subscribe(data => {
-        if (data) {
-          this.stories = data;
-        }
-        else {
-          this.stories = new Array<Story>();
-        }
-      });
+      this.loadStories();
+
+      // this.stories$ = this.storyService.getItems().subscribe(data => {
+      //   if (data) {
+      //     this.stories = data;
+      //   }
+      //   else {
+      //     this.stories = new Array<Story>();
+      //   }
+      // });
     }
+
+
+    
+  loadStories(): void {
+      this.storyService.getAll().subscribe((stories) => {
+      this.stories = stories
+      this.loading = false;
+      console.log(stories);
+    });
+  }
 
     ngOnDestroy(): void {
       this.stories$.unsubscribe();

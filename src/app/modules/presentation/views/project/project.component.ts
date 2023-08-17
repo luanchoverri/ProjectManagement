@@ -12,15 +12,15 @@ import { Project } from 'src/app/modules/models/project.model';
   styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent implements OnInit, OnDestroy {
-  navId: string | null | undefined;
-  projectId!: string;
-  // projects: Project[];
-  // projects$: Subscription;
-  loading = true;
+ 
+  id!: string;
+  loading: boolean = true;
   project!: Project;
   epics: Epic[] = [];
+
+  //no se usan
   epics$: Subscription = new Subscription();
-  project$: Subscription = new Subscription();
+ // project$: Subscription = new Subscription();
 
   constructor(
     private projectService: ProjectService,
@@ -28,23 +28,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    //  this.navId = this.route.snapshot.paramMap.get('project-id');
-    //  console.log("este es project-id", this.navId);
-    // if (this.navId){
-    //   this.projectId = this.navId;
-
-    // }
-
     this.route.paramMap.subscribe((params) => {
-      const projectId = params.get('project-id'); // Obtén el ID del parámetro de la URL
+      const id = params.get('project-id');
 
-      if (projectId) {
-        const getSpecifications$ = this.getProjectSpecificationsById(projectId);
-        const getEpics$ = this.getEpics(projectId);
+      if (id) {
+        const info$ = this.getSpecificationsById(id);
+        const epics$ = this.getEpics(id);
 
-        forkJoin([getSpecifications$, getEpics$]).subscribe(
-          ([specifications, epics]) => {
-            this.project = specifications;
+        forkJoin([info$, epics$]).subscribe(
+          ([info, epics]) => {
+            this.project = info;
             this.epics = epics;
             this.loading = false;
           }
@@ -53,7 +46,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     });
   }
 
-  getProjectSpecificationsById(id: string) {
+  getSpecificationsById(id: string) {
     return this.projectService.getProjectById(id);
   }
 

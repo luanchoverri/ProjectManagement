@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Story } from 'src/app/modules/models/story';
 
@@ -10,13 +11,10 @@ import { Story } from 'src/app/modules/models/story';
 })
 export class StoryComponent {
  
-  IdFromNav: string | null | undefined;
   id !: string;
   story !: Story ;
-
-
-
-  
+  loading: boolean = true;
+  // tasks: Task[] = []; Agregar
 
   constructor(
 
@@ -25,15 +23,31 @@ export class StoryComponent {
   ) {}
 
   ngOnInit(): void {
-    this.IdFromNav = this.route.snapshot.paramMap.get('story-id');
+
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('story-id'); 
+      if (id) {
+        const info$ = this.getSpecificationsById(id);
+        // const tasks$ = this.getTasks(id);
+
+        forkJoin([info$]).subscribe(
+          ([info]) => {
+            this.story = info;
+            // this.tasks = tasks;
+            this.loading = false;
+          }
+        );
+      }
+    });
+  }
 
 
-    if (this.IdFromNav) {
-      this.id = (this.IdFromNav);
-      // this.story = this.storyService.getItemById(this.id);
-      // this.tasks = this.taskService.getTasksByStory(this.id);
-    }
+  getSpecificationsById(id: string) {
+    return this.storyService.getStoryById(id);
+  }
 
+  getEpics(id: string) {
+    return this.storyService.getTasksByStory(id);
   }
 
   ngOnDestroy(): void {

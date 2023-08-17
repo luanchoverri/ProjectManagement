@@ -3,14 +3,16 @@ import { ListService } from '../list/list.service';
 import { Story } from 'src/app/modules/models/story';
 import { State } from 'src/app/modules/models/enum';
 import { LocalStorageService } from '../localStorage/local-storage.service';
-import { Observable, map } from 'rxjs';
-
+import { Observable, catchError, map, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
+import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
+import { ApiResponse } from 'src/app/modules/models/apiResponse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoryService implements ListService<Story> {
-
   //datos mock
   // storyList: Story[] = [
   //   new Story(
@@ -82,7 +84,11 @@ export class StoryService implements ListService<Story> {
 
   storiesList$ = new Observable<Story[]>();
 
-  constructor(private ls: LocalStorageService) {
+  constructor(
+    private ls: LocalStorageService,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {
     // //carga de datos mock
     // this.ls.updateItem('stories', this.storyList);
   }
@@ -103,13 +109,37 @@ export class StoryService implements ListService<Story> {
     throw new Error('Method not implemented.');
   }
 
-
   // getItemById(id: number): Story | undefined{
   //   return this.storyList.find((item) => item.id == id);
   // }
 
-
   // getStoriesByEpicId(id : number): Story[] {
   //   return this.storyList.filter(story => story.epic === id);
   // }
+
+  getStoryById(id: string): Observable<Story> {
+    // if (this.isLoggedIn) {
+    const headers = this.authService.getHeaders();
+    return this.http
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`, { headers })
+      .pipe(map((response) => response.data));
+  }
+
+  getTasksByStory(id: string): Observable<any[]> {
+    const headers = this.authService.getHeaders();
+    return this.http
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}/tasks`, { headers })
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of([]))
+      );
+  }
+
+  getAll(): Observable<Story[]> {
+    const headers = this.authService.getHeaders();
+    return this.http.get<ApiResponse>(PathRest.GET_STORIES, { headers }).pipe(
+      map((response) => response.data),
+      catchError(() => of([])) // Manejar error y devolver lista vacía
+    );
+  }
 }

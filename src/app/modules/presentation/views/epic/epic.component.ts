@@ -13,7 +13,7 @@ import { Story } from 'src/app/modules/models/story';
 })
 export class EpicComponent implements OnInit, OnDestroy {
 
-  epicId!: string;
+  id!: string;
   epic!: Epic ;
 
   loading: boolean = true;
@@ -29,15 +29,15 @@ export class EpicComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const epicId = params.get('epic-id'); // Obtén el ID del parámetro de la URL
+      const id = params.get('epic-id'); // Obtén el ID del parámetro de la URL
 
-      if (epicId) {
-        const getSpecifications$ = this.getEpicSpecificationsById(epicId);
-        const getStories$ = this.getStories(epicId);
+      if (id) {
+        const info$ = this.getSpecificationsById(id);
+        const stories$ = this.getStories(id);
 
-        forkJoin([getSpecifications$, getStories$]).subscribe(
-          ([specifications, stories]) => {
-            this.epic = specifications;
+        forkJoin([info$, stories$ ]).subscribe(
+          ([info, stories]) => {
+            this.epic = info;
             this.stories = stories;
             this.loading = false;
           }
@@ -47,7 +47,7 @@ export class EpicComponent implements OnInit, OnDestroy {
   }
 
 
-  getEpicSpecificationsById(id: string) {
+  getSpecificationsById(id: string) {
     return this.epicService.getEpicById(id);
   }
 
