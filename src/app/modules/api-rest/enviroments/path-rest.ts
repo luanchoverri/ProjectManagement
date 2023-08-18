@@ -1,6 +1,5 @@
 import { endpoint } from './endpoints';
 import { enviroment } from './enviroment';
-import { Epic } from '../../models/epic.model';
 
 export class PathRest{
     static readonly GET_LOGIN = enviroment.hostBackend + endpoint.LOGIN;

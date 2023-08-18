@@ -1,30 +1,24 @@
-import { Type } from "./enum";
 import { Item } from "./item.model";
 import { Story } from "./story";
 
 export class Task extends Item {
 
     // private _story: Story; 
-    private _story: string;
+    private _story: Story;
     private _created?: Date;
     private _dueDate?: Date;
     private _done?: boolean;
-    private static Type: Type;
 
-    constructor(name: string, description: string, _id :string, story: string, created?: Date, dueDate?: Date, done?: boolean) {
+    constructor(name: string, description: string, _id :string, story: Story, created?: Date, dueDate?: Date, done?: boolean) {
         super(name, description, _id);
         this._story = story;
         this._created = created || new Date();
         this._dueDate = dueDate;
         this._done = done || false;
     }
-    
-    get type(): Type {
-        return Type.Task;
-    }
 
     // Getters
-    get story(): string {
+    get story(): Story {
         return this._story;
     }
 
@@ -41,7 +35,7 @@ export class Task extends Item {
     }
 
     // Setters
-    set story(value: string) {
+    set story(value: Story) {
         this._story = value;
     }
 
