@@ -12,6 +12,8 @@ import { EpicComponent } from './epic/epic.component';
 import { StoryComponent } from './story/story.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BreadcrumbModule } from 'xng-breadcrumb';
+
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule, 
     SharedModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    BreadcrumbModule,
   ]
 })
 export class ViewsModule { }

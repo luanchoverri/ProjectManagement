@@ -14,6 +14,8 @@ import { PresentationModule } from './modules/presentation/presentation.module';
 import { CoreModule } from './modules/presentation/core/core.module';
 import { ViewsModule } from './modules/presentation/views/views.module';
 import { AuthInterceptor } from './modules/api-rest/interceptos/auth.interceptor';
+import { BreadcrumbService } from 'xng-breadcrumb';
+
 
 registerLocaleData(localeEsAr, 'es-AR');
 
@@ -36,11 +38,13 @@ registerLocaleData(localeEsAr, 'es-AR');
     }),
     PresentationModule,
     CoreModule, 
-    ViewsModule
+    ViewsModule,
+    BreadcrumbModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-AR' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    BreadcrumbService
   ],
   bootstrap: [AppComponent]
 })

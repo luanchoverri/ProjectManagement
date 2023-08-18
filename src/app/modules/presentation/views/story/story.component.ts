@@ -6,6 +6,7 @@ import { TaskService } from 'src/app/modules/core/services/task/task.service';
 import { Story } from 'src/app/modules/models/story';
 import { Task } from 'src/app/modules/models/task.model';
 import { TaskFormComponent } from '../../feature/forms/task-form/task-form.component';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-story',
@@ -23,6 +24,7 @@ export class StoryComponent {
   constructor(
     private route: ActivatedRoute,
     private storyService: StoryService,
+    private breadcrumbService: BreadcrumbService,
     private taskService: TaskService
   ) {
     this.tasksServ = taskService;
@@ -33,6 +35,7 @@ export class StoryComponent {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('story-id');
       if (id) {
+        this.breadcrumbService.set('@Story', `Story ${this.id}`);
         const info$ = this.getSpecificationsById(id);
         const tasks$ = this.getTasks(id);
 
