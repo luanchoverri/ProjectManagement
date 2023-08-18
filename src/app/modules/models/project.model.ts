@@ -1,43 +1,34 @@
-import { Type } from "./enum";
-import { Item } from "./item.model";
+import { Item } from './item.model';
 
-export class Project extends Item{
+export class Project extends Item {
+  private _members: string[];
+  private _icon: string;
 
-    members: string[] ;
-    icon: string = '';
+  constructor(
+    name: string,
+    members: string[],
+    description: string,
+    icon: string,
+    _id: string
+  ) {
+    super(name, description, _id);
+    this._members = members;
+    this._icon = icon;
+  }
 
-    constructor(name: string, members: string[], description: string, icon: string, _id:string) {
-        super(name, description, _id);
-        
-        this.members = members;
-        this.icon = icon;
-    }
+  get members(): string[] {
+    return this._members;
+  }
 
-    addMember(member: string): void {
-        this.members.push(member);
-    }
+  get icon(): string {
+    return this._icon;
+  }
 
-    getMembers(): string[] {
-        return this.members;
-    }
+  set members(members: string[]) {
+    this._members = members;
+  }
 
-    removeMember(member: string): void {
-        let index = this.members.indexOf(member);
-        if (index > -1) {
-            this.members.splice(index, 1);
-        }
-    }
-
-    setIcon(icon: string): void {
-        this.icon = icon;
-    }
-
-    getIcon(): string {
-        return this.icon;
-    }
-
-
-    get type(): Type {
-        return Type.Project;
-    }
+  set icon(icon: string) {
+    this._icon = icon;
+  }
 }

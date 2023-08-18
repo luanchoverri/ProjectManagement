@@ -10,7 +10,7 @@ import { Story } from 'src/app/modules/models/story';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { ListService } from '../list/list.service';
-// import { Project } from 'src/app/modules/models/project.model';
+
 
 @Injectable({
   providedIn: 'root'

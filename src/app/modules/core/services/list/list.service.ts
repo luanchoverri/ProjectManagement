@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Item } from 'src/app/modules/models/item.model'; 
-
 @Injectable({
   providedIn: 'root'
 })
-export abstract class ListService<T extends Item> {
+export abstract class ListService<Item> {
 
-  abstract getItems(): Observable<T[]>;
+  abstract getItems(): Observable<Item[]>;
 
-  abstract createItem(item: T): Observable<T>;
+  abstract createItem(item: Item): Observable<Item>;
 
-  abstract updateItem(item: T): Observable<T>;
+  abstract updateItem(item: Item): Observable<Item>;
 
-  abstract deleteItem(id: string): Observable<T>;
+  abstract deleteItem(id: string): Observable<Item>;
 
   //Llamar a esta funcion desde el item-detail-card y filtar que datos del total muestra la vista
-  //abstract getViewDetails(id: string): Observable<T>;
-
-  //  abstract getItemById(id: number): Item;
+  //abstract getViewDetails(id: string): Observable<Item>;
 }

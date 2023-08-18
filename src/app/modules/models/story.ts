@@ -1,6 +1,6 @@
 
 import { Item } from './item.model';
-import { State, Type } from './enum';
+import { State } from './enum';
 
 // to-do chequear con los demas que la descripcion pueda no estar
 // to-do atributo icon
@@ -9,7 +9,6 @@ import { State, Type } from './enum';
 
 
 export class Story extends Item {
-    static Type: Type;
 
     constructor(
         name: string,
@@ -27,12 +26,6 @@ export class Story extends Item {
     ) {
 
         super(name, description, _id);
-    }
-
-    // Abstract method
-
-    get type(): Type {
-        return Type.Story;
     }
 
     // Getters

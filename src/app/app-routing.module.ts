@@ -11,7 +11,7 @@ import { LoginComponent } from './modules/presentation/views/login/login.compone
 
 const routes: Routes = [
   {path: 'home', component:HomeComponent},
- { path: 'my-projects/:project-id/:epic-id/:story-id', component: StoryComponent, pathMatch: 'full'},
+  {path: 'my-projects/:project-id/:epic-id/:story-id', component: StoryComponent, pathMatch: 'full'},
   {path: 'my-projects/:project-id/:epic-id', component: EpicComponent, pathMatch: 'full'},
   {path: 'my-projects/:project-id', component: ProjectComponent, pathMatch: 'full' },
   {path: 'my-projects', component: MyProjectsComponent, 
@@ -24,7 +24,8 @@ const routes: Routes = [
   },
   {path: 'my-stories', component:MyStoriesComponent},
   {path: 'settings', component:SettingsComponent},
-  {path: 'login', component:LoginComponent}
+  {path: 'login', component:LoginComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
 @NgModule({
