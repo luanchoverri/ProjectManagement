@@ -9,6 +9,7 @@ import { Item } from 'src/app/modules/models/item.model';
 })
 export class ItemCardComponent {
   @Input() item !: Item;
+  @Input() service : any;
   linkSize: number = 0;
   routerLink: string = '/';
   currentLink!: string;
@@ -34,11 +35,11 @@ export class ItemCardComponent {
   }
 
   editItem() {
-    console.log("editting... "+this.item);
+    this.service.updateItem(this.item);
   }
 
   deleteItem() {
-    console.log("deleting... "+this.item);
+    this.service.deleteItem(this.item._id);
   }
 
 }

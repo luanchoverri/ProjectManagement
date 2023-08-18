@@ -9,13 +9,13 @@ import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { Story } from 'src/app/modules/models/story';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
+import { ListService } from '../list/list.service';
 // import { Project } from 'src/app/modules/models/project.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EpicService {
-
+export class EpicService extends ListService<Epic>{
   private readonly EPIC_KEY = 'epics';
   private epicsList$ = new Observable<Epic[]>();
   
@@ -31,6 +31,22 @@ export class EpicService {
 
   constructor(private storage: LocalStorageService, private http:HttpClient, private authService: AuthService) {
     // this.storage.updateItem(this.EPIC_KEY, this.epicsList);  
+    super();
+  }
+
+  override getItems(): Observable<Epic[]> {
+    throw new Error('Method not implemented.');
+  }
+  override createItem(item: Epic): Observable<Epic> {
+    throw new Error('Method not implemented.');
+  }
+  override updateItem(item: Epic): Observable<Epic> {
+    console.log("voy a actualizar el epic");
+    return new Observable<Epic>;
+  }
+  override deleteItem(id: string): Observable<Epic> {
+    console.log("voy a borrar el epic");
+    return new Observable<Epic>;
   }
 
 

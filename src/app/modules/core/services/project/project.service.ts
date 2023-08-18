@@ -14,7 +14,7 @@ import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectService implements ListService<Project> {
+export class ProjectService extends ListService<Project>{
 
  
 
@@ -29,42 +29,39 @@ export class ProjectService implements ListService<Project> {
   isLoggedIn: boolean = false;
  
 
-  // projectsList$ = new Observable<Project[]>();
+  projectsList$ = new Observable<Project[]>();
 
   constructor(private ls: LocalStorageService, private http:HttpClient, private authService: AuthService) {
     //carga de datos mock
     // this.ls.updateItem('projects', this.projectsList);
 
+    super();
+    
     this.authService.loggedIn$.subscribe(value => {
       this.isLoggedIn = value;
     });
   }
 
-  getItems(): Observable<Project[]> {
+  override getItems(): Observable<Project[]> {
     return this.ls
       .getItem<Project[]>('projects')
       .pipe(map((data) => data || []));
   }
 
-
-
-  createItem(item: Project): Observable<Project> {
+  override createItem(item: Project): Observable<Project> {
     throw new Error('Method not implemented.');
   }
 
-  updateItem(item: Project): Observable<Project> {
-    throw new Error('Method not implemented.');
+  override updateItem(item: Project): Observable<Project> {
+    console.log("voy a actualizar el proyecto");
+    return new Observable<Project>;
+
   }
 
-  deleteItem(id: string): Observable<Project> {
-    throw new Error('Method not implemented.');
+  override deleteItem(id: string): Observable<Project> {
+    console.log("voy a borrar el proyecto");
+    return new Observable<Project>;
   }
-
-  // getItemById(id: number): Project | undefined{
-  //   let item: Project | undefined;
-  //   item = this.projectsList.find((item) => item.id == id);
-  //   return item;
-  // }
 
   getProjectById(id: string): Observable<Project> {
 

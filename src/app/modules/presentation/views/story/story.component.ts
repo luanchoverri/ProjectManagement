@@ -16,12 +16,15 @@ export class StoryComponent {
   story!: Story;
   loading: boolean = true;
   tasks: Task[] = [];
+  tasksServ: any;
 
   constructor(
     private route: ActivatedRoute,
     private storyService: StoryService,
     private taskService: TaskService
-  ) {}
+  ) {
+    this.tasksServ = taskService;
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
