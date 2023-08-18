@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
+import { Task } from 'src/app/modules/models/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -125,7 +126,7 @@ export class StoryService implements ListService<Story> {
       .pipe(map((response) => response.data));
   }
 
-  getTasksByStory(id: string): Observable<any[]> {
+  getTasksByStory(id: string): Observable<Task[]> {
     const headers = this.authService.getHeaders();
     return this.http
       .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}/tasks`, { headers })
