@@ -1,5 +1,13 @@
+<ng-container *ngIf="loading; else content">
+<div class="loading-progress">
+  <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+
+</div>
+</ng-container>
+<ng-template #content>
 
 <app-item-details-card [item]="story"></app-item-details-card>
 
 <!-- ACA IRIA LISTA DE TAREAS -->
 <app-card-list [list]="tasks" ></app-card-list>
+</ng-template>
