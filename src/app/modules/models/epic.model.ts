@@ -6,7 +6,7 @@ export class Epic extends Item {
  
 
     // private _project: Project; 
-    private _project: number;
+    private _project: string;
     private _icon: string ;
 
     // constructor(name: string, description: string, project: Project, icon: string) {
@@ -15,7 +15,7 @@ export class Epic extends Item {
     //     this._icon = icon;
     // }
 
-    constructor(name: string, description: string, project: number, icon: string, _id:string) {
+    constructor(name: string, description: string, project: string, icon: string, _id:string) {
         super(name, description, _id);
         this._project = project;
         this._icon = icon;
@@ -25,7 +25,7 @@ export class Epic extends Item {
     //     return this._project;
     // }
 
-    get project(): number{
+    get project(): string{
         return this._project;
     }
 

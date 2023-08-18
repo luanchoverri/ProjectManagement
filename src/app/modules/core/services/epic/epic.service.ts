@@ -39,8 +39,8 @@ export class EpicService {
 
     // if (this.isLoggedIn) {
  
-      const headers = this.authService.getHeaders();
-      return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`, { headers }).pipe(
+     
+      return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`).pipe(
         map(response => response.data)
       );
 
@@ -48,8 +48,7 @@ export class EpicService {
   
   getStoriesByEpic(id: string): Observable<Story[]> {
 
-    const headers = this.authService.getHeaders();
-    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/${endpoint.STORIES}`, { headers }).pipe(
+    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/${endpoint.STORIES}`).pipe(
       map(response => response.data),
       catchError(() => of([])) 
     );
