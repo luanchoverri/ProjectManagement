@@ -10,7 +10,6 @@ import { Item } from 'src/app/modules/models/item.model';
 export class ItemCardComponent {
   @Input() item !: Item;
   @Input() service : any;
-
   linkSize: number = 0;
   routerLink: string = '/';
   currentLink!: string;

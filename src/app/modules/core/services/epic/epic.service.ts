@@ -10,7 +10,6 @@ import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { ListService } from '../list/list.service';
 
-
 @Injectable({
   providedIn: 'root'
 })

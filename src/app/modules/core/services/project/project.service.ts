@@ -25,13 +25,14 @@ export class ProjectService extends ListService<Project> {
 
   isLoggedIn: boolean = false;
   projectsList: Project[];
-  projectsList$ : Subject<Project[]>; 
+  projectsList$: Subject<Project[]>;
 
+  projectsList$ = new Observable<Project[]>();
 
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     super();
 
@@ -42,20 +43,16 @@ export class ProjectService extends ListService<Project> {
     });
   }
 
-  //abstract methods
   override getItems(): Observable<Project[]> {
-    //usando el localStorage:
     return this.ls
       .getItem<Project[]>('projects')
       .pipe(map((data) => data || []));
   }
 
   override createItem(item: Project): Observable<Project> {
-
-      return this.http
-        .post<ApiResponse>(PathRest.GET_PROJECTS, item)
-        .pipe(map((response) => response.data));
-    
+    return this.http
+      .post<ApiResponse>(PathRest.GET_PROJECTS, item)
+      .pipe(map((response) => response.data));
   }
 
   override updateItem(item: Project): Observable<Project> {
