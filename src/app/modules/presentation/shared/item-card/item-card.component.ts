@@ -9,7 +9,10 @@ import { Item } from 'src/app/modules/models/item.model';
 })
 export class ItemCardComponent {
   @Input() item !: Item;
+<<<<<<< HEAD
   @Input() service : any;
+=======
+>>>>>>> 4f63e6d (tg-84 Fix card-list & item-card routing link)
   linkSize: number = 0;
   routerLink: string = '/';
   currentLink!: string;
@@ -35,11 +38,19 @@ export class ItemCardComponent {
   }
 
   editItem() {
+<<<<<<< HEAD
     this.service.updateItem(this.item);
   }
 
   deleteItem() {
     this.service.deleteItem(this.item._id);
+=======
+    console.log("editting... "+this.item);
+  }
+
+  deleteItem() {
+    console.log("deleting... "+this.item);
+>>>>>>> 4f63e6d (tg-84 Fix card-list & item-card routing link)
   }
 
 }
