@@ -29,7 +29,7 @@ export class EpicComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('epic-id'); // Obtén el ID del parámetro de la URL
+      const id = params.get('epic-id'); // Obtiene el id del parametro de la URL
 
       if (id) {
         const info$ = this.getSpecificationsById(id);

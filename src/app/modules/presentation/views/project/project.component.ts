@@ -15,7 +15,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
  
   id!: string;
   loading: boolean = true;
-  project!: Project;
+  project!: Project ;
   epics: Epic[] = [];
 
   //no se usan
@@ -58,21 +58,5 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.epics$.unsubscribe();
   }
 
-  // getProjectSpecificationsById(id :string ){
-  //   this.projectService.getProjectById(id).subscribe(
-  //     project => {
-  //       console.log(project);
-  //       this.clickedProject = project;
-  //       this.loading = false;
-  //     }
-  //   );
-  // }
 
-  // getEpics(id : string){
-  //   this.projectService.getEpicsByProject(id).subscribe(
-  //     epics => {
-  //       console.log(epics);
-  //       this.epics = epics;
-  //     }
-  //   );
 }

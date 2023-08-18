@@ -1,6 +1,7 @@
+import { Observable } from "rxjs";
 import { Type } from "./enum";
 
-export  class Item {
+export abstract class Item {
 
      _id: string;
 
@@ -24,6 +25,9 @@ export  class Item {
     public get nombre():string {
         return this.name;
     }
+
+
+   // public abstract editItem(): Observable<Item>;
 
 
 }

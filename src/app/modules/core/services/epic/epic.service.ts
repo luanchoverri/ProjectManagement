@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { Story } from 'src/app/modules/models/story';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
+import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 // import { Project } from 'src/app/modules/models/project.model';
 
 @Injectable({
@@ -48,7 +49,7 @@ export class EpicService {
   getStoriesByEpic(id: string): Observable<Story[]> {
 
     const headers = this.authService.getHeaders();
-    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/stories`, { headers }).pipe(
+    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/${endpoint.STORIES}`, { headers }).pipe(
       map(response => response.data),
       catchError(() => of([])) 
     );

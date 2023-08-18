@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
+import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 
 
 @Injectable({
@@ -79,12 +80,12 @@ export class ProjectService implements ListService<Project> {
   getEpicsByProject(id: string): Observable<Epic[]> {
 
     const headers = this.authService.getHeaders();
-    return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}/epics`, { headers }).pipe(
+    return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}/${endpoint.EPICS}`, { headers }).pipe(
       map(response => response.data),
       catchError(() => of([])) 
     );
-  
   }
+
 
 
   getAll(): Observable<Project[]> {
@@ -99,10 +100,10 @@ export class ProjectService implements ListService<Project> {
       const headers = this.authService.getHeaders();
       return this.http.get<ApiResponse>(PathRest.GET_PROJECTS, { headers }).pipe(
         map(response => response.data),
-        catchError(() => of([])) // Manejar error y devolver lista vacía
+        catchError(() => of([])) // Maneja error y devuelve lista vacia
       );
     } else {
-      return of([]); // No está logueado, devolver lista vacía
+      return of([]); // No esta logueado, devuelve lista vacia
     }
     }
   
