@@ -40,9 +40,7 @@ export class ProjectService extends ListService<Project> {
     });
   }
 
-  //abstract methods
   override getItems(): Observable<Project[]> {
-    //usando el localStorage:
     return this.ls
       .getItem<Project[]>('projects')
       .pipe(map((data) => data || []));
