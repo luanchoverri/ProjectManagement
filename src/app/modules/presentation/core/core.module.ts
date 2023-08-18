@@ -6,6 +6,7 @@ import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { FeatureModule } from '../feature/feature.module';
 import { RouterModule } from '@angular/router';
+import { BreadcrumbModule } from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
     FeatureModule,
     SharedModule,
     RouterModule,
+    BreadcrumbModule
   ],
   exports: [
     HeaderComponent,

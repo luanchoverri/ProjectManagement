@@ -11,6 +11,7 @@ import { ProjectComponent } from './project/project.component';
 import { EpicComponent } from './epic/epic.component';
 import { StoryComponent } from './story/story.component';
 import { LoginComponent } from './login/login.component';
+import { BreadcrumbModule } from 'xng-breadcrumb';
 
 
 
@@ -30,7 +31,8 @@ import { LoginComponent } from './login/login.component';
     RouterModule, 
     SharedModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    BreadcrumbModule,
   ]
 })
 export class ViewsModule { }

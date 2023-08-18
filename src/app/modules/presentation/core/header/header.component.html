@@ -1,7 +1,13 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <button mat-icon-button (click)="toggleMenu()"> <mat-icon>menu</mat-icon> </button>
-    <span>{{ navName }}</span>
+
+    <xng-breadcrumb [separator]="iconTemplate"></xng-breadcrumb>
+    <ng-template #iconTemplate>
+      <mat-icon>chevron_right</mat-icon>
+    </ng-template>
+
+    <!-- <span>{{ breadcrumbString }}</span> -->
   </mat-toolbar-row>
 </mat-toolbar>
 

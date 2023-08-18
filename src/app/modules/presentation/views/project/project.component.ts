@@ -2,10 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, forkJoin, catchError } from 'rxjs';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
+import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.service';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
 import { EpicFormComponent } from '../../feature/forms/epic-form/epic-form.component';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-project',
@@ -28,7 +30,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private epicService: EpicService
+    private epicService: EpicService,
+    private breadcrumbService: BreadcrumbService,
   ) { 
     this.epicsServ = epicService;
     this.formComponent = EpicFormComponent;
@@ -39,6 +42,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
       const id = params.get('project-id');
 
       if (id) {
+
+        this.breadcrumbService.set('@Project', `Project ${id}`);
         const info$ = this.getSpecificationsById(id);
         const epics$ = this.getEpics(id);
 

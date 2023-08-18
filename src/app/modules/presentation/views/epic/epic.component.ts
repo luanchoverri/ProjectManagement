@@ -6,6 +6,7 @@ import { StoryService } from 'src/app/modules/core/services/story/story.service'
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Story } from 'src/app/modules/models/story';
 import { StoryFormComponent } from '../../feature/forms/story-form/story-form.component';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-epic',
@@ -28,8 +29,10 @@ export class EpicComponent implements OnInit, OnDestroy {
   constructor(
     private epicService: EpicService,
     private route: ActivatedRoute,
-    private storyService: StoryService
+    private storyService: StoryService,
+    private breadcrumbService: BreadcrumbService
   ) {
+
     this.storiesServ = storyService;
     this.formComponent = StoryFormComponent;
    }
@@ -39,6 +42,7 @@ export class EpicComponent implements OnInit, OnDestroy {
       const id = params.get('epic-id'); // Obtiene el id del parametro de la URL
 
       if (id) {
+        this.breadcrumbService.set('@Epic', `Epic ${id}`);
         const info$ = this.getSpecificationsById(id);
         const stories$ = this.getStories(id);
 

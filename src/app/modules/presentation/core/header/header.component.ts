@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   openMenu: boolean =false;
   navName:String;
   navNameSuscription: Subscription;
+  // breadcrumbString!: string;
+  
 
   constructor( private navNameService : NavNameService) { 
     this.openMenu = false;
@@ -23,6 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.navNameSuscription = this.navNameService.name$.subscribe( name => {
       this.navName = name;
       console.log('name', name);
+
+      // const breadcrumbNames = this.navNameService.getBreadcrumbNames();
+      // this.breadcrumbString = breadcrumbNames.join(' > ');
     });
   }
 
