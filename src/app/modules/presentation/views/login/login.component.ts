@@ -1,34 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../api-rest/services/auth.service';
 import { ActivatedRoute, Route } from '@angular/router';
+import { UserCredentials } from '../../../models/userCredentials';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) {
- 
-
-  }
-
-  ngOnInit(){
+  ngOnInit() {
     this.onLogin();
-
   }
-
 
   onLogin() {
-    this.authService.login('thomas', '1234').subscribe(
-      (response) => {
-        if (response.success) {
-          this.authService.setLoggedInUser(response.user, response.token);
-           console.log("el usuario es ", response.user);
-        } else {
-        }
-      },
-    );
+    const userData = { username: 'thomas', password: '1234' };
+    this.authService.login(userData).subscribe((response) => console.log('Login :)' + userData.username));
   }
 }

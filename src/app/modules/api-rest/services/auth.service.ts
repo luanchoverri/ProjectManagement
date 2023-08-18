@@ -1,100 +1,66 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, catchError } from 'rxjs';
 import { User } from '../../models/user';
-
+import { enviroment } from '../enviroments/enviroment';
+import { PathRest } from '../enviroments/path-rest';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserResponse } from '../../models/userResponse';
+import { UserCredentials } from '../../models/userCredentials';
+import { Route, Router } from '@angular/router';
+import { endpoint } from '../enviroments/endpoints';
+const helper = new JwtHelperService();
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthService implements OnInit{
-
-  private apiUrl = 'https://lamansysfaketaskmanagerapi.onrender.com/api';
-  private direction = '/login';
-  private tokenKey = 'auth_token'; // Clave para guardar el token en el almacenamiento local
-  private accesToken: string | null = null;
+export class AuthService {
+  private readonly TOKEN_KEY = 'token'; // Clave para guardar el token en el almacenamiento local
   private loggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
- 
   loggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
-  
-  private loggedInUser: User | null = null;
-  private isAuth: boolean = false;
+  private currentUser : User | null = null;
+  constructor(private router: Router ,private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit():void{
-    
+  login(authData: UserCredentials): Observable<UserResponse | void> {
+    return this.http.post<UserResponse>(`${PathRest.GET_LOGIN}`, authData)
+    .pipe(
+      map((response: UserResponse) => {
+        this.saveToken(response.token);
+        this.currentUser = response.user;
+        this.loggedInSubject.next(true);
+      }),
+      catchError((err) => this.handleError(err))
+    )
   }
 
-  login(username: string, password: string): Observable<any> {
-    const credentials = { username, password };
-    this.loggedInSubject.next(true);
-    return this.http.post<any>(`${this.apiUrl}${this.direction}`, credentials);
+  handleError(err: any): Observable<never> {
+    throw new Error('Method not implemented.');
   }
-
-  // setToken(token: string): void {
-  //   localStorage.setItem(this.tokenKey, token);
-  //  / this.loggedInSubject.next(true);
-  // }
-
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.loggedInUser = null;
+    localStorage.removeItem(this.TOKEN_KEY);
     this.loggedInSubject.next(false);
-   // 
+    this.router.navigate([endpoint.LOGIN]);
   }
 
-  setLoggedInUser(user : User, jwt:string):void{
-    this.loggedInUser = user;
-    this.accesToken = jwt;
+  private checkToken(): void {
+    const token = this.getToken()!;
+    const isExpired = helper.isTokenExpired(token);
+    isExpired ? this.logout() : this.loggedInSubject.next(true);
   }
 
+  private saveToken(tokenValue: string): void {
+    localStorage.setItem(this.TOKEN_KEY, tokenValue);
+  }
 
+  get isLoggedIn(): Observable<boolean> {
+    return this.loggedIn$;
+  }
 
   getToken(): string | null {
-    return this.accesToken;  //local storage o que ??
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
-
-
-   // Obtener el _id del usuario
-   getUserId(): string | null {
-    return this.loggedInUser ? this.loggedInUser._id : null;
+  get user(): User | null {
+    return this.currentUser ? this.currentUser : null;
   }
-
-   getHeaders(): HttpHeaders {
-     return new HttpHeaders({
-       auth: `${this.accesToken}`
-     });
-   }
-
-  // private isAuth = false;
-  // private accesToken: string | null = null;
-  // private username = 'thomas';
-  // private password = '1234';
-
-  // url:string = 'https://lamansysfaketaskmanagerapi.onrender.com/api'
-
-  // constructor(private readonly http: HttpClient) { }
-
-  // //aca iria tambien log ing y log out
-
-  // login(username: string, password: string): Observable<any> {
-  //   const credentials = { username, password };
-  
-  //   return this.http.post<any>(`${this.url}/login`, credentials);
-  // }
-
-
-
-  // setToken(token: string) {
-  //   this.accesToken = token;
-  // }
-
-  // getToken() {
-  //   return this.accesToken;
-  // }
-
-  
-  
 }

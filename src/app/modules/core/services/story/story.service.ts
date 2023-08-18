@@ -129,7 +129,7 @@ export class StoryService implements ListService<Story> {
 
   getTasksByStory(id: string): Observable<Task[]> {
     return this.http
-      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}/${endpoint.TASKS}`)
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`)
       .pipe(
         map((response) => response.data),
         catchError(() => of([]))

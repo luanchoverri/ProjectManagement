@@ -15,12 +15,8 @@ import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
   providedIn: 'root'
 })
 export class EpicService {
-
-  private readonly EPIC_KEY = 'epics';
   private epicsList$ = new Observable<Epic[]>();
   
-  url:string = "https://lamansysfaketaskmanagerapi.onrender.com/api"
-
   // private project1 = new Project('Project 1', ['User 1', 'User 2'], 'Description 1', 'icon');
 
   // epicsList: Epic[] = [
@@ -36,10 +32,6 @@ export class EpicService {
 
   // API 
   getEpicById(id: string): Observable<Epic> {
-
-    // if (this.isLoggedIn) {
- 
-     
       return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`).pipe(
         map(response => response.data)
       );
@@ -48,7 +40,7 @@ export class EpicService {
   
   getStoriesByEpic(id: string): Observable<Story[]> {
 
-    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}/${endpoint.STORIES}`).pipe(
+    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}${endpoint.STORIES}`).pipe(
       map(response => response.data),
       catchError(() => of([])) 
     );
