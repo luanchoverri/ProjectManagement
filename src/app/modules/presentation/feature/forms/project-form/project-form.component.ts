@@ -35,12 +35,10 @@ export class ProjectFormComponent implements OnInit{
       description: new FormControl(''),
       members: new FormControl('', Validators.required),
     });
-    this.projectList$ = this.ps.getItems();
   }
 
   onSubmit() {
     this.ps.createItem(this.myForm.value).subscribe((data) => {
-      console.log(data);
     });
   }
 
