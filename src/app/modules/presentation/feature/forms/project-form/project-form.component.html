@@ -1,0 +1,38 @@
+<div mat-dialog-title>
+    <h1> NEW PROJECT </h1>
+</div>
+
+<form [formGroup]=myForm (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Members</mat-label>
+            <mat-select formControlName="members">
+                <mat-option *ngFor="let member of members" [value]="member._id">
+                    {{member.username}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button type="submit" mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+    </div>
+
+</form>
