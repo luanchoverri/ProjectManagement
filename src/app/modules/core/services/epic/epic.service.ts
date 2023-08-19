@@ -4,7 +4,6 @@ import { catchError, map } from 'rxjs/operators'
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { Story } from 'src/app/modules/models/story';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
@@ -27,7 +26,7 @@ export class EpicService extends ListService<Epic>{
   //   new Epic('Epic -  Integration with Third-Party Services', 'Integrate the application with external services to provide additional functionality and data exchange', 0, 'icon')
   // ];
 
-  constructor(private storage: LocalStorageService, private http:HttpClient, private authService: AuthService) {
+  constructor(private storage: LocalStorageService, private http:HttpClient) {
     // this.storage.updateItem(this.EPIC_KEY, this.epicsList);  
     super();
   }
@@ -36,7 +35,9 @@ export class EpicService extends ListService<Epic>{
     throw new Error('Method not implemented.');
   }
   override createItem(item: Epic): Observable<Epic> {
-    throw new Error('Method not implemented.');
+    return this.http
+    .post<ApiResponse>(PathRest.GET_EPICS, item)
+    .pipe(map((response) => response.data));
   }
   override updateItem(item: Epic): Observable<Epic> {
     console.log("voy a actualizar el epic");
