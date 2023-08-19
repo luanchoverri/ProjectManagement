@@ -11,24 +11,22 @@ import { Project } from 'src/app/modules/models/project.model';
 })
 export class MyProjectsComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
-
+  projectServ: any;
   projects$: Subscription;
   loading = true;
-  constructor(
-    private projectService: ProjectService,
-  ) {
+
+  constructor(private projectService: ProjectService) {
     this.projects$ = new Subscription();
+    this.projectServ = projectService;
   }
 
   ngOnInit(): void {
-    
-        this.loadProjects();
-
+    this.loadProjects();
   }
 
   loadProjects(): void {
     this.projectService.getAll().subscribe((projects) => {
-      this.projects = projects
+      this.projects = projects;
       this.loading = false;
       console.log(projects);
     });

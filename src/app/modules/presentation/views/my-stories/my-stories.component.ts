@@ -12,10 +12,11 @@ export class MyStoriesComponent {
 
     loading:boolean = true;
     stories: Story[] = [];
-    stories$: Subscription = new Subscription()
+    stories$: Subscription = new Subscription();
+    storiesServ : any;
 
     constructor(private storyService: StoryService) {
-    
+      this.storiesServ = storyService;
     }
 
     ngOnInit(): void {

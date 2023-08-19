@@ -17,6 +17,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   project!: Project ;
   epics: Epic[] = [];
+  epicsServ : any;
 
   //no se usan
   epics$: Subscription = new Subscription();
@@ -24,8 +25,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   constructor(
     private projectService: ProjectService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private epicService: EpicService
+  ) { 
+    this.epicsServ = epicService;
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

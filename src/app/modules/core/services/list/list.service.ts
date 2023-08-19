@@ -8,33 +8,16 @@ import { Item } from 'src/app/modules/models/item.model';
 })
 export abstract class ListService<T extends Item> {
 
-  constructor() { }
+  abstract getItems(): Observable<T[]>;
 
-  getItems(): Observable<T[]> {
-    // Lógica para obtener elementos desde la API
-    return new Observable<[]>;
-  }
+  abstract createItem(item: T): Observable<T>;
 
-  createItem(item: T): Observable<T> {
-    // Lógica para crear un elemento en la API
-    return new Observable<T>;
-  }
+  abstract updateItem(item: T): Observable<T>;
 
-  updateItem(item: T): Observable<T> {
-    // Lógica para actualizar un elemento en la API
-    return new Observable<T>;
-  }
-
-  deleteItem(id: string): Observable<T> {
-    // Lógica para eliminar un elemento desde la API
-    return new Observable<T>;
-  }
+  abstract deleteItem(id: string): Observable<T>;
 
   //Llamar a esta funcion desde el item-detail-card y filtar que datos del total muestra la vista
-
-  // getViewDetails(id: string): Observable<T> {
-  //   // Lógica para obtener los detalles de un elemento a mostrar desde la API
-  // }
+  //abstract getViewDetails(id: string): Observable<T>;
 
   //  abstract getItemById(id: number): Item;
 }

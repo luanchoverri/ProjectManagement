@@ -21,11 +21,15 @@ export class EpicComponent implements OnInit, OnDestroy {
   // observables/ suscripcion lista de historias
   stories: Story[] = [];
   stories$: Subscription = new Subscription();
+  storiesServ : any;
 
   constructor(
     private epicService: EpicService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private storyService: StoryService
+  ) {
+    this.storiesServ = storyService;
+   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

@@ -14,7 +14,7 @@ import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 @Injectable({
   providedIn: 'root',
 })
-export class StoryService implements ListService<Story> {
+export class StoryService extends ListService<Story> {
   //datos mock
   // storyList: Story[] = [
   //   new Story(
@@ -93,22 +93,25 @@ export class StoryService implements ListService<Story> {
   ) {
     // //carga de datos mock
     // this.ls.updateItem('stories', this.storyList);
+    super();
   }
 
-  getItems(): Observable<Story[]> {
+  override getItems(): Observable<Story[]> {
     return this.ls.getItem<Story[]>('stories').pipe(map((data) => data || []));
   }
 
-  createItem(item: Story): Observable<Story> {
+  override createItem(item: Story): Observable<Story> {
     throw new Error('Method not implemented.');
   }
 
-  updateItem(item: Story): Observable<Story> {
-    throw new Error('Method not implemented.');
+  override updateItem(item: Story): Observable<Story> {
+    console.log("voy a actualizar el story");
+    return new Observable<Story>;
   }
 
-  deleteItem(id: string): Observable<Story> {
-    throw new Error('Method not implemented.');
+  override deleteItem(id: string): Observable<Story> {
+    console.log("voy a borrar la story");
+    return new Observable<Story>;
   }
 
   // getItemById(id: number): Story | undefined{
