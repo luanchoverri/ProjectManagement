@@ -101,7 +101,9 @@ export class StoryService extends ListService<Story> {
   }
 
   override createItem(item: Story): Observable<Story> {
-    throw new Error('Method not implemented.');
+    return this.http
+    .post<ApiResponse>(PathRest.GET_STORIES, item)
+    .pipe(map((response) => response.data));
   }
 
   override updateItem(item: Story): Observable<Story> {
