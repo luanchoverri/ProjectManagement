@@ -14,7 +14,6 @@ import { TaskFormComponent } from './forms/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
-
 @NgModule({
   declarations: [
     MenuComponent,
