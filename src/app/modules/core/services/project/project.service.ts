@@ -49,20 +49,11 @@ export class ProjectService extends ListService<Project> {
   }
 
   override createItem(item: Project): Observable<Project> {
-    let loggedIn = false;
 
-    this.authService.loggedIn$.subscribe((value) => {
-      loggedIn = value;
-    });
-
-    if (loggedIn) {
-      const headers = this.authService.getHeaders();
       return this.http
-        .post<ApiResponse>(PathRest.GET_PROJECTS, item, { headers })
+        .post<ApiResponse>(PathRest.GET_PROJECTS, item)
         .pipe(map((response) => response.data));
-    } else {
-      return of(item); // No esta logueado, devuelve el item
-    }
+    
   }
 
   override updateItem(item: Project): Observable<Project> {

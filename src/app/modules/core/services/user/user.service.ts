@@ -19,22 +19,11 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    let loggedIn = false;
-
-    this.authService.loggedIn$.subscribe((value) => {
-      loggedIn = value;
-    });
-
-    if (loggedIn) {
-      const headers = this.authService.getHeaders();
       return this.http
-        .get<ApiResponse>(PathRest.GET_USERS, { headers })
+        .get<ApiResponse>(PathRest.GET_USERS)
         .pipe(
           map((response) => response.data),
-          catchError(() => of([])) // Maneja error y devuelve lista vacia
+          catchError(() => of([]))
         );
-    } else {
-      return of([]); // No esta logueado, devuelve lista vacia
-    }
   }
 }
