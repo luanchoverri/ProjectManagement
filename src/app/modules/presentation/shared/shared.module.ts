@@ -5,13 +5,17 @@ import { CardListComponent } from './card-list/card-list.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { ItemDetailsCardComponent } from './item-details-card/item-details-card.component';
 import { RouterModule } from '@angular/router';
+import { AddItemComponent } from './add-item/add-item.component';
+
 
 
 @NgModule({
   declarations: [
     CardListComponent,
     ItemCardComponent,
-    ItemDetailsCardComponent
+    ItemDetailsCardComponent,
+    AddItemComponent,
+
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     CardListComponent,
     ItemCardComponent,
-    ItemDetailsCardComponent
+    ItemDetailsCardComponent,
+    AddItemComponent
   ]
 })
 export class SharedModule { }

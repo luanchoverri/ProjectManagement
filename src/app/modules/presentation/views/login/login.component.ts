@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit{
 
 
   onLogin() {
-    this.authService.login('thomas', '1234').subscribe(
+    this.authService.login('nina', '1234').subscribe(
       (response) => {
         if (response.success) {
           this.authService.setLoggedInUser(response.user, response.token);
