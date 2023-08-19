@@ -43,9 +43,7 @@ const routes: Routes = [
       pathMatch: 'full'
       },
       {
-        path: ':project-id',
-      
-        pathMatch: 'full',
+        path: ':project-id',  // padre sin match full
         data: { breadcrumb: { alias: 'Project' } }, 
         children: [
             {
@@ -54,10 +52,20 @@ const routes: Routes = [
             pathMatch: 'full',
             },
              {
-               path: ':epic-id',
-                component: EpicComponent,
-               pathMatch: 'full',
+               path: ':epic-id', // padre sin match full
               data: { breadcrumb: { alias: 'Epic' } },
+              children: [
+                {
+                path: '',
+                component: EpicComponent,
+                pathMatch: 'full',
+                },
+                 {
+                   path: ':story-id', // padre sin match full -> si se agregan tasks hay q sacarle el component y el match
+                    component: StoryComponent,
+                   pathMatch: 'full',
+                  data: { breadcrumb: { alias: 'Story' } },
+                 }]
              }]
       }
     ]
