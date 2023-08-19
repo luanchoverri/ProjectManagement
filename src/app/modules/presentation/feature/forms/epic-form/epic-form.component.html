@@ -1,1 +1,28 @@
-<p>epic-form works!</p>
+<div mat-dialog-title>
+    <h1> NEW EPIC </h1>
+</div>
+
+<form [formGroup]=myForm (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+        <button type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Epic</button>
+    </div>
+</form>
