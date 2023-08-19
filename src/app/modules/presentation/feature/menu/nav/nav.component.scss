@@ -1,13 +1,7 @@
-  
-  @use '../../../../../../assets/styles/theme.scss';
-  
+
   .nav-section{
    // max-height: 250px; /* Ajusta esta altura según tus necesidades */
     overflow-y: auto;
-
-   
-
-
 
     .nav-list {
         flex: 1;
@@ -16,8 +10,6 @@
         margin-bottom: 90%;
         .mdc-list-item{
             padding: 32px 24px;
-            
-            
         } 
         
     }
