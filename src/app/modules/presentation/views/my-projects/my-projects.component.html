@@ -5,6 +5,7 @@
 </ng-container>
 
 <ng-template #content>
+    <app-add-item [formDialog]=formComponent></app-add-item>
     <app-card-list [list] = projects [service] = projectServ></app-card-list>
 </ng-template>
 

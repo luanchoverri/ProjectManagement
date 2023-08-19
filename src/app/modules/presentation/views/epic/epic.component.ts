@@ -5,6 +5,7 @@ import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Story } from 'src/app/modules/models/story';
+import { StoryFormComponent } from '../../feature/forms/story-form/story-form.component';
 
 @Component({
   selector: 'app-epic',
@@ -22,6 +23,7 @@ export class EpicComponent implements OnInit, OnDestroy {
   stories: Story[] = [];
   stories$: Subscription = new Subscription();
   storiesServ : any;
+  formComponent: any;
 
   constructor(
     private epicService: EpicService,
@@ -29,6 +31,7 @@ export class EpicComponent implements OnInit, OnDestroy {
     private storyService: StoryService
   ) {
     this.storiesServ = storyService;
+    this.formComponent = StoryFormComponent;
    }
 
   ngOnInit(): void {
