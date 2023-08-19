@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 
 @Component({
@@ -13,8 +13,8 @@ export class EpicFormComponent implements OnInit {
   projectId!: string;
   myForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private es: EpicService, private route: ActivatedRoute) {
-    this.projectId = this.route.snapshot.paramMap.get('project-id')!;
+  constructor(private fb: FormBuilder, private es: EpicService, private router: Router) {
+    this.projectId = router.url.split('?')[0].split('/').pop()!;
   }
 
   ngOnInit() {
