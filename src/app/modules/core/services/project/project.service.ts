@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-<<<<<<< HEAD
 import { Observable, Subject, catchError, map, of } from 'rxjs';
-=======
-import { Observable, catchError, map, of } from 'rxjs';
->>>>>>> 643e1ac (tg-87 Clean-up general)
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient } from '@angular/common/http';
@@ -28,9 +24,9 @@ export class ProjectService extends ListService<Project> {
   // ];
 
   isLoggedIn: boolean = false;
-<<<<<<< HEAD
   projectsList: Project[];
   projectsList$ : Subject<Project[]>; 
+
 
   constructor(
     private ls: LocalStorageService,
@@ -38,22 +34,9 @@ export class ProjectService extends ListService<Project> {
     private authService: AuthService,
   ) {
     super();
+
     this.projectsList = [];
     this.projectsList$ = new Subject<Project[]>();
-=======
-  projectsList$ = new Observable<Project[]>();
-
-  constructor(
-    private ls: LocalStorageService,
-    private http: HttpClient,
-    private authService: AuthService
-  ) {
-    super();
-
-    //carga de datos mock
-    // this.ls.updateItem('projects', this.projectsList);
-
->>>>>>> 643e1ac (tg-87 Clean-up general)
     this.authService.loggedIn$.subscribe((value) => {
       this.isLoggedIn = value;
     });
@@ -87,7 +70,6 @@ export class ProjectService extends ListService<Project> {
 
   getProjectById(id: string): Observable<Project> {
     // if (this.isLoggedIn) {
-<<<<<<< HEAD
 
     return this.http
       .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
@@ -108,44 +90,5 @@ export class ProjectService extends ListService<Project> {
       map((response) => response.data),
       catchError(() => of([])) // Maneja error y devuelve lista vacia
     );
-=======
-    const headers = this.authService.getHeaders();
-    return this.http
-      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`, { headers })
-      .pipe(map((response) => response.data));
-  }
-
-  getEpicsByProject(id: string): Observable<Epic[]> {
-    const headers = this.authService.getHeaders();
-    return this.http
-      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}/${endpoint.EPICS}`, {
-        headers,
-      })
-      .pipe(
-        map((response) => response.data),
-        catchError(() => of([]))
-      );
-  }
-
-  getAll(): Observable<Project[]> {
-    let loggedIn = false;
-
-    this.authService.loggedIn$.subscribe((value) => {
-      loggedIn = value;
-    });
-
-    if (loggedIn) {
-      console.log('estoy logueada y voy a ir a buscar los proyectos');
-      const headers = this.authService.getHeaders();
-      return this.http
-        .get<ApiResponse>(PathRest.GET_PROJECTS, { headers })
-        .pipe(
-          map((response) => response.data),
-          catchError(() => of([])) // Maneja error y devuelve lista vacia
-        );
-    } else {
-      return of([]); // No esta logueado, devuelve lista vacia
-    }
->>>>>>> 643e1ac (tg-87 Clean-up general)
   }
 }
