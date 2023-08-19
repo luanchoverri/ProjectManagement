@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observer, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
+import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Project } from 'src/app/modules/models/project.model';
+import { ProjectFormComponent } from '../../feature/forms/project-form/project-form.component';
 
 @Component({
   selector: 'app-my-projects',
@@ -10,14 +10,17 @@ import { Project } from 'src/app/modules/models/project.model';
   styleUrls: ['./my-projects.component.scss'],
 })
 export class MyProjectsComponent implements OnInit, OnDestroy {
-  projects: Project[] = [];
+  projects: Project[];
   projectServ: any;
   projects$: Subscription;
   loading = true;
+  formComponent: any;
 
   constructor(private projectService: ProjectService) {
+    this.projects = [];
     this.projects$ = new Subscription();
     this.projectServ = projectService;
+    this.formComponent = ProjectFormComponent;
   }
 
   ngOnInit(): void {

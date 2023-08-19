@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient } from '@angular/common/http';
@@ -24,18 +24,17 @@ export class ProjectService extends ListService<Project> {
   // ];
 
   isLoggedIn: boolean = false;
-  projectsList$ = new Observable<Project[]>();
+  projectsList: Project[];
+  projectsList$ : Subject<Project[]>; 
 
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     super();
-
-    //carga de datos mock
-    // this.ls.updateItem('projects', this.projectsList);
-
+    this.projectsList = [];
+    this.projectsList$ = new Subject<Project[]>();
     this.authService.loggedIn$.subscribe((value) => {
       this.isLoggedIn = value;
     });
@@ -50,7 +49,20 @@ export class ProjectService extends ListService<Project> {
   }
 
   override createItem(item: Project): Observable<Project> {
-    throw new Error('Method not implemented.');
+    let loggedIn = false;
+
+    this.authService.loggedIn$.subscribe((value) => {
+      loggedIn = value;
+    });
+
+    if (loggedIn) {
+      const headers = this.authService.getHeaders();
+      return this.http
+        .post<ApiResponse>(PathRest.GET_PROJECTS, item, { headers })
+        .pipe(map((response) => response.data));
+    } else {
+      return of(item); // No esta logueado, devuelve el item
+    }
   }
 
   override updateItem(item: Project): Observable<Project> {

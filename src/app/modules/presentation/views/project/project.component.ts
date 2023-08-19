@@ -5,6 +5,7 @@ import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
+import { EpicFormComponent } from '../../feature/forms/epic-form/epic-form.component';
 
 @Component({
   selector: 'app-project',
@@ -18,6 +19,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   project!: Project ;
   epics: Epic[] = [];
   epicsServ : any;
+  formComponent: any;
 
   //no se usan
   epics$: Subscription = new Subscription();
@@ -29,6 +31,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private epicService: EpicService
   ) { 
     this.epicsServ = epicService;
+    this.formComponent = EpicFormComponent;
   }
 
   ngOnInit(): void {

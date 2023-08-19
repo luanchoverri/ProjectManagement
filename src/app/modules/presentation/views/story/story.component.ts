@@ -5,6 +5,7 @@ import { StoryService } from 'src/app/modules/core/services/story/story.service'
 import { TaskService } from 'src/app/modules/core/services/task/task.service';
 import { Story } from 'src/app/modules/models/story';
 import { Task } from 'src/app/modules/models/task.model';
+import { TaskFormComponent } from '../../feature/forms/task-form/task-form.component';
 
 @Component({
   selector: 'app-story',
@@ -17,6 +18,7 @@ export class StoryComponent {
   loading: boolean = true;
   tasks: Task[] = [];
   tasksServ: any;
+  formComponent: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,7 @@ export class StoryComponent {
     private taskService: TaskService
   ) {
     this.tasksServ = taskService;
+    this.formComponent = TaskFormComponent;
   }
 
   ngOnInit(): void {

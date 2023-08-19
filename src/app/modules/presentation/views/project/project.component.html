@@ -8,6 +8,7 @@
 
 <ng-template #content>
     <app-item-details-card [item] = "project"></app-item-details-card>
+    <app-add-item [formDialog]=formComponent></app-add-item>
     <app-card-list [list]= "epics" [service] = epicsServ ></app-card-list>
 </ng-template>
 
