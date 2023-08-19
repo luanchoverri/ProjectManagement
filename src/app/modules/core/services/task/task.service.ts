@@ -3,6 +3,9 @@ import { Observable, map } from 'rxjs';
 import { Task } from 'src/app/modules/models/task.model';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ListService } from '../list/list.service';
+import { HttpClient } from '@angular/common/http';
+import { ApiResponse } from 'src/app/modules/models/apiResponse';
+import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +20,20 @@ export class TaskService extends ListService<Task> {
   // new Task("UI Integration", "Integrate the translation module with the user interface.", '11')
   // ]
 
-  constructor(private ls: LocalStorageService) {
+  constructor(private ls: LocalStorageService, private http: HttpClient) {
     // this.ls.updateItem(this.TASK_KEY, this.taskList);
     super();
   }
 
   override getItems(): Observable<Task[]> {
-    return this.ls.getItem<Task[]>(this.TASK_KEY).pipe(map((data) => data || []));
+    // return this.ls.getItem<Task[]>(this.TASK_KEY).pipe(map((data) => data || []));
+    return this.http.get<ApiResponse>(PathRest.GET_TASKS)
+    .pipe(map((response) => response.data));
   }
 
   override createItem(item: Task): Observable<Task> {
-    throw new Error('Method not implemented.');
+    return this.http.post<ApiResponse>(PathRest.GET_TASKS, item)
+    .pipe(map((response) => response.data));
   }
   override updateItem(item: Task): Observable<Task> {
     console.log("voy a actualizar el task");
@@ -37,14 +43,4 @@ export class TaskService extends ListService<Task> {
     console.log("voy a borrar el task");
     return new Observable<Task>;
   }
-
-
-  // getItemById(id: number): Task | undefined{
-  //   return this.taskList.find((item) => item.id == id);
-  // }
-
-
-  // getTasksByStoryId(id : number): Task[] {
-  //   return this.taskList.filter(task => task.story === id);
-  // }
 }
