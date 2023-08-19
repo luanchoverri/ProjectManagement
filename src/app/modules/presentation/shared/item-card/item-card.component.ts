@@ -45,4 +45,7 @@ export class ItemCardComponent {
     this.service.deleteItem(this.item._id);
   }
 
+
+
+
 }

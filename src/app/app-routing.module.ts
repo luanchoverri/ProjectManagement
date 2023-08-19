@@ -35,30 +35,30 @@ const routes: Routes = [
   },
   {
     path: 'my-projects',
-    component: MyProjectsComponent,
     data: { breadcrumb: 'My Projects' },
     children: [
       {
+      path: '',
+      component: MyProjectsComponent,
+      pathMatch: 'full'
+      },
+      {
         path: ':project-id',
-        component: ProjectComponent,
+      
         pathMatch: 'full',
-        data: { breadcrumb: { alias: 'Project' } },
-        // children: [
-        //   {
-        //     path: ':epic-id',
-        //     component: EpicComponent,
-        //     pathMatch: 'full',
-        //     data: { breadcrumb: { alias: 'Epic' } },
-        //     children:[
-        //       {
-        //         path: ':story-id',
-        //         component: StoryComponent,
-        //         pathMatch:'full',
-        //         data:{breadcrumb:{alias:'Story'}}
-        //       }
-        //     ]
-        //   }
-        // ]
+        data: { breadcrumb: { alias: 'Project' } }, 
+        children: [
+            {
+            path: '',
+            component: ProjectComponent,
+            pathMatch: 'full',
+            },
+             {
+               path: ':epic-id',
+                component: EpicComponent,
+               pathMatch: 'full',
+              data: { breadcrumb: { alias: 'Epic' } },
+             }]
       }
     ]
   },
@@ -83,5 +83,19 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-// {path: 'login', component:LoginComponent},
-// {path: '', redirectTo: '/login', pathMatch: 'full'},
+        // children: [
+        //   {
+        //     path: ':epic-id',
+        //     component: EpicComponent,
+        //     pathMatch: 'full',
+        //     data: { breadcrumb: { alias: 'Epic' } },
+        //     children:[
+        //       {
+        //         path: ':story-id',
+        //         component: StoryComponent,
+        //         pathMatch:'full',
+        //         data:{breadcrumb:{alias:'Story'}}
+        //       }
+        //     ]
+        //   }
+        // ]
