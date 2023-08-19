@@ -124,16 +124,15 @@ export class StoryService extends ListService<Story> {
 
   getStoryById(id: string): Observable<Story> {
     // if (this.isLoggedIn) {
-    const headers = this.authService.getHeaders();
+ 
     return this.http
-      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`, { headers })
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
       .pipe(map((response) => response.data));
   }
 
   getTasksByStory(id: string): Observable<Task[]> {
-    const headers = this.authService.getHeaders();
     return this.http
-      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}/${endpoint.TASKS}`, { headers })
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`)
       .pipe(
         map((response) => response.data),
         catchError(() => of([]))
@@ -141,8 +140,8 @@ export class StoryService extends ListService<Story> {
   }
 
   getAll(): Observable<Story[]> {
-    const headers = this.authService.getHeaders();
-    return this.http.get<ApiResponse>(PathRest.GET_STORIES, { headers }).pipe(
+  
+    return this.http.get<ApiResponse>(PathRest.GET_STORIES).pipe(
       map((response) => response.data),
       catchError(() => of([])) 
     );

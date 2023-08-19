@@ -4,7 +4,7 @@ import { Project } from 'src/app/modules/models/project.model';
 import { Observable, Subject, catchError, map, of } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
@@ -49,20 +49,11 @@ export class ProjectService extends ListService<Project> {
   }
 
   override createItem(item: Project): Observable<Project> {
-    let loggedIn = false;
-
-    this.authService.loggedIn$.subscribe((value) => {
-      loggedIn = value;
-    });
-
-    if (loggedIn) {
-      const headers = this.authService.getHeaders();
+    
       return this.http
-        .post<ApiResponse>(PathRest.GET_PROJECTS, item, { headers })
+        .post<ApiResponse>(PathRest.GET_PROJECTS, item)
         .pipe(map((response) => response.data));
-    } else {
-      return of(item); // No esta logueado, devuelve el item
-    }
+    
   }
 
   override updateItem(item: Project): Observable<Project> {
@@ -77,18 +68,15 @@ export class ProjectService extends ListService<Project> {
 
   getProjectById(id: string): Observable<Project> {
     // if (this.isLoggedIn) {
-    const headers = this.authService.getHeaders();
+
     return this.http
-      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`, { headers })
+      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
       .pipe(map((response) => response.data));
   }
 
   getEpicsByProject(id: string): Observable<Epic[]> {
-    const headers = this.authService.getHeaders();
     return this.http
-      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}/${endpoint.EPICS}`, {
-        headers,
-      })
+      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}${endpoint.EPICS}`)
       .pipe(
         map((response) => response.data),
         catchError(() => of([]))
@@ -96,22 +84,9 @@ export class ProjectService extends ListService<Project> {
   }
 
   getAll(): Observable<Project[]> {
-    let loggedIn = false;
-
-    this.authService.loggedIn$.subscribe((value) => {
-      loggedIn = value;
-    });
-
-    if (loggedIn) {
-      const headers = this.authService.getHeaders();
-      return this.http
-        .get<ApiResponse>(PathRest.GET_PROJECTS, { headers })
-        .pipe(
-          map((response) => response.data),
-          catchError(() => of([])) // Maneja error y devuelve lista vacia
-        );
-    } else {
-      return of([]); // No esta logueado, devuelve lista vacia
-    }
+    return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
+      map((response) => response.data),
+      catchError(() => of([])) // Maneja error y devuelve lista vacia
+    );
   }
 }
