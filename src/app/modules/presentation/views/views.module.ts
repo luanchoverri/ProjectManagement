@@ -11,11 +11,12 @@ import { ProjectComponent } from './project/project.component';
 import { EpicComponent } from './epic/epic.component';
 import { StoryComponent } from './story/story.component';
 import { LoginComponent } from './login/login.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
+
     HomeComponent,
     MyProjectsComponent,
     MyStoriesComponent,
@@ -26,6 +27,7 @@ import { LoginComponent } from './login/login.component';
     LoginComponent
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     RouterModule, 
     SharedModule,
