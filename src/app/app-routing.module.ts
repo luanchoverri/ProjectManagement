@@ -8,6 +8,7 @@ import { ProjectComponent } from './modules/presentation/views/project/project.c
 import { EpicComponent } from './modules/presentation/views/epic/epic.component';
 import { StoryComponent } from './modules/presentation/views/story/story.component';
 import { BreadcrumbModule } from "xng-breadcrumb";
+import { LoginComponent } from './modules/presentation/views/login/login.component';
 
 
 // const routes: Routes = [
@@ -79,7 +80,11 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     data: { breadcrumb: 'Settings' }
-  }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
 ];
 
 
