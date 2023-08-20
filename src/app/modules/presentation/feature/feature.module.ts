@@ -38,7 +38,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     EpicFormComponent,
     StoryFormComponent,
     TaskFormComponent,
-    
   ]
 })
 export class FeatureModule { }

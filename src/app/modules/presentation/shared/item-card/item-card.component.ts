@@ -38,6 +38,8 @@ export class ItemCardComponent {
     this.service.updateItem(this.item);
   }
 
+
+
   deleteItem() {
     this.service.deleteItem(this.item._id);
   }
