@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    const userData = { username: 'thomas', password: '1234' };
+    const userData = { username: 'nina', password: '1234' };
     this.authService.login(userData).subscribe((response) => console.log('Login :)' + userData.username));
   }
 }

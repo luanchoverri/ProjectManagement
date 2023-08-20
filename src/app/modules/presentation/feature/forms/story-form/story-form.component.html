@@ -1,1 +1,101 @@
-<p>story-form works!</p>
+<div mat-dialog-title>
+    <h1> NEW STORY </h1>
+</div>
+
+<form [formGroup]=myForm (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Owner</mat-label>
+            <mat-select formControlName="owner">
+                <mat-option *ngFor="let member of members" [value]="member._id">
+                    {{member.username}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Assigned to</mat-label>
+            <mat-select formControlName="assignedTo">
+                <mat-option *ngFor="let member of members" [value]="member._id">
+                    {{member.username}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Points</mat-label>
+            <mat-select formControlName="points">
+                <mat-option value=1>1</mat-option>
+                <mat-option value=2>2</mat-option>
+                <mat-option value=3>3</mat-option>
+                <mat-option value=4>4</mat-option>
+                <mat-option value=5>5</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Created</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="created">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field >
+            <mat-label>Due</mat-label>
+            <input matInput  [matDatepicker]="picker2" formControlName="due">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Started</mat-label>
+            <input matInput [matDatepicker]="picker3" formControlName="started">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Finished</mat-label>
+            <input matInput [matDatepicker]="picker4" formControlName="finished">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+
+ 
+            <mat-label>Status</mat-label>
+            <mat-radio-group formControlName="status">
+                <mat-radio-button value=todo [checked]="true">Todo</mat-radio-button>
+                <mat-radio-button value=running>Running</mat-radio-button>
+                <mat-radio-button value=done>Done</mat-radio-button>
+            </mat-radio-group>
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Icon</mat-label>
+            <input matInput formControlName="icon" />
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+        <button type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary"
+            [mat-dialog-close]="true">Create Story</button>
+    </div>
+
+</form>
