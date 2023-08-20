@@ -23,16 +23,8 @@ export class ItemCardComponent {
     
   }
 
-  getCurrentRoute(item: Item): string {
-    this.linkSize = this.route.snapshot.url.length;
-
-    for (let i = 0; i < this.linkSize; i++) {
-      this.currentLink += this.route.snapshot.url[i].path + '/';
-    }
-    this.currentLink += `${item._id}`;
-    this.routerLink = this.currentLink;
-    this.currentLink = '/';
-    return this.routerLink;
+  getCurrentRoute(): string {
+    return this.item._id;
   }
 
   editItem() {
@@ -44,6 +36,8 @@ export class ItemCardComponent {
   deleteItem() {
     this.service.deleteItem(this.item._id);
   }
+
+
 
 
 
