@@ -11,16 +11,8 @@ import { BreadcrumbModule } from "xng-breadcrumb";
 import { LoginComponent } from './modules/presentation/views/login/login.component';
 import { AuthGuard } from './modules/presentation/guards/auth.guard';
 
-
 const routes: Routes = [
-
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {
-    path: 'login',
-    component: LoginComponent,
-
-    data: { breadcrumb: 'Login' }
-  },
   {
     path: 'home',
     component: HomeComponent,
@@ -29,6 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'my-projects',
+    canActivate: [AuthGuard],
     data: { breadcrumb: 'My Projects' },
     children: [
       {
@@ -38,29 +31,33 @@ const routes: Routes = [
       },
       {
         path: ':project-id',  // padre sin match full
-        data: { breadcrumb: { alias: 'Project' } },
+        canActivate: [AuthGuard],
+        data: { breadcrumb: { alias: 'Project' } }, 
         children: [
           {
             path: '',
             component: ProjectComponent,
             pathMatch: 'full',
-          },
-          {
-            path: ':epic-id', // padre sin match full
-            data: { breadcrumb: { alias: 'Epic' } },
-            children: [
-              {
+            },
+             {
+               path: ':epic-id', // padre sin match full
+               canActivate: [AuthGuard],
+              data: { breadcrumb: { alias: 'Epic' } },
+              children: [
+                {
                 path: '',
                 component: EpicComponent,
+                canActivate: [AuthGuard],
                 pathMatch: 'full',
-              },
-              {
-                path: ':story-id', // padre sin match full -> si se agregan tasks hay q sacarle el component y el match
-                component: StoryComponent,
-                pathMatch: 'full',
-                data: { breadcrumb: { alias: 'Story' } },
-              }]
-          }]
+                },
+                 {
+                   path: ':story-id', // padre sin match full -> si se agregan tasks hay q sacarle el component y el match
+                    component: StoryComponent,
+                    canActivate: [AuthGuard],
+                   pathMatch: 'full',
+                  data: { breadcrumb: { alias: 'Story' } },
+                 }]
+             }]
       }
     ]
   },
@@ -75,7 +72,13 @@ const routes: Routes = [
     component: SettingsComponent,
     canActivate: [AuthGuard],
     data: { breadcrumb: 'Settings' }
-  }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { breadcrumb: 'Login' }
+  },
+
 ];
 
 
