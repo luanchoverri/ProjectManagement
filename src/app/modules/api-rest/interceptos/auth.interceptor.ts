@@ -16,7 +16,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = this.authService.getToken()
     if (token) {
-      this.authService.checkToken(); // si el token ha expirado y redirigir si es necesario
       request = request.clone({
         setHeaders: {
           auth: token        

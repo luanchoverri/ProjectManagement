@@ -9,18 +9,22 @@ import { EpicComponent } from './modules/presentation/views/epic/epic.component'
 import { StoryComponent } from './modules/presentation/views/story/story.component';
 import { BreadcrumbModule } from "xng-breadcrumb";
 import { LoginComponent } from './modules/presentation/views/login/login.component';
+import { AuthGuard } from './modules/presentation/guards/auth.guard';
 
 
 const routes: Routes = [
 
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
+
+    data: { breadcrumb: 'Login' }
   },
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     data: { breadcrumb: 'Home' }
   },
   {
@@ -63,11 +67,13 @@ const routes: Routes = [
   {
     path: 'my-stories',
     component: MyStoriesComponent,
+    canActivate: [AuthGuard],
     data: { breadcrumb: 'My Stories' }
   },
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [AuthGuard],
     data: { breadcrumb: 'Settings' }
   }
 ];

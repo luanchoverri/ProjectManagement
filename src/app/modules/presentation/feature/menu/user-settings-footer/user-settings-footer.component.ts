@@ -13,7 +13,9 @@ export class UserSettingsFooterComponent implements OnInit, OnDestroy {
    
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   ngOnDestroy(): void {}
 
