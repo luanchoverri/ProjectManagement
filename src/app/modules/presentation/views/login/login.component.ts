@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   hide = true;
   myForm!: FormGroup;
   errorMessage: string = ''
+  loginFailed = false;
+  failedIcon = 'mood'
 
   constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) {}
 
@@ -29,23 +31,23 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onLogin(userData : UserCredentials) {
-    this.authService.login(userData).subscribe(
-      (response) => {
-        console.log(response);
-        if (response){
-          console.log(response);
-           this.router.navigate(['/home']);
-        }
-        else {
+  // onLogin(userData : UserCredentials) {
+  //   this.authService.login(userData).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       if (response){
+  //         console.log(response);
+  //          this.router.navigate(['/home']);
+  //       }
+  //       else {
          
-          this.myForm.setErrors({ invalidCredentials: true });
-        }
-      },
-      error => {
-        console.error(error);
-      });
-  }
+  //         this.myForm.setErrors({ invalidCredentials: true });
+  //       }
+  //     },
+  //     error => {
+  //       console.error(error);
+  //     });
+  // }
 
   isLoading = false;
 
@@ -82,7 +84,9 @@ export class LoginComponent implements OnInit {
 
   handleError(error: any) {
   //  throw new Error(error);
+    this.loginFailed = true
     this.isLoading = false; // Desactivar el estado de carga
+    
     this.errorMessage = '*Incorrect username or password';
     console.error('Ocurrió un error durante el inicio de sesión:', error);
   }
