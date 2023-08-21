@@ -6,6 +6,7 @@ import { ItemCardComponent } from './item-card/item-card.component';
 import { ItemDetailsCardComponent } from './item-details-card/item-details-card.component';
 import { RouterModule } from '@angular/router';
 import { AddItemComponent } from './add-item/add-item.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 
@@ -15,6 +16,7 @@ import { AddItemComponent } from './add-item/add-item.component';
     ItemCardComponent,
     ItemDetailsCardComponent,
     AddItemComponent,
+    ConfirmationDialogComponent,
 
   ],
   imports: [

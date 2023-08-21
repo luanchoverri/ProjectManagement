@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from 'src/app/modules/models/item.model';
-import { Project } from 'src/app/modules/models/project.model';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-item-card',
@@ -15,7 +16,7 @@ export class ItemCardComponent {
   routerLink: string = '/';
   currentLink!: string;
  
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog) {
       this.currentLink = '/';
   }
 
@@ -31,15 +32,17 @@ export class ItemCardComponent {
     this.service.updateItem(this.item);
   }
 
-
-
-  deleteItem() {
-    this.service.deleteItem(this.item._id);
+  deleteItem(item: Item): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: { itemName: item.name }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.service.deleteItem(item._id).subscribe();
+      }
+    });
   }
-
-
-
-
-
 
 }
