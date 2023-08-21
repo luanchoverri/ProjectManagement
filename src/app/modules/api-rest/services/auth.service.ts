@@ -20,6 +20,11 @@ export class AuthService {
   private currentUser : User | null = null;
   constructor(private router: Router ,private http: HttpClient) {}
 
+
+
+  ngOnInit(){
+    this.loggedIn$ = this.loggedInSubject.asObservable();
+  }
   login(authData: UserCredentials): Observable<boolean |void> {
     return this.http.post<UserResponse>(`${PathRest.GET_LOGIN}`, authData)
     .pipe(
@@ -54,7 +59,8 @@ export class AuthService {
   }
 
   get isLoggedIn(): Observable<boolean> {
-    return this.loggedIn$;
+    console.log('observable en is LoggedIn', this.loggedInSubject.asObservable())
+    return this.loggedInSubject.asObservable();
   }
 
   getToken(): string | null {

@@ -4,7 +4,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { UserCredentials } from '../../../models/userCredentials';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserResponse } from 'src/app/modules/models/userResponse';
-import { catchError, throwError } from 'rxjs';
+import { catchError, throwError, Subscription } from 'rxjs';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 
 @Component({
@@ -19,9 +19,18 @@ export class LoginComponent implements OnInit {
   protected errorMessage: string = ''
   protected isLoading = false;
 
-  constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) {}
+  constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) {
+
+  }
 
   ngOnInit() {
+    this.authService.loggedIn$.subscribe((isLoggedIn) => {
+      console.log(isLoggedIn)
+      if (isLoggedIn) {
+        console.log('estiy logueada')
+        this.router.navigate(['/home']);
+      }
+    })
     this.myForm = this.fb.group({
       username: new FormControl('', [ Validators.required, Validators.minLength(4)]),
       password: new FormControl('', [ Validators.required,  Validators.minLength(4)])
