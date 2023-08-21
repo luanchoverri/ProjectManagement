@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-import { Observable, Subject, catchError, map, of } from 'rxjs';
+import { Observable, Subject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,7 @@ export class ProjectService extends ListService<Project> {
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
+    private snackBar: MatSnackBar
   ) {
     super();
     this.projectsList = [];
@@ -56,9 +58,30 @@ export class ProjectService extends ListService<Project> {
     return new Observable<Project>();
   }
 
-  override deleteItem(id: string): Observable<Project> {
-    console.log('voy a borrar el proyecto');
-    return new Observable<Project>();
+  override deleteItem(id: string): Observable<Project | null> {
+    return this.getEpicsByProject(id).pipe(
+      switchMap(epics => {
+        if (epics.length > 0) {
+          this.snackBar.open('This project has associated epics and cannot be deleted.', 'Close', {
+            duration: 5000,
+          });
+          return of(null); 
+        } else {
+          return this.http.delete<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
+            .pipe(
+              map((response) => response.data),
+              catchError(error => {
+                return of(null);
+              }),
+              tap(() => {
+                this.snackBar.open('Project deleted successfully.', 'Close', {
+                  duration: 5000,
+                });
+              })
+            );
+        }
+      })
+    );
   }
 
   getProjectById(id: string): Observable<Project> {
