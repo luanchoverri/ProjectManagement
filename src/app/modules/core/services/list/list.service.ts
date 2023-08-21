@@ -12,7 +12,7 @@ export abstract class ListService<Item> {
 
   abstract updateItem(item: Item): Observable<Item>;
 
-  abstract deleteItem(id: string): Observable<Item>;
+  abstract deleteItem(id: string): Observable<Item | null>;
 
   //Llamar a esta funcion desde el item-detail-card y filtar que datos del total muestra la vista
   //abstract getViewDetails(id: string): Observable<Item>;
