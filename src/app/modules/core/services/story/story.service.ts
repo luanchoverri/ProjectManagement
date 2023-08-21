@@ -3,13 +3,14 @@ import { ListService } from '../list/list.service';
 import { Story } from 'src/app/modules/models/story';
 import { State } from 'src/app/modules/models/enum';
 import { LocalStorageService } from '../localStorage/local-storage.service';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { Task } from 'src/app/modules/models/task.model';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -89,7 +90,8 @@ export class StoryService extends ListService<Story> {
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
     // //carga de datos mock
     // this.ls.updateItem('stories', this.storyList);
@@ -111,9 +113,30 @@ export class StoryService extends ListService<Story> {
     return new Observable<Story>;
   }
 
-  override deleteItem(id: string): Observable<Story> {
-    console.log("voy a borrar la story");
-    return new Observable<Story>;
+  override deleteItem(id: string): Observable<Story | null> {
+    return this.getTasksByStory(id).pipe(
+      switchMap(tasks => {
+        if (tasks.length > 0) {
+          this.snackBar.open('This story has associated tasks and cannot be deleted.', 'Close', {
+            duration: 5000,
+          });
+          return of(null); 
+        } else {
+          return this.http.delete<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
+            .pipe(
+              map((response) => response.data),
+              catchError(error => {
+                return of(null);
+              }),
+              tap(() => {
+                this.snackBar.open('Story deleted successfully.', 'Close', {
+                  duration: 5000,
+                });
+              })
+            );
+        }
+      })
+    );
   }
 
   // getItemById(id: number): Story | undefined{
