@@ -1,18 +1,19 @@
-  <mat-card class="list-item">
-    <a [routerLink]= "getCurrentRoute()">
-      <mat-card-header class="item-header">
-        <mat-card-title>{{item.name}}</mat-card-title>
-      </mat-card-header>
+<mat-card class="list-item">
+  <a [routerLink]="getCurrentRoute()">
+    <mat-card-header class="item-header">
+      <mat-card-title>{{item.name}}</mat-card-title>
+    </mat-card-header>
 
+    <mat-divider></mat-divider>
 
-      <mat-card-content>
-        <p>{{item.description}}</p>
-      </mat-card-content>
-
+    <mat-card-content>
+      <p>{{item.description}}</p>
+    </mat-card-content>
   </a>
 
   <mat-card-actions align="end">
     <button mat-button (click)="editItem()"><mat-icon>edit</mat-icon></button>
     <button mat-button (click)="deleteItem(item)"><mat-icon>delete</mat-icon></button>
   </mat-card-actions>
+
 </mat-card>
