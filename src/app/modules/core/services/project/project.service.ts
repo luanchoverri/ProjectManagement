@@ -30,14 +30,11 @@ export class ProjectService extends ListService<Project> {
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
-    private authService: AuthService,
   ) {
     super();
     this.projectsList = [];
     this.projectsList$ = new Subject<Project[]>();
-    this.authService.loggedIn$.subscribe((value) => {
-      this.isLoggedIn = value;
-    });
+
   }
 
   //abstract methods

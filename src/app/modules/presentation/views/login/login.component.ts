@@ -19,51 +19,42 @@ export class LoginComponent implements OnInit {
   protected errorMessage: string = ''
   protected isLoading = false;
 
-  constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) {
-
-  }
+  constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.authService.loggedIn$.subscribe((isLoggedIn) => {
-      console.log(isLoggedIn)
-      if (isLoggedIn) {
-        console.log('estiy logueada')
-        this.router.navigate(['/home']);
-      }
-    })
+    if (this.authService.isSessionActive()) {
+      this.router.navigate([endpoint.HOME]);
+    }
+
     this.myForm = this.fb.group({
-      username: new FormControl('', [ Validators.required, Validators.minLength(4)]),
-      password: new FormControl('', [ Validators.required,  Validators.minLength(4)])
+      username: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(4)])
     });
   }
 
 
   onSubmit() {
     if (this.myForm.valid) {
-      this.isLoading = true; 
-      const userData = {
-        username: this.myForm.value.username,
-        password: this.myForm.value.password
-      };
-      this.authService.login(userData)
-      .pipe(
-        catchError((error) => {
-          this.handleError(error); 
-          return [];
-        })
-      )
-      .subscribe(
-        success => {
-          if (success) {
-            this.router.navigate([endpoint.HOME]);
-          } else {
-            this.myForm.setErrors({ invalidCredentials: true } );
-            this.handleError('');
-          }
-         
-        });
+      this.isLoading = true;
+      this.authService.login(this.myForm.value)
+        .pipe(
+          catchError((error) => {
+            this.handleError(error);
+            return [];
+          })
+        )
+        .subscribe(
+          success => {
+            if (success) {
+              this.router.navigate([endpoint.ROOT]);
+            } else {
+              this.myForm.setErrors({ invalidCredentials: true });
+              this.handleError('');
+            }
+
+          });
     }
-    
+
   }
 
 
@@ -71,15 +62,11 @@ export class LoginComponent implements OnInit {
   handleError(error: any) {
     this.isLoading = false;
     this.errorMessage = '*Incorrect username or password';
-    console.error('Ocurrió un error durante el inicio de sesión:', error);
+    console.error('Ocurrió un error durante el inicio de sesión ', error);
   }
 
 
-  clearFormFields() {
-    this.myForm.get('username')?.setValue('');
-    this.myForm.get('password')?.setValue('');
-  }
-    
+
 }
 
 

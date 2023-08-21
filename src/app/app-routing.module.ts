@@ -12,31 +12,8 @@ import { LoginComponent } from './modules/presentation/views/login/login.compone
 import { AuthGuard } from './modules/presentation/guards/auth.guard';
 
 
-// const routes: Routes = [
-//   {path: 'home', component:HomeComponent, data: { breadcrumb: 'Home' }},
-//  { path: 'my-projects/:project-id/:epic-id/:story-id', component: StoryComponent, pathMatch: 'full', data: { breadcrumb: {alias: 'Story'} }},
-//   {path: 'my-projects/:project-id/:epic-id', component: EpicComponent, pathMatch: 'full', data: { breadcrumb: {alias: 'Epic'} }},
-//   {path: 'my-projects/:project-id', component: ProjectComponent, pathMatch: 'full', data: { breadcrumb: {alias: 'Project'} }},
-//   {path: 'my-projects', component: MyProjectsComponent, data: { breadcrumb: 'My Projects' },
-//     // children: [
-//   //     { path: 'my-projects/:project-id/:epic-id/:story-id/:task-id', component: TasksComponent, pathMatch: 'full'},  --> esta no existe solo navega hasta Story 
-//   //     { path: 'my-projects/:project-id/:epic-id/:story-id', component: StoryComponent, pathMatch: 'full'},
-//   //     { path: 'my-projects/:project-id/:epic-id', component: EpicComponent, pathMatch: 'full'},
-//   //     { path: ':project-id', component: ProjectComponent},
-//   // ]
-//   },
-//   {path: 'my-stories', component:MyStoriesComponent, data: { breadcrumb: 'My Stories' }},
-//   {path: 'settings', component:SettingsComponent, data: { breadcrumb: 'Settings' }}
-// ];
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {
-    path: 'login',
-    component: LoginComponent,
-
-    data: { breadcrumb: 'Login' }
-  },
   {
     path: 'home',
     component: HomeComponent,
@@ -45,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'my-projects',
+    canActivate: [AuthGuard],
     data: { breadcrumb: 'My Projects' },
     children: [
       {
@@ -54,6 +32,7 @@ const routes: Routes = [
       },
       {
         path: ':project-id',  // padre sin match full
+        canActivate: [AuthGuard],
         data: { breadcrumb: { alias: 'Project' } }, 
         children: [
             {
@@ -63,16 +42,19 @@ const routes: Routes = [
             },
              {
                path: ':epic-id', // padre sin match full
+               canActivate: [AuthGuard],
               data: { breadcrumb: { alias: 'Epic' } },
               children: [
                 {
                 path: '',
                 component: EpicComponent,
+                canActivate: [AuthGuard],
                 pathMatch: 'full',
                 },
                  {
                    path: ':story-id', // padre sin match full -> si se agregan tasks hay q sacarle el component y el match
                     component: StoryComponent,
+                    canActivate: [AuthGuard],
                    pathMatch: 'full',
                   data: { breadcrumb: { alias: 'Story' } },
                  }]
@@ -95,7 +77,9 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    data: { breadcrumb: 'Login' }
   },
+
 ];
 
 
@@ -107,19 +91,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-        // children: [
-        //   {
-        //     path: ':epic-id',
-        //     component: EpicComponent,
-        //     pathMatch: 'full',
-        //     data: { breadcrumb: { alias: 'Epic' } },
-        //     children:[
-        //       {
-        //         path: ':story-id',
-        //         component: StoryComponent,
-        //         pathMatch:'full',
-        //         data:{breadcrumb:{alias:'Story'}}
-        //       }
-        //     ]
-        //   }
-        // ]
