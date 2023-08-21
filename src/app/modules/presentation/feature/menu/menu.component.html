@@ -1,20 +1,13 @@
-<mat-sidenav-container [hasBackdrop]="true">
-    <mat-sidenav class="side-menu-content" #sidenav [(opened)]="openMenu" mode="side">
+<mat-sidenav-container [hasBackdrop]="true" (click)="sidenav.toggle()">
+    <mat-sidenav #sidenav [(opened)]="openMenu" mode="side">
         <app-logo-header></app-logo-header>
 
-        <mat-divider></mat-divider>
+        <app-nav></app-nav>
 
-        <app-nav class="nav-main-section"></app-nav>
-
-        <mat-divider></mat-divider>
-
-        <app-user-settings-footer class="nav-footer"></app-user-settings-footer>
+        <app-user-settings-footer></app-user-settings-footer>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <!-- main view cont -->
-        <!-- <app-main></app-main> -->
         <router-outlet></router-outlet>
-        <div style="height: autovh"></div>
     </mat-sidenav-content>
 </mat-sidenav-container>

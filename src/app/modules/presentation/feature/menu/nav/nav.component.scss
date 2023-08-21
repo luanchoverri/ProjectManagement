@@ -1,16 +1,5 @@
-
-  .nav-section{
-   // max-height: 250px; /* Ajusta esta altura según tus necesidades */
-    overflow-y: auto;
-
-    .nav-list {
-        flex: 1;
-        padding: 0px 0px;
-        max-height: auto;
-        margin-bottom: 90%;
-        .mdc-list-item{
-            padding: 32px 24px;
-        } 
-        
-    }
-  }
+section{
+    margin-top: 4rem;   //lo que ocupa el logo
+    overflow: auto;
+    height: 100vh;
+}

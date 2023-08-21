@@ -1,12 +1,41 @@
-.mat-sidenav-container {
-  height: 100vh; /* Asegura que la sidenav ocupe toda la altura visible */
-  font-size: 16px;
+mat-sidenav-container {
+  height: 100vh; // Asegura que la sidenav ocupe toda la altura visible
 }
 
-.side-menu-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 20%;
+mat-sidenav{
+  width: 70%; // Asegura que la sidenav ocupe el 70% del ancho visible
+}
 
+app-logo-header {
+  position: fixed; 
+  width: 70%; // Al ser position fixed, no puedo heredar width del padre
+  z-index: 2; // Asegura que el logo se vea por encima del contenido
+  background-color: white;
+  border-bottom: 1px solid black;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+app-user-settings-footer {
+  min-width: 70%;
+  position: fixed; // User settings at the bottom are fixed
+  bottom: 0;
+  border-top: 1px solid black;
+}
+
+//desktop
+@media only screen and (min-width: 768px) {
+  mat-sidenav{
+    width: 30%; 
+  }
+
+  app-logo-header {
+    width: 30%; 
+  }
+
+  app-user-settings-footer {
+    min-width: 30%;
+  }
 }
