@@ -2,12 +2,12 @@ mat-sidenav-container {
   height: 100vh; // Asegura que la sidenav ocupe toda la altura visible
 }
 
-mat-sidenav{
+mat-sidenav {
   width: 70%; // Asegura que la sidenav ocupe el 70% del ancho visible
 }
 
 app-logo-header {
-  position: fixed; 
+  position: fixed;
   width: 70%; // Al ser position fixed, no puedo heredar width del padre
   z-index: 2; // Asegura que el logo se vea por encima del contenido
   background-color: white;
@@ -27,18 +27,18 @@ app-user-settings-footer {
 
 //estilos del main content
 mat-sidenav-content {
-  margin: 2rem;
+  margin: 10%;
   margin-top: 1rem;
 }
 
 //desktop
 @media only screen and (min-width: 768px) {
-  mat-sidenav{
-    width: 30%; 
+  mat-sidenav {
+    width: 30%;
   }
 
   app-logo-header {
-    width: 30%; 
+    width: 30%;
   }
 
   app-user-settings-footer {
