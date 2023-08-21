@@ -11,7 +11,6 @@ import { BreadcrumbModule } from "xng-breadcrumb";
 import { LoginComponent } from './modules/presentation/views/login/login.component';
 import { AuthGuard } from './modules/presentation/guards/auth.guard';
 
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
