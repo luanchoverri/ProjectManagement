@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.service';
+import { AuthService } from '../../../../api-rest/services/auth.service';
 
 @Component({
   selector: 'app-user-settings-footer',
@@ -9,20 +8,19 @@ import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.s
 })
 
 export class UserSettingsFooterComponent implements OnInit, OnDestroy {
-  navName: String;
-  navNameSuscription: Subscription;
 
-  constructor(private navNameService: NavNameService) {
-    this.navName = '';
-    this.navNameSuscription = new Subscription();
+  constructor(private authService: AuthService) {
+   
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 
-  changeNavName(name: String) {
-    this.navName = name;
-    this.navNameService.changeName(name);
+
+
+  logOut(){
+    this.authService.logout();
   }
+
 }

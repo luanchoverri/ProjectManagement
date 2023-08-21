@@ -5,4 +5,5 @@ export class endpoint{
     static readonly STORIES = '/stories';
     static readonly USERS = '/users';
     static readonly TASKS =  '/tasks';
+    static readonly HOME = '/home';
 }

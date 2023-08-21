@@ -33,3 +33,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+// {path: 'login', component:LoginComponent},
+// {path: '', redirectTo: '/login', pathMatch: 'full'},

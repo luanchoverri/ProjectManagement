@@ -1,14 +1,14 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, map, catchError, throwError } from 'rxjs';
 import { User } from '../../models/user';
-import { enviroment } from '../enviroments/enviroment';
 import { PathRest } from '../enviroments/path-rest';
+import { endpoint } from '../enviroments/endpoints';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserResponse } from '../../models/userResponse';
 import { UserCredentials } from '../../models/userCredentials';
-import { Route, Router } from '@angular/router';
-import { endpoint } from '../enviroments/endpoints';
+import { Router } from '@angular/router';
+
 const helper = new JwtHelperService();
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class AuthService {
         }
         return response.success;
       }),catchError((error: HttpErrorResponse) => {
-        return throwError(error);
+        return throwError(()=> error);
       }
   
     ))
@@ -43,7 +43,7 @@ export class AuthService {
     this.router.navigate([endpoint.LOGIN]);
   }
 
-  private checkToken(): void {
+  public checkToken(): void {
     const token = this.getToken()!;
     const isExpired = helper.isTokenExpired(token);
     isExpired ? this.logout() : this.loggedInSubject.next(true);
