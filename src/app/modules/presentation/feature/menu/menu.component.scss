@@ -25,6 +25,12 @@ app-user-settings-footer {
   border-top: 1px solid black;
 }
 
+//estilos del main content
+mat-sidenav-content {
+  margin: 2rem;
+  margin-top: 1rem;
+}
+
 //desktop
 @media only screen and (min-width: 768px) {
   mat-sidenav{
