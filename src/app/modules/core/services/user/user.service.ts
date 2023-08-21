@@ -12,11 +12,9 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-      return this.http
-        .get<ApiResponse>(PathRest.GET_USERS)
-        .pipe(
-          map((response) => response.data),
-          catchError(() => of([]))
-        );
+    return this.http.get<ApiResponse>(PathRest.GET_USERS).pipe(
+      map((response) => response.data),
+      catchError(() => of([])) // Maneja error y devuelve lista vacia
+    );
   }
 }

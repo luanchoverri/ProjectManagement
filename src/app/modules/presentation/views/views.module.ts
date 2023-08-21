@@ -12,11 +12,12 @@ import { EpicComponent } from './epic/epic.component';
 import { StoryComponent } from './story/story.component';
 import { LoginComponent } from './login/login.component';
 import { BreadcrumbModule } from 'xng-breadcrumb';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
+
     HomeComponent,
     MyProjectsComponent,
     MyStoriesComponent,
@@ -27,6 +28,7 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
     LoginComponent
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     RouterModule, 
     SharedModule,
