@@ -11,6 +11,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
 import { ProjectDetailsComponent } from './details/project-details/project-details.component';
 import { EpicDetailsComponent } from './details/epic-details/epic-details.component';
 import { StoryDetailsComponent } from './details/story-details/story-details.component';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 
 
@@ -25,6 +26,7 @@ import { StoryDetailsComponent } from './details/story-details/story-details.com
     ProjectDetailsComponent,
     EpicDetailsComponent,
     StoryDetailsComponent,
+    TaskCardComponent,
 
   ],
   imports: [
@@ -41,5 +43,6 @@ import { StoryDetailsComponent } from './details/story-details/story-details.com
     ProjectDetailsComponent,
     EpicDetailsComponent,
     StoryDetailsComponent,
+    TaskCardComponent
   ]
 })
