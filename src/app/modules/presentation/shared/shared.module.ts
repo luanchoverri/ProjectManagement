@@ -7,6 +7,7 @@ import { ItemDetailsCardComponent } from './item-details-card/item-details-card.
 import { RouterModule } from '@angular/router';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 
 
@@ -17,6 +18,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ItemDetailsCardComponent,
     AddItemComponent,
     ConfirmationDialogComponent,
+    TaskCardComponent,
 
   ],
   imports: [
@@ -28,7 +30,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     CardListComponent,
     ItemCardComponent,
     ItemDetailsCardComponent,
-    AddItemComponent
+    AddItemComponent,
+    TaskCardComponent
   ]
 })
 export class SharedModule { }

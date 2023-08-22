@@ -1,0 +1,16 @@
+.list-item {
+  transition: box-shadow 0.3s ease, transform 0.1s ease;
+  margin-bottom: 1rem;
+
+  &:hover {
+    box-shadow: 0 2px 4px rgba(63, 81, 181, 0.808);
+  }
+}
+
+.item-header {
+  margin-bottom: 0.5rem;
+}
+
+.styleCheckTask{
+  text-decoration: line-through;
+}
