@@ -17,4 +17,11 @@ export class UserService {
       catchError(() => of([])) // Maneja error y devuelve lista vacia
     );
   }
+
+  getUserById(id:string): Observable<User|null> {
+    return this.http.get<ApiResponse>(`${PathRest.GET_USERS}/${id}`).pipe(
+      map((response) => response.data),
+      catchError(() => of(null)) 
+    );
+  }
 }

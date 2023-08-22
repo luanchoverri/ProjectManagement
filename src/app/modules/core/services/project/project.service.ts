@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-import { Observable, Subject, catchError, map, of, switchMap, tap } from 'rxjs';
+import { Observable, Subject, catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectFormComponent } from 'src/app/modules/presentation/feature/forms/project-form/project-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,6 @@ export class ProjectService extends ListService<Project> {
     private ls: LocalStorageService,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    private authService: AuthService,
     private dialog: MatDialog
   ) {
     super();
@@ -123,4 +123,31 @@ export class ProjectService extends ListService<Project> {
       catchError(() => of([])) // Maneja error y devuelve lista vacia
     );
   }
+
+
+  // getSpecificationsList(project: Project): Observable<{ clave: string; valor: any }[]> {
+  //   return this.getMembersNames(project.members).pipe(
+  //     map(membersNames => {
+  //       const specifications: { clave: string; valor: any }[] = [
+  //         { clave: "name", valor: project.name },
+  //         { clave: "description", valor: project.description },
+  //         { clave: "members", valor: membersNames.join(', ') }, 
+  //       ];
+
+  //       return specifications.filter(specification => specification.valor !== null);
+  //     })
+  //   );
+  // }
+
+  // getMembersNames(memberIds: string[]): Observable<string[]> {
+  //   const membersNames$: Observable<string>[] = memberIds.map(memberId =>
+  //     this.userService.getUserById(memberId).pipe(
+  //       map(user => user ? `${user.name.first} ${user.name.last}` : ''),
+  //       catchError(() => of(''))
+  //     )
+  //   );
+  //   return forkJoin(membersNames$);
+  // }
+
+
 }
