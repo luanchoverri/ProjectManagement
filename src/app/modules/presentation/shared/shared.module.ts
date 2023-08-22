@@ -11,7 +11,6 @@ import { TaskCardComponent } from './task-card/task-card.component';
 import { ProjectDetailsComponent } from './details/project-details/project-details.component';
 import { EpicDetailsComponent } from './details/epic-details/epic-details.component';
 import { StoryDetailsComponent } from './details/story-details/story-details.component';
-import { TaskCardComponent } from './task-card/task-card.component';
 
 
 
@@ -26,7 +25,6 @@ import { TaskCardComponent } from './task-card/task-card.component';
     ProjectDetailsComponent,
     EpicDetailsComponent,
     StoryDetailsComponent,
-    TaskCardComponent,
 
   ],
   imports: [
@@ -39,10 +37,10 @@ import { TaskCardComponent } from './task-card/task-card.component';
     ItemCardComponent,
     ItemDetailsCardComponent,
     AddItemComponent,
-    TaskCardComponent
+    TaskCardComponent,
     ProjectDetailsComponent,
     EpicDetailsComponent,
     StoryDetailsComponent,
-    TaskCardComponent
+
   ]
-})
+}) export class SharedModule { }
