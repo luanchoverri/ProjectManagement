@@ -11,8 +11,9 @@ import { Project } from 'src/app/modules/models/project.model';
 export class ItemDetailsCardComponent {
   panelOpenState = false;
   @Input() item!: Item  ;
+  @Input() projectSpecifications!: { clave: string; valor: any }[];
 
-  constructor() {
+  constructor() { 
   }
 
 }

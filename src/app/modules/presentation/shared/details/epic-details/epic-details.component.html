@@ -1,4 +1,4 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<mat-expansion-panel class="custom-extension-panel" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   <mat-expansion-panel-header>
     <div class="header">
       <div class="icon-container">
@@ -17,7 +17,7 @@
   
   <ul>
       <li *ngIf="item.project">
-          {{ item.project.name}}
+         Project: {{projectName}}
       </li>
   </ul>
 

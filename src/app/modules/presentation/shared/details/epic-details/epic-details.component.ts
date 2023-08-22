@@ -13,16 +13,21 @@ export class EpicDetailsComponent {
   panelOpenState = false;
   @Input() item !: Epic ;
 
+  projectName !:string;
+
   constructor(
     private projecT: ProjectService
   ) {}
 
   ngOnInit(): void {
     if (this.item) {
-      console.log(this.item.project.name);
-
-      
+     this.projecT.getProjectById(this.item.project).subscribe( project => this.projectName = project.name );
+   
+   
+   
     }
+
+
   }
 
 }

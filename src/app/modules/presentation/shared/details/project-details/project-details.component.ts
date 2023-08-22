@@ -11,7 +11,7 @@ import { User } from 'src/app/modules/models/user';
 export class ProjectDetailsComponent {
   panelOpenState = false;
   @Input() project !: Project ;
-  formattedMembers: string[] = [];
+  members: string[] = [];
   ownerName!: string;
 
 
@@ -23,7 +23,7 @@ export class ProjectDetailsComponent {
     if (this.project) {
       this.userService.getMembersNames(this.project.members).subscribe(
         membersNames => {
-          this.formattedMembers = membersNames;
+          this.members = membersNames;
         }
       );
       
@@ -37,9 +37,7 @@ export class ProjectDetailsComponent {
     }
   }
 
-  // formatDateTime(timestamp: number): string {
-  //   return formatDate(timestamp, 'dd/MM/yyyy HH:mm', 'en-US'); // Ajusta el formato según tus necesidades
-  // }
+
 
 
 

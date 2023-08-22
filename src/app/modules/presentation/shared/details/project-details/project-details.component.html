@@ -1,4 +1,4 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<mat-expansion-panel class="custom-extension-panel" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <div class="header">
         <div class="icon-container">
@@ -16,14 +16,14 @@
     <mat-divider></mat-divider>
     
     <ul>
-        <li *ngIf="formattedMembers.length > 0">
-             Members: 
-             <div *ngFor="let member of formattedMembers; let last = last">
-                    <a>{{ member }}</a>{{ !last ? ', ' : '' }}
+        <li *ngIf="members.length > 0">
+             Members:&nbsp;&nbsp; 
+             <div *ngFor="let member of members; let last = last">
+                <mat-chip> <mat-icon matChipAvatar>person</mat-icon> {{member}}</mat-chip>{{ !last ? ', ' : '' }}
              </div>    
         </li>
         <li *ngIf="project.owner">
-            Owner: {{ ownerName }}
+            Owner:&nbsp;<mat-chip> <mat-icon matChipAvatar>person</mat-icon>{{ownerName}}</mat-chip>
         </li>
     </ul>
 
