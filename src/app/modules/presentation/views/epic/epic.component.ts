@@ -42,7 +42,7 @@ export class EpicComponent implements OnInit, OnDestroy {
       const id = params.get('epic-id'); // Obtiene el id del parametro de la URL
 
       if (id) {
-        this.breadcrumbService.set('@Epic', `Epic ${id}`);
+        this.breadcrumbService.set('@Epic', `Epic`);
         const info$ = this.getSpecificationsById(id);
         const stories$ = this.getStories(id);
 

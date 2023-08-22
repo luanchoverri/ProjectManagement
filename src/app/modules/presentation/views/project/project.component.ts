@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, forkJoin, catchError } from 'rxjs';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
-import { NavNameService } from 'src/app/modules/core/services/navName/nav-name.service';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
@@ -43,7 +42,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
       if (id) {
 
-        this.breadcrumbService.set('@Project', `Project ${id}`);
+        this.breadcrumbService.set('@Project', `Project`);
         const info$ = this.getSpecificationsById(id);
         const epics$ = this.getEpics(id);
 

@@ -35,7 +35,7 @@ export class StoryComponent {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('story-id');
       if (id) {
-        this.breadcrumbService.set('@Story', `Story ${this.id}`);
+        this.breadcrumbService.set('@Story', `Story`);
         const info$ = this.getSpecificationsById(id);
         const tasks$ = this.getTasks(id);
 
