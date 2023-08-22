@@ -10,6 +10,8 @@ import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { ListService } from '../list/list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { EpicFormComponent } from 'src/app/modules/presentation/feature/forms/epic-form/epic-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +19,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EpicService extends ListService<Epic>{
   private readonly EPIC_KEY = 'epics';
   private epicsList$ = new Observable<Epic[]>();
-  
-  // private project1 = new Project('Project 1', ['User 1', 'User 2'], 'Description 1', 'icon');
-
-  // epicsList: Epic[] = [
-  //   new Epic('Epic - Increase User Engagement', 'Develop new features to enhance user engagement and interaction with the platform.', 1, 'icon'),
-  //   new Epic('Epic - Mobile App Optimization', 'Optimize the mobile app for better performance, smoother navigation, and improved user experience.', 1, 'icon'),
-  //   new Epic('Epic -  Integration with Third-Party Services', 'Integrate the application with external services to provide additional functionality and data exchange', 0, 'icon')
-  // ];
 
   constructor(
     private storage: LocalStorageService, 
     private http:HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog  
   ) {
     // this.storage.updateItem(this.EPIC_KEY, this.epicsList);  
     super();
@@ -43,9 +38,22 @@ export class EpicService extends ListService<Epic>{
     .post<ApiResponse>(PathRest.GET_EPICS, item)
     .pipe(map((response) => response.data));
   }
-  override updateItem(item: Epic): Observable<Epic> {
-    console.log("voy a actualizar el epic");
-    return new Observable<Epic>;
+
+  editItem(epic: Epic): void {
+    const dialogRef = this.dialog.open(EpicFormComponent, {
+      data: { initialValues: epic },
+    });
+
+    dialogRef.componentInstance.toggleIsEditing();
+  }
+
+  override updateItem(item: Epic): Observable<Epic | null> {
+    return this.http
+      .put<ApiResponse>(`${PathRest.GET_EPICS}/${item._id}`, item)
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of(null))
+    );
   }
   
   override deleteItem(id: string): Observable<Epic | null> {
@@ -90,43 +98,5 @@ export class EpicService extends ListService<Epic>{
     );
   
   }
-
-
-  // STORAGE
-
-  // public getEpicsByProjectId(projectId: number): Observable<Epic[]> {
-  //   return this.storage.getItem<Epic[]>(this.EPIC_KEY).pipe(
-  //     map((epics: Epic[] | undefined) => {
-  //       if (epics) {
-  //         return epics.filter(epic => epic.project.id === projectId);
-  //       } else {
-  //         return [];
-  //       }
-  //     })
-  //   );
-  // }
-  // public getEpicsByProjectId(projectId: number): Observable<Epic[]> {
-  //   console.log(projectId)
-  //   console.log(this.epicsList$.pipe(
-  //     //map(epics => epics.filter(epic => epic.project.id === projectId))
-  //     map(epics => epics.filter(epic => epic.project === projectId))
-  //   ));
-  //   return this.epicsList$.pipe(
-  //     //map(epics => epics.filter(epic => epic.project.id === projectId))
-  //     map(epics => epics.filter(epic => epic.project === projectId))
-  //   );
-
-
-  // }
-
-
-  // public getEpicsByProjectId(projectId: number): Epic[] {
-  //   return this.epicsList.filter(epic => epic.project === projectId);
-  // }
-  
-
-  // getItemById(id: number): Epic | undefined{
-  //   return this.epicsList.find((item) => item.id == id);
-  // }
   
 }

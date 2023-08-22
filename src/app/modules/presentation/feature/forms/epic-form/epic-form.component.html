@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-    <h1> NEW EPIC </h1>
+    <h1>{{ isEditing ? 'EDIT EPIC' : 'NEW EPIC' }}</h1>
 </div>
 
 <form [formGroup]=myForm (ngSubmit)="onSubmit()">
@@ -23,6 +23,7 @@
 
     <div mat-dialog-actions align="end">
         <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-        <button type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Epic</button>
+        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Epic</button>
+        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Save Changes</button>
     </div>
 </form>
