@@ -30,7 +30,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: ':project-id',  // padre sin match full
+        path: ':project-id', 
         canActivate: [AuthGuard],
         data: { breadcrumb: { alias: 'Project' } }, 
         children: [
@@ -40,7 +40,7 @@ const routes: Routes = [
             pathMatch: 'full',
             },
              {
-               path: ':epic-id', // padre sin match full
+               path: ':epic-id', 
                canActivate: [AuthGuard],
               data: { breadcrumb: { alias: 'Epic' } },
               children: [
@@ -51,7 +51,7 @@ const routes: Routes = [
                 pathMatch: 'full',
                 },
                  {
-                   path: ':story-id', // padre sin match full -> si se agregan tasks hay q sacarle el component y el match
+                   path: ':story-id',
                     component: StoryComponent,
                     canActivate: [AuthGuard],
                    pathMatch: 'full',
@@ -63,9 +63,22 @@ const routes: Routes = [
   },
   {
     path: 'my-stories',
-    component: MyStoriesComponent,
     canActivate: [AuthGuard],
-    data: { breadcrumb: 'My Stories' }
+    data: { breadcrumb: 'My Stories'},
+    children: [
+      {
+        path: '',
+        component: MyStoriesComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: ':story-id', 
+        canActivate: [AuthGuard],
+        component: StoryComponent,
+        pathMatch: 'full',
+        data: { breadcrumb: { alias: 'Story' } }
+      }
+    ]
   },
   {
     path: 'settings',
