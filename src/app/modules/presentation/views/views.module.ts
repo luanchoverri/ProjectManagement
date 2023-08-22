@@ -13,12 +13,12 @@ import { StoryComponent } from './story/story.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'xng-breadcrumb';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
 @NgModule({
   declarations: [
-
     HomeComponent,
     MyProjectsComponent,
     MyStoriesComponent,
@@ -26,7 +26,8 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
     ProjectComponent,
     EpicComponent,
     StoryComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent
   ],
   imports: [
     ReactiveFormsModule,
