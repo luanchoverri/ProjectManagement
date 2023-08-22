@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of } from 'rxjs';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { User } from 'src/app/modules/models/user';
@@ -14,14 +14,32 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<ApiResponse>(PathRest.GET_USERS).pipe(
       map((response) => response.data),
-      catchError(() => of([])) // Maneja error y devuelve lista vacia
+      catchError(() => of([])) 
     );
   }
 
-  getUserById(id:string): Observable<User|null> {
+
+  getUserById(id: string): Observable<User | null> {
     return this.http.get<ApiResponse>(`${PathRest.GET_USERS}/${id}`).pipe(
       map((response) => response.data),
-      catchError(() => of(null)) 
+      catchError(() => of(null))
     );
   }
+
+  getMembersNames(memberIds: string[]): Observable<string[]> {
+    const membersNames$: Observable<string>[] = memberIds.map(memberId =>
+      this.getUserById(memberId).pipe(
+        map(user => user ? `${user.name.first} ${user.name.last}` : ''),
+        catchError(() => of(''))
+      )
+    );
+    console.log(forkJoin(membersNames$))
+    return forkJoin(membersNames$);
+  }
+
+
+
+
+
+
 }

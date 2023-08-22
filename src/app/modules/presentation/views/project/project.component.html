@@ -7,7 +7,8 @@
 </ng-container>
 
 <ng-template #content>
-    <app-item-details-card [item] = "project"></app-item-details-card>
+    <!-- <app-item-details-card [item] = "project"></app-item-details-card> -->
+    <app-project-details [project]="project" ></app-project-details>
     <app-add-item [formDialog]=formComponent></app-add-item>
     <app-card-list [list]= "epics" [service] = epicsServ ></app-card-list>
 </ng-template>

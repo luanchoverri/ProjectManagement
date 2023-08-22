@@ -1,19 +1,24 @@
 import { Item } from './item.model';
+import { User } from './user';
 
 export class Project extends Item {
   private _members: string[];
   private _icon: string;
+  private _owner: string;
+
 
   constructor(
     name: string,
     members: string[],
     description: string,
     icon: string,
-    _id: string
+    _id: string,
+    owner: string
   ) {
     super(name, description, _id);
     this._members = members;
     this._icon = icon;
+    this._owner = owner;
   }
 
   get members(): string[] {
@@ -22,6 +27,10 @@ export class Project extends Item {
 
   get icon(): string {
     return this._icon;
+  }
+
+  get owner(): string {
+    return this._owner;
   }
 
   set members(members: string[]) {
