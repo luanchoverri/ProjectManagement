@@ -10,7 +10,7 @@ export abstract class ListService<Item> {
 
   abstract createItem(item: Item): Observable<Item>;
 
-  abstract updateItem(item: Item): Observable<Item>;
+  abstract updateItem(item: Item): Observable<Item | null>;
 
   abstract deleteItem(id: string): Observable<Item | null>;
 

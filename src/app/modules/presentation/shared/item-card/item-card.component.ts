@@ -28,8 +28,8 @@ export class ItemCardComponent {
     return this.item._id;
   }
 
-  editItem() {
-    this.service.updateItem(this.item);
+  editItem(): void {    
+    this.service.editItem(this.item);
   }
 
   deleteItem(item: Item): void {

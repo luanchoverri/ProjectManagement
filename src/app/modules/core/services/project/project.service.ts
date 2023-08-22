@@ -10,6 +10,8 @@ import { Epic } from 'src/app/modules/models/epic.model';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProjectFormComponent } from 'src/app/modules/presentation/feature/forms/project-form/project-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +33,9 @@ export class ProjectService extends ListService<Project> {
   constructor(
     private ls: LocalStorageService,
     private http: HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
     super();
     this.projectsList = [];
@@ -47,15 +51,27 @@ export class ProjectService extends ListService<Project> {
       .pipe(map((data) => data || []));
   }
 
-  override createItem(item: Project): Observable<Project> {
+  override createItem(item: Project): Observable<Project> { 
       return this.http
         .post<ApiResponse>(PathRest.GET_PROJECTS, item)
         .pipe(map((response) => response.data));
   }
 
-  override updateItem(item: Project): Observable<Project> {
-    console.log('voy a actualizar el proyecto');
-    return new Observable<Project>();
+  editItem(project: Project): void {
+    const dialogRef = this.dialog.open(ProjectFormComponent, {
+      data: { initialValues: project },
+    });
+
+    dialogRef.componentInstance.toggleIsEditing();
+  }
+
+  override updateItem(item: Project): Observable<Project | null> {
+    return this.http
+      .put<ApiResponse>(`${PathRest.GET_PROJECTS}/${item._id}`, item)
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of(null))
+    );
   }
 
   override deleteItem(id: string): Observable<Project | null> {
