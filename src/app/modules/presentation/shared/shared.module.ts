@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { TaskCardComponent } from './task-card/task-card.component';
+import { ProjectDetailsComponent } from './details/project-details/project-details.component';
+import { EpicDetailsComponent } from './details/epic-details/epic-details.component';
 
 
 
@@ -19,6 +21,9 @@ import { TaskCardComponent } from './task-card/task-card.component';
     AddItemComponent,
     ConfirmationDialogComponent,
     TaskCardComponent,
+    ProjectDetailsComponent,
+
+    EpicDetailsComponent,
 
   ],
   imports: [
@@ -33,5 +38,4 @@ import { TaskCardComponent } from './task-card/task-card.component';
     AddItemComponent,
     TaskCardComponent
   ]
-})
-export class SharedModule { }
+}

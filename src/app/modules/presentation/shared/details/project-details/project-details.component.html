@@ -1,0 +1,33 @@
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <div class="header">
+        <div class="icon-container">
+          <mat-icon class="icon" *ngIf="project.icon">{{project.icon}}</mat-icon>
+        </div>
+        <div class="content">
+          <mat-panel-title>{{ project.name }}</mat-panel-title>
+          <mat-panel-description *ngIf="project.description">
+            {{ project.description }}
+          </mat-panel-description>
+        </div>
+      </div>
+    </mat-expansion-panel-header>
+
+    <mat-divider></mat-divider>
+    
+    <ul>
+        <li *ngIf="formattedMembers.length > 0">
+             Members: 
+             <div *ngFor="let member of formattedMembers; let last = last">
+                    <a>{{ member }}</a>{{ !last ? ', ' : '' }}
+             </div>    
+        </li>
+        <li *ngIf="project.owner">
+            Owner: {{ ownerName }}
+        </li>
+    </ul>
+
+
+    
+  </mat-expansion-panel>
+  

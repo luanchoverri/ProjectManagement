@@ -1,0 +1,28 @@
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <div class="header">
+      <div class="icon-container">
+        <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
+      </div>
+      <div class="content">
+        <mat-panel-title>{{ item.name }}</mat-panel-title>
+        <mat-panel-description *ngIf="item.description">
+          {{ item.description }}
+        </mat-panel-description>
+      </div>
+    </div>
+  </mat-expansion-panel-header>
+
+  <mat-divider></mat-divider>
+  
+  <ul>
+      <li *ngIf="item.project">
+          {{ item.project.name}}
+      </li>
+  </ul>
+
+
+  
+</mat-expansion-panel>
+
+
