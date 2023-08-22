@@ -39,3 +39,65 @@ body {
   
 }
 
+
+
+.custom-extension-panel {
+
+  mat-expansion-panel-header  {
+    padding: 16px 24px;
+   }
+
+  mat-panel-title{
+    font-size: 18px;
+  }
+
+    .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    font-size: 16px;
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(245, 245, 245, 0.575);
+
+      .icon {
+        font-size: 24px;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+
+  }
+
+  mat-divider {
+    padding: 8px 24px;
+  }
+
+  ul{
+    list-style-type: none;
+    padding: 0;
+    
+    li {
+      color: rgb(54, 54, 54);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+
+
+
+}

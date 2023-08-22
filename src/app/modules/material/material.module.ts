@@ -19,7 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [],
   imports: [
@@ -43,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatNativeDateModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatChipsModule,
   ],
   exports: [
     MatCardModule,
@@ -64,6 +65,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatNativeDateModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatChipsModule,
   ],
 })
 export class MaterialModule {}

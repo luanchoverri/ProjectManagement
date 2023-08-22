@@ -1,6 +1,6 @@
 
 import { Item } from './item.model';
-import { State } from './enum';
+import { Status } from './enum';
 
 // to-do chequear con los demas que la descripcion pueda no estar
 // to-do atributo icon
@@ -13,8 +13,10 @@ export class Story extends Item {
     constructor(
         name: string,
         description: string,
+        
         _id: string,
-        private _epic: string,   //to-do por ahora referencia al nombre de la epica
+        private _epic: string,   
+        private _icon?: string | undefined,
         private _owner?: string | undefined,  //to-do reemplazar por user / nombre de usuario / id usuario
         private _assignedTo: string[] = [],
         private _points: number = 0,
@@ -22,13 +24,17 @@ export class Story extends Item {
         private _due?: Date| undefined,
         private _started?: Date| undefined,
         private _finished?: Date | undefined,
-        private _status: State = State.Todo
+        private _status: Status = Status.Todo
     ) {
 
         super(name, description, _id);
     }
 
     // Getters
+
+    public get icon(): string | undefined {
+        return this._icon;
+    }
 
     public get epic(): string {
         return this._epic
@@ -57,7 +63,7 @@ export class Story extends Item {
     public get finished(): Date | undefined {
         return this._finished ;
     }
-    public get status(): State {
+    public get status(): Status {
         return this._status;
     }
 
@@ -89,8 +95,8 @@ export class Story extends Item {
         this._finished = newDate;
     }
 
-    public set status(newState: State) {
-        this._status = newState;
+    public set status(newStatus: Status) {
+        this._status = newStatus;
     }
 
 

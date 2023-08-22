@@ -129,11 +129,10 @@ export class ProjectService extends ListService<Project> {
   //   return this.getMembersNames(project.members).pipe(
   //     map(membersNames => {
   //       const specifications: { clave: string; valor: any }[] = [
-  //         { clave: "name", valor: project.name },
-  //         { clave: "description", valor: project.description },
   //         { clave: "members", valor: membersNames.join(', ') }, 
   //       ];
 
+  //       console.log(specifications);
   //       return specifications.filter(specification => specification.valor !== null);
   //     })
   //   );

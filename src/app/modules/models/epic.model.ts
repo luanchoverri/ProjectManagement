@@ -3,16 +3,16 @@ import { Project } from "./project.model";
 
 export class Epic extends Item {
 
-    private _project: Project; 
+    private _project: string; 
     private _icon: string ;
 
     constructor(name: string, description: string, project: Project, icon: string, _id:string) {
         super(name, description, _id);
-        this._project = project;
+        this._project = project._id;
         this._icon = icon;
     }
 
-    get project(): Project {
+    get project(): string {
         return this._project;
     }
 
@@ -20,7 +20,7 @@ export class Epic extends Item {
         return this._icon;
     }
 
-    set project(project: Project) {
+    set project(project: string) {
         this._project = project;
     }
 

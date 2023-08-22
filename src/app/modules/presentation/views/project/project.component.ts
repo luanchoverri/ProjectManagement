@@ -19,7 +19,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   id!: string;
   loading: boolean = true;
-  project!: any;
+  project!: Project;
   epics: Epic[] = [];
   epicsServ: any;
   formComponent: any;
@@ -47,22 +47,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
       if (id) {
 
         this.breadcrumbService.set('@Project', `Project`);
-        this.projectService.getProjectById(id).subscribe(
-          (project: Project) => {
-            this.projectSpecifications = this.projectService.getSpecificationsList(project);
-            const epics$ = this.getEpics(id);
+        const info$ = this.projectService.getProjectById(id);
+        const epics$ = this.getEpics(id);
 
-            forkJoin([epics$]).subscribe(
-              ([epics]) => {
-                this.epics = epics;
-                this.loading = false;
-              }
-            );
-          });
+        forkJoin([info$, epics$]).subscribe(
+          ([info, epics]) => {
+            this.project = info;
+            this.epics = epics;
+            this.loading = false;
+          }
+        );
       }
     });
-  }
 
+  }
 
   getEpics(id: string) {
     return this.projectService.getEpicsByProject(id);
