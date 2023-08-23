@@ -7,6 +7,7 @@ import { Story } from 'src/app/modules/models/story';
 import { StoryFormComponent } from '../../feature/forms/story-form/story-form.component';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
+import { StoryService } from 'src/app/modules/core/services/story/story.service';
 
 @Component({
   selector: 'app-epic',
@@ -15,7 +16,7 @@ import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.serv
   providers: [
     {
       provide: LIST_SERVICE_TOKEN,
-      useExisting: EpicService,
+      useExisting: StoryService,
     },
   ],
 })

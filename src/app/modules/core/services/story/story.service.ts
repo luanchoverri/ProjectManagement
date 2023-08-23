@@ -6,6 +6,7 @@ import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
+import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { Task } from 'src/app/modules/models/task.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -77,6 +78,7 @@ export class StoryService extends ListService<Story> {
             .pipe(
               map((response) => response.data),
               catchError((error) => {
+                console.log(error);
                 return of(null);
               }),
               tap(() => {
@@ -96,8 +98,8 @@ export class StoryService extends ListService<Story> {
       .pipe(map((response) => response.data));
   }
 
-  getTasksByStory(id: string): Observable<Task[]> {
-    return this.http.get<ApiResponse>(`${PathRest.GET_TASKS}`).pipe(
+  getTasksByStory(id: string): Observable<Task[]> {  
+    return this.http.get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`).pipe(
       map((response) => response.data),
       catchError(() => of([]))
     );

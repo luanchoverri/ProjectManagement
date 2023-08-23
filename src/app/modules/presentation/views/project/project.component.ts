@@ -7,6 +7,7 @@ import { Project } from 'src/app/modules/models/project.model';
 import { EpicFormComponent } from '../../feature/forms/epic-form/epic-form.component';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
+import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 
 @Component({
   selector: 'app-project',
@@ -15,7 +16,7 @@ import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.serv
   providers: [
     {
       provide: LIST_SERVICE_TOKEN,
-      useExisting: ProjectService,
+      useExisting: EpicService,
     },
   ],
 })
