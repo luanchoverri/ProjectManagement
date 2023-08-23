@@ -39,7 +39,7 @@ export class EpicService extends ListService<Epic>{
     .pipe(map((response) => response.data));
   }
 
-  editItem(epic: Epic): void {
+  override editItem(epic: Epic): void {
     const dialogRef = this.dialog.open(EpicFormComponent, {
       data: { initialValues: epic },
     });

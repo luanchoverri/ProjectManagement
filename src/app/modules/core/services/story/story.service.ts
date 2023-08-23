@@ -15,6 +15,7 @@ import { StoryFormComponent } from 'src/app/modules/presentation/feature/forms/s
 @Injectable({
   providedIn: 'root',
 })
+
 export class StoryService extends ListService<Story> {
   storiesList$ = new Observable<Story[]>();
 
@@ -29,7 +30,10 @@ export class StoryService extends ListService<Story> {
   }
 
   override getItems(): Observable<Story[]> {
-    return this.ls.getItem<Story[]>('stories').pipe(map((data) => data || []));
+    return this.http.get<ApiResponse>(PathRest.GET_STORIES).pipe(
+      map((response) => response.data),
+      catchError(() => of([]))
+    );
   }
 
   override createItem(item: Story): Observable<Story> {
@@ -38,7 +42,7 @@ export class StoryService extends ListService<Story> {
       .pipe(map((response) => response.data));
   }
 
-  editItem(story: Story): void {
+  override editItem(story: Story): void {
     const dialogRef = this.dialog.open(StoryFormComponent, {
       data: { initialValues: story },
     });
@@ -94,13 +98,6 @@ export class StoryService extends ListService<Story> {
 
   getTasksByStory(id: string): Observable<Task[]> {
     return this.http.get<ApiResponse>(`${PathRest.GET_TASKS}`).pipe(
-      map((response) => response.data),
-      catchError(() => of([]))
-    );
-  }
-
-  getAll(): Observable<Story[]> {
-    return this.http.get<ApiResponse>(PathRest.GET_STORIES).pipe(
       map((response) => response.data),
       catchError(() => of([]))
     );

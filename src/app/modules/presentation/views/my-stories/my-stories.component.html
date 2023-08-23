@@ -1,22 +1,9 @@
-
-<!-- <mat-card-header class="header" color="primary">
-    <div class="title-container">
-         <h1 class="title">Exploring User Stories</h1> 
-        <h1 class="title">User Story Adventure</h1>
-        <h1 class="title">Story Mapping</h1> 
-    </div>
-   
-    <button mat-raised-button color="accent" routerLink="/nueva-historia">New Story</button>
-</mat-card-header> -->
-
-
 <ng-container *ngIf="loading; else content">
     <div class="loading-progress">
-        <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
-      
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
     </div>
 </ng-container>
 <ng-template #content>
-    <app-card-list [list] = "stories" [service]=storiesServ></app-card-list>
+    <app-card-list [list]="stories"></app-card-list>
 </ng-template>
-

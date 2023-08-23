@@ -1,52 +1,42 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Story } from 'src/app/modules/models/story';
 
 @Component({
   selector: 'app-my-stories',
   templateUrl: './my-stories.component.html',
-  styleUrls: ['./my-stories.component.scss']
+  styleUrls: ['./my-stories.component.scss'],
+  providers: [{
+    provide: LIST_SERVICE_TOKEN,
+    useExisting: StoryService,
+  }],
 })
+
 export class MyStoriesComponent {
+  loading: boolean = true;
+  stories: Story[] = [];
+  stories$: Subscription = new Subscription();
+  storiesServ: any;
 
-    loading:boolean = true;
-    stories: Story[] = [];
-    stories$: Subscription = new Subscription();
-    storiesServ : any;
+  constructor(private storyService: StoryService) {
+    this.storiesServ = storyService;
+  }
 
-    constructor(private storyService: StoryService) {
-      this.storiesServ = storyService;
-    }
+  ngOnInit(): void {
+    this.loadStories();
+  }
 
-    ngOnInit(): void {
-      this.loadStories();
-
-      // this.stories$ = this.storyService.getItems().subscribe(data => {
-      //   if (data) {
-      //     this.stories = data;
-      //   }
-      //   else {
-      //     this.stories = new Array<Story>();
-      //   }
-      // });
-    }
-
-
-    
   loadStories(): void {
-      this.storyService.getAll().subscribe((stories) => {
-      this.stories = stories
+    this.storyService.getItems().subscribe((stories) => {
+      this.stories = stories;
       this.loading = false;
       console.log(stories);
     });
   }
 
-    ngOnDestroy(): void {
-      this.stories$.unsubscribe();
-    }
-
-  
-
-
+  ngOnDestroy(): void {
+    this.stories$.unsubscribe();
+  }
 }

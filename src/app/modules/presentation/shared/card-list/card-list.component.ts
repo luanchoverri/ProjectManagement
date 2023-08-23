@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Item } from 'src/app/modules/models/item.model';
 
-
 @Component({
   selector: 'app-card-list',
   templateUrl: './card-list.component.html',
@@ -9,8 +8,6 @@ import { Item } from 'src/app/modules/models/item.model';
 })
 export class CardListComponent {
   @Input() list: Item[] | undefined;
-  @Input() service: any;
 
   constructor() {}
-
 }

@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class TaskService extends ListService<Task> {
+
   private readonly TASK_KEY = 'tasks';
   taskList$ = new Observable<Task[]>();
 
@@ -36,6 +37,10 @@ export class TaskService extends ListService<Task> {
   override updateItem(item: Task): Observable<Task> {
     console.log("voy a actualizar el task");
     return new Observable<Task>;
+  }
+
+  override editItem(item: Task): void {
+    throw new Error('Method not implemented.');
   }
   
   override deleteItem(id: string): Observable<Task | null> {
