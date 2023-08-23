@@ -98,5 +98,11 @@ export class EpicService extends ListService<Epic>{
     );
   
   }
+
+  getEpicName(id: string): Observable<string> {
+    return this.getEpicById(id).pipe(
+      map((epic: Epic) => epic.name)
+    );
+  }
   
 }

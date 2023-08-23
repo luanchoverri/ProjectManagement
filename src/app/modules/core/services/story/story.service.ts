@@ -104,4 +104,10 @@ export class StoryService extends ListService<Story> {
       catchError(() => of([]))
     );
   }
+
+  getStoryName(id: string): Observable<string> {
+    return this.getStoryById(id).pipe(
+      map((story: Story) => story.name)
+    );
+  }
 }

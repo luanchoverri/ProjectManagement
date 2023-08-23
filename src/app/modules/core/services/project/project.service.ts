@@ -106,4 +106,10 @@ export class ProjectService extends ListService<Project> {
       );
   }
 
+  getProjectName(id: string): Observable<string> {
+    return this.getProjectById(id).pipe(
+      map((project: Project) => project.name)
+    );
+  }
+
 }

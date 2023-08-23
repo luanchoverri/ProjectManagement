@@ -44,6 +44,11 @@ export class StoryComponent {
           this.tasks = tasks;
           this.loading = false;
         });
+
+        this.storyService.getStoryName(id).subscribe(
+          storyName => {
+            this.breadcrumbService.set('@Story', `${storyName}`);
+        });
       }
     });
   }

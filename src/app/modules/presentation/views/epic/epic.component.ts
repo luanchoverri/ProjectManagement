@@ -50,6 +50,11 @@ export class EpicComponent implements OnInit {
           this.stories = stories;
           this.loading = false;
         });
+
+        this.epicService.getEpicName(id).subscribe(
+          epicName => {
+            this.breadcrumbService.set('@Epic', `${epicName}`);
+        });
       }
     });
   }

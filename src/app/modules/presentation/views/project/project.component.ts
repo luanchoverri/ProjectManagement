@@ -48,6 +48,11 @@ export class ProjectComponent implements OnInit {
           this.epics = epics;
           this.loading = false;
         });
+        
+        this.projectService.getProjectName(id).subscribe(
+          projectName => {
+            this.breadcrumbService.set('@Project', `${projectName}`);
+        });
       }
     });
   }
