@@ -14,8 +14,6 @@ export class AddItemComponent {
   }
 
   openDialog() {
-    this.dialog.open(this.formDialog,{
-      width: '30vw'
-    });
+    this.dialog.open(this.formDialog);
   }
 }
