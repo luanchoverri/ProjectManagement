@@ -39,11 +39,6 @@ export class ProjectService extends ListService<Project> {
         }
   });
     return this.projects$;
-
-  // return this.http
-  // .get<ApiResponse>(PathRest.GET_PROJECTS)
-  // .pipe(map((response) => response.data));
-    
   }
 
   override createItem(item: Project): Observable<Project> { 
