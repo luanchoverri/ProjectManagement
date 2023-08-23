@@ -8,6 +8,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" />
+            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">

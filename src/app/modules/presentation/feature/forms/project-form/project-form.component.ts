@@ -39,14 +39,20 @@ export class ProjectFormComponent implements OnInit{
     if (this.isEditing) {
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
-        name: new FormControl(this.data.initialValues.name, Validators.required),
+        name: new FormControl(this.data.initialValues.name, [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
         icon: new FormControl(this.data.initialValues.icon),
         description: new FormControl(this.data.initialValues.description),
         members: new FormControl(this.data.initialValues.members[0], Validators.required),
       });
     } else { 
       this.myForm = this.fb.group({
-        name: new FormControl('', Validators.required),
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
         icon: new FormControl(''),
         description: new FormControl(''),
         members: new FormControl('', Validators.required),

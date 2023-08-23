@@ -8,11 +8,13 @@
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" />
+            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
             <input matInput formControlName="description" />
+            <mat-error *ngIf="myForm.get('description')?.hasError('minlength')">At least 10 characters long</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -29,6 +31,7 @@
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
+            <mat-error *ngIf="myForm.get('dueDate')?.hasError('dueDateInvalid')">Due date must be after creation date</mat-error>
           </mat-form-field>
 
           <mat-checkbox formControlName="done">Done</mat-checkbox>

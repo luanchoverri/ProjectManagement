@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,7 +19,7 @@ export class StoryFormComponent {
   members$: Observable<User[]>;
   isEditing: boolean = false;
   selectedPoint!: number;
-
+  
   constructor(
     private fb: FormBuilder, 
     private ss: StoryService,
@@ -41,7 +41,10 @@ export class StoryFormComponent {
       this.selectedPoint = this.data.initialValues.points;
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
-        name: new FormControl(this.data.initialValues.name, Validators.required),
+        name: new FormControl(this.data.initialValues.name, [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
         description: new FormControl(this.data.initialValues.description),
         epic: new FormControl(this.epicId),
         owner: new FormControl(this.data.initialValues.owner),
@@ -56,7 +59,10 @@ export class StoryFormComponent {
       });
     } else {
       this.myForm = this.fb.group({
-        name: new FormControl('', Validators.required),
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5)
+        ]),
         description: new FormControl(''),
         epic: new FormControl(this.epicId),
         owner: new FormControl(''),
@@ -70,6 +76,27 @@ export class StoryFormComponent {
         icon: new FormControl(''),
       });
     }
+
+    const createdControl = this.myForm.get('created');
+    const dueControl = this.myForm.get('due');
+    const startedControl = this.myForm.get('started');
+    const finishedControl = this.myForm.get('finished');
+
+    if (dueControl && createdControl) {
+      dueControl.setValidators(dueDateValidator(createdControl));
+      dueControl.updateValueAndValidity();
+    }
+
+    if (startedControl && createdControl) {
+      startedControl.setValidators(startDateValidator(createdControl));
+      startedControl.updateValueAndValidity();
+    }
+
+    if (finishedControl && startedControl) {
+      finishedControl.setValidators(finishDateValidator(startedControl));
+      finishedControl.updateValueAndValidity();
+    }
+
   }
 
   onSubmit() {
@@ -85,4 +112,43 @@ export class StoryFormComponent {
     this.isEditing = !this.isEditing;
   }  
 
+}
+
+export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const creationDate = creationDateControl.value;
+    const dueDate = control.value;
+
+    if (creationDate && dueDate && dueDate < creationDate) {
+      return { dueDateInvalid: true };
+    }
+    
+    return null;
+  };
+}
+
+export function startDateValidator(creationDateControl: AbstractControl): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const creationDate = creationDateControl.value;
+    const startDate = control.value;
+
+    if (creationDate && startDate && startDate < creationDate) {
+      return { startDateInvalid: true };
+    }
+    
+    return null;
+  };
+}
+
+export function finishDateValidator(startDateControl: AbstractControl): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const startDate = startDateControl.value;
+    const finishDate = control.value;
+
+    if (startDate && finishDate && finishDate < startDate) {
+      return { finishDateInvalid: true };
+    }
+    
+    return null;
+  };
 }
