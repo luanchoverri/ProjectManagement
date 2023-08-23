@@ -21,6 +21,7 @@ export class ProjectFormComponent implements OnInit{
   myForm!: FormGroup;
   members: User[] = [];
   members$: Observable<User[]>;
+  projectList: Project[] = [];
   projectList$ : Observable<Project[]>;
   isEditing: boolean = false;
   isMobile: boolean = false;
@@ -74,12 +75,19 @@ export class ProjectFormComponent implements OnInit{
   onSubmit() {
     console.log(this.myForm.value);
     if (this.isEditing) {    
-      this.ps.updateItem(this.myForm.value).subscribe(
-        //aca decirle que llame devuelta al servicio para que actualice la lista
-        // () => this.goBack()
+      this.ps.updateItem(this.myForm.value).subscribe({
+        next: (project) => {
+          this.ps.getItems().subscribe();
+        }
+      }
       );
     } else {
-      this.ps.createItem(this.myForm.value).subscribe();
+      this.ps.createItem(this.myForm.value).subscribe({
+        next: (project) => {
+          this.ps.getItems().subscribe();
+        }
+      }
+      );
     }
 
   }

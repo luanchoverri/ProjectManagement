@@ -38,7 +38,13 @@ export class ItemCardComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-        this.service.deleteItem(item._id).subscribe();
+        this.service.deleteItem(item._id).subscribe(
+          {
+            next: (item) => {
+              this.service.getItems().subscribe();
+            }
+          }
+        );
       }
     });
   }
