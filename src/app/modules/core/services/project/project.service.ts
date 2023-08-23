@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Project } from 'src/app/modules/models/project.model';
-import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { HttpClient } from '@angular/common/http';
 import { Epic } from 'src/app/modules/models/epic.model';
@@ -15,7 +15,9 @@ import { MatDialog } from '@angular/material/dialog';
   providedIn: 'root',
 })
 export class ProjectService extends ListService<Project> {
-  projectsList$ = this.getItems();
+
+  private projectsSubject = new BehaviorSubject<Project[]>([]);
+  projects$ = this.projectsSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -27,10 +29,15 @@ export class ProjectService extends ListService<Project> {
 
   //abstract methods
   override getItems(): Observable<Project[]> {
-    return this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
-      map((response) => response.data),
-      catchError(() => of([]))
-    );
+    const sub = this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
+      map((response) => response.data),catchError(() => of([]))).subscribe({
+        next: (projects) => {
+          sub.unsubscribe();
+          if (this.projectsSubject)
+          this.projectsSubject.next(projects);
+        }
+  });
+    return this.projects$;
   }
 
   override createItem(item: Project): Observable<Project> { 
@@ -47,11 +54,13 @@ export class ProjectService extends ListService<Project> {
     dialogRef.componentInstance.toggleIsEditing();
   }
 
-  override updateItem(item: Project): Observable<Project | null> {
+  override updateItem(item: Project): Observable<Project | null>{
     return this.http
       .put<ApiResponse>(`${PathRest.GET_PROJECTS}/${item._id}`, item)
       .pipe(
-        map((response) => response.data),
+        map((response) => {
+          return response.data
+        }),
         catchError(() => of(null))
     );
   }

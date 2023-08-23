@@ -56,7 +56,10 @@ export class ProjectFormComponent implements OnInit{
 
   onSubmit() {
     if (this.isEditing) {    
-      this.ps.updateItem(this.myForm.value).subscribe();
+      this.ps.updateItem(this.myForm.value).subscribe(
+        //aca decirle que llame devuelta al servicio para que actualice la lista
+        // () => this.goBack()
+      );
     } else {
       this.ps.createItem(this.myForm.value).subscribe();
     }

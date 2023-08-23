@@ -15,31 +15,29 @@ import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.serv
   }],
 })
 export class MyProjectsComponent implements OnInit, OnDestroy {
-  projects: Project[];
-  projectServ: any;
-  projects$: Subscription;
+  //A la card que muestra la lista de proyectos le paso la lista de proyectos esta estatica, 
+  //OJO CAPZ ES AHI la cosa, estoy listando un arreglo, no un observable
+  projects: Project[] = [];
+
+  projects$: Subscription = new Subscription();
   loading = true;
   formComponent: any;
 
-  constructor(private projectService: ProjectService) {
-    this.projects = [];
-    this.projects$ = new Subscription();
-    this.projectServ = projectService;
-    this.formComponent = ProjectFormComponent;
-  }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.loadProjects();
-  }
-
-  loadProjects(): void {
-    this.projectService.getItems().subscribe((projects) => {
+    //me suscribo a la lista observable del servicio, 
+    //los metodos http solo emiten el primer valor, no estan sujetos a cambios 
+    this.projects$ = this.projectService.getItems().subscribe((projects) => {
+      //recibo la lista y la paso a la variable local
       this.projects = projects;
       this.loading = false;
     });
+    this.formComponent = ProjectFormComponent;
   }
 
   ngOnDestroy(): void {
     this.projects$.unsubscribe();
   }
+
 }
