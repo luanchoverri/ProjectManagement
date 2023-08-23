@@ -18,6 +18,7 @@ export class StoryFormComponent {
   members!: User[];
   members$: Observable<User[]>;
   isEditing: boolean = false;
+  selectedPoint!: number;
 
   constructor(
     private fb: FormBuilder, 
@@ -37,6 +38,7 @@ export class StoryFormComponent {
 
   ngOnInit() {
     if (this.isEditing) {
+      this.selectedPoint = this.data.initialValues.points;
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, Validators.required),
