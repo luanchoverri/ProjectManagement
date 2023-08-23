@@ -18,6 +18,7 @@ export class ProjectService extends ListService<Project> {
 
   private projectsSubject = new BehaviorSubject<Project[]>([]);
   projects$ = this.projectsSubject.asObservable();
+  projectList: Project[] = [];
 
   constructor(
     private http: HttpClient,
@@ -38,6 +39,11 @@ export class ProjectService extends ListService<Project> {
         }
   });
     return this.projects$;
+
+  // return this.http
+  // .get<ApiResponse>(PathRest.GET_PROJECTS)
+  // .pipe(map((response) => response.data));
+    
   }
 
   override createItem(item: Project): Observable<Project> { 
@@ -58,9 +64,9 @@ export class ProjectService extends ListService<Project> {
     return this.http
       .put<ApiResponse>(`${PathRest.GET_PROJECTS}/${item._id}`, item)
       .pipe(
-        map((response) => {
-          return response.data
-        }),
+        map((response) => 
+           response.data
+        ),
         catchError(() => of(null))
     );
   }
