@@ -1,0 +1,14 @@
+.button-icon-select {
+    box-shadow: none !important;
+}
+
+.icon-menu {
+    padding: 0 !important; /* Elimina el relleno predeterminado del menú */
+  }
+
+  .icon-grid-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

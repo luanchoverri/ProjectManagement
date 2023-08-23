@@ -50,6 +50,12 @@ body {
   mat-panel-title{
     font-size: 18px;
   }
+  
+  mat-chip {
+    font-size: 14px;
+    margin: 2px;
+    height: 30px;
+  }
 
     .header {
     display: flex;
@@ -90,6 +96,7 @@ body {
     padding: 0;
     
     li {
+      flex-wrap: wrap;
       color: rgb(54, 54, 54);
       margin-bottom: 0.8rem;
       display: flex;

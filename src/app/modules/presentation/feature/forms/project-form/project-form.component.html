@@ -1,41 +1,77 @@
-<div mat-dialog-title>
-    <h1>{{ isEditing ? 'EDIT PROJECT' : 'NEW PROJECT' }}</h1>
+
+
+<div mat-dialog-title class="dialog-title">
+  <h2>{{ isEditing ? "EDIT PROJECT" : "CREATE A NEW PROJECT" }}</h2>
+   <p> Fill out the form </p>
 </div>
 
-<form [formGroup]=myForm (ngSubmit)="onSubmit()">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div mat-dialog-content >
 
-    <div mat-dialog-content>
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Icon</mat-label>
-            <input matInput formControlName="icon" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Members</mat-label>
-            <mat-select formControlName="members">
-                <mat-option *ngFor="let member of members" [value]="member._id">
-                    {{member.username}}
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is required</mat-error>
-        </mat-form-field>
+    <div class="icon-button-container">
+    <app-icon-picker 
+    [currentIcon]="myForm.get('icon')?.value"
+    (iconSelected)="onIconSelected($event)"
+    class="icon-picker"
+    ></app-icon-picker>
     </div>
 
-    <div mat-dialog-actions align="end">
-        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Project</button>
-        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Save Changes</button>
-    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>&nbsp;Name&nbsp;</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+    </mat-form-field>
 
+
+    <mat-form-field appearance="outline">
+      <mat-label>&nbsp;Description&nbsp;&nbsp;</mat-label>
+      <input matInput formControlName="description" />
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list" appearance="outline">
+        <mat-label>&nbsp;Select Memebers&nbsp;</mat-label>
+        <mat-chip-grid #chipGrid aria-label="User selection">
+          <mat-chip-row *ngFor="let u of selectedUsers"  (removed)="remove(u)">
+            {{ u.username }}
+            <button matChipRemove [attr.aria-label]="'remove ' + u.username">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input placeholder="Search Users..."  formControlName="members"
+          [matChipInputFor]="chipGrid" [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let member of members" [value]="member">
+                {{ member.username }}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is required</mat-error>
+      </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button type="button" mat-raised-button color="warn" mat-dialog-close>
+      Cancel
+    </button>
+    <button
+      type="submit"
+      *ngIf="!isEditing"
+      [disabled]="!myForm.valid"
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Create Project
+    </button>
+    <button
+      type="submit"
+      *ngIf="isEditing"
+      [disabled]="!myForm.valid"
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Save Changes
+    </button>
+  </div>
 </form>

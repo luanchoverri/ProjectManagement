@@ -1,3 +1,33 @@
 mat-form-field{
     width: 100%;
+    
 }
+
+.mat-autocomplete-panel {
+    max-height: 100px; /* Altura máxima del menú desplegable */
+    display: flex;
+    overflow-y: auto; /* Agregar desplazamiento vertical cuando sea necesario */
+  }
+
+
+  .dialog-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-container {
+    width: 100%;
+
+    margin: 0 auto;
+  }
+  .icon-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .icon-picker {
+    margin-left: 10px; /* Agrega un espaciado entre el botón y el formulario */
+  }
+
+  

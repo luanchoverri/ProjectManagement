@@ -20,6 +20,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -44,6 +48,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatCheckboxModule,
     MatTabsModule,
     MatChipsModule,
+    MatMenuModule,
+    MatAutocompleteModule,
+    MatGridListModule,
   ],
   exports: [
     MatCardModule,
@@ -66,6 +73,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatCheckboxModule,
     MatTabsModule,
     MatChipsModule,
+    MatMenuModule,
+    MatAutocompleteModule,
+    MatGridListModule,
   ],
 })
 export class MaterialModule {}
