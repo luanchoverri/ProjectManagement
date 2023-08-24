@@ -27,8 +27,7 @@ export class ProjectComponent implements OnInit {
   formComponent: any;
   epicSubject = new BehaviorSubject<Epic[]>([]);
   epics$ = this.epicSubject.asObservable();
-  parentItemId: string | undefined;;
-  
+  parentItemId: string | undefined;
 
   constructor(
     private projectService: ProjectService,
@@ -39,13 +38,15 @@ export class ProjectComponent implements OnInit {
     this.formComponent = EpicFormComponent;
   }
 
-    ngOnInit(): void {
-
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('project-id');
 
       if (id) {
+        //sirve para el delete que despues de borrar actualice lista
         this.parentItemId = id;
+
+        //traigo los datos del proyecto para mostrar la descripción
         this.projectService.getItemById(id).subscribe({
           next: (project) => {
             this.project = project;
@@ -59,25 +60,24 @@ export class ProjectComponent implements OnInit {
           },
         });
 
+        //traigo los epics del proyecto
         this.epicService.getItems(id).subscribe({
           next: (epics) => {
             this.epics = epics;
           },
           error: (error) => {
             this.loading = false;
-            alert('Error fetching project');
+            alert('Error fetching epics');
           },
           complete: () => {
             this.loading = false;
           },
         });
 
-        this.projectService.getItemName(id).subscribe(
-                projectName => {
-                  this.breadcrumbService.set('@Project', `${projectName}`);
-                }
-        );
-
+        //cambio el nombre del breadcrumb
+        this.projectService.getItemName(id).subscribe((projectName) => {
+          this.breadcrumbService.set('@Project', `${projectName}`);
+        });
       }
     });
   }

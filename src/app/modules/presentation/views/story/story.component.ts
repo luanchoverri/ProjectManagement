@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { TaskService } from 'src/app/modules/core/services/task/task.service';
 import { Story } from 'src/app/modules/models/story';
@@ -20,6 +20,9 @@ export class StoryComponent {
   tasks: Task[] = [];
   tasksServ: any;
   formComponent: any;
+  taskSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.taskSubject.asObservable();
+  parentItemId: string | undefined;;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,31 +37,48 @@ export class StoryComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('story-id');
-      if (id) {
-        this.breadcrumbService.set('@Story', `Story`);
-        const info$ = this.getSpecificationsById(id);
-        const tasks$ = this.getTasks(id);
 
-        forkJoin([info$, tasks$]).subscribe(([info, tasks]) => {
-          //this.story = info;
-          this.tasks = tasks;
-          this.loading = false;
+      if (id) {
+        //sirve para el delete que despues de borrar actualice lista
+        this.parentItemId = id;
+
+        //traigo los datos de la story para mostrar la descripción
+        this.storyService.getItemById(id).subscribe({
+          next: (story) => {
+            this.story = story;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching story');
+          },
+          complete: () => {
+            this.loading = false;
+          },
         });
 
+        //traigo las tareas de la story
+        this.taskService.getItems(id).subscribe({
+          next: (tasks) => {
+            this.tasks = tasks;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching tasks');
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
+
+        //traigo el nombre del story para mostrar en el breadcrumb
         this.storyService.getItemName(id).subscribe(
           storyName => {
+            console.log(storyName);
             this.breadcrumbService.set('@Story', `${storyName}`);
         });
+
       }
     });
-  }
-
-  getSpecificationsById(id: string) {
-    return this.storyService.getItems(id);
-  }
-
-  getTasks(id: string) {
-    return this.storyService.getTasksByStory(id);
   }
 
   ngOnDestroy(): void {}

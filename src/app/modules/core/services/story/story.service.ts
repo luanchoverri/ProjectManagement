@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ListService } from '../list/list.service';
 import { Story } from 'src/app/modules/models/story';
-import { LocalStorageService } from '../localStorage/local-storage.service';
-import { Observable, catchError, map, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
@@ -18,12 +16,13 @@ import { StoryFormComponent } from 'src/app/modules/presentation/feature/forms/s
 })
 
 export class StoryService extends ListService<Story> {
-  storiesList$ = new Observable<Story[]>();
+  
+  private storiesSubject = new BehaviorSubject<Story[]>([]);
+  stories$ = this.storiesSubject.asObservable();
+  storyList: Story[] = [];
 
   constructor(
-    private ls: LocalStorageService,
     private http: HttpClient,
-    private authService: AuthService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -37,9 +36,19 @@ export class StoryService extends ListService<Story> {
   }
 
   override getItems(id: string): Observable<Story[]> {
-    return this.http
-      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
-      .pipe(map((response) => response.data));
+    const sub = this.http
+      .get<ApiResponse>(`${PathRest.GET_EPICS}/${id}${endpoint.STORIES}`)
+      .pipe(map((response) => response.data),
+      catchError(() => of([])))
+      .subscribe({
+        next: (stories) => {
+          sub.unsubscribe();
+          if (this.storiesSubject) {
+            this.storiesSubject.next(stories);
+          }
+        }
+      });
+    return this.stories$;
   }
 
   override getItemById(id: string): Observable<Story> {
@@ -109,22 +118,11 @@ export class StoryService extends ListService<Story> {
     );
   }
 
-  // getStoryById(id: string): Observable<Story> {
-  //   return this.http
-  //     .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
-  //     .pipe(map((response) => response.data));
-  // }
-
+  //sirve para el delete que saber si tiene tasks asociadas
   getTasksByStory(id: string): Observable<Task[]> {  
     return this.http.get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`).pipe(
       map((response) => response.data),
       catchError(() => of([]))
     );
   }
-
-  // getStoryName(id: string): Observable<string> {
-  //   return this.getStoryById(id).pipe(
-  //     map((story: Story) => story.name)
-  //   );
-  // }
 }

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
@@ -21,6 +22,7 @@ export class StoryFormComponent {
   selectedPoint!: number;
   
   constructor(
+    private snackBar: MatSnackBar,
     private fb: FormBuilder, 
     private ss: StoryService,
     private us: UserService, 
@@ -101,9 +103,23 @@ export class StoryFormComponent {
 
   onSubmit() {
     if (this.isEditing) {        
-      this.ss.updateItem(this.myForm.value).subscribe();
+      this.ss.updateItem(this.myForm.value).subscribe({
+        next: (story) => {
+          this.ss.getItems(this.epicId).subscribe();
+          this.snackBar.open('Story updated successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      });
     } else {
-      this.ss.createItem(this.myForm.value).subscribe();
+      this.ss.createItem(this.myForm.value).subscribe({
+        next: (story) => {
+          this.ss.getItems(this.epicId).subscribe();
+          this.snackBar.open('Story created successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      });
     }
 
   }

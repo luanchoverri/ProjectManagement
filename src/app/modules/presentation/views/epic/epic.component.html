@@ -7,5 +7,5 @@
 <ng-template #content>
     <app-epic-details [item]="epic"></app-epic-details>
     <app-add-item [formDialog]=formComponent></app-add-item>
-    <app-card-list [list]="stories"></app-card-list>
+    <app-card-list [list]="stories" [parentId]=parentItemId></app-card-list>
 </ng-template>

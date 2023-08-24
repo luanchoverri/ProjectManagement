@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Story } from 'src/app/modules/models/story';
@@ -21,15 +21,17 @@ import { StoryService } from 'src/app/modules/core/services/story/story.service'
   ],
 })
 export class EpicComponent implements OnInit {
-  id!: string;
-  epic!: Epic;
   loading: boolean = true;
+  epic!: Epic;
   stories: Story[] = [];
-
   formComponent: any;
+  storySubject = new BehaviorSubject<Story[]>([]);
+  stories$ = this.storySubject.asObservable();
+  parentItemId: string | undefined;
 
   constructor(
     private epicService: EpicService,
+    private storyService: StoryService,
     private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService
   ) {
@@ -38,21 +40,42 @@ export class EpicComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const id = params.get('epic-id'); // Obtiene el id del parametro de la URL
+      const id = params.get('epic-id');
 
       if (id) {
-        this.breadcrumbService.set('@Epic', `Epic`);
-        const info$ = this.getSpecificationsById(id);
-        const stories$ = this.getStories(id);
+        //sirve para el delete que despues de borrar actualice lista
+        this.parentItemId = id;
 
-        forkJoin([info$, stories$]).subscribe(([info, stories]) => {
-          this.epic = info;
-          this.stories = stories;
-          this.loading = false;
+        //traigo los datos del proyecto para mostrar la descripción
+        this.epicService.getItemById(id).subscribe({
+          next: (epic) => {
+            this.epic = epic;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching epic');
+          },
+          complete: () => {
+            this.loading = false;
+          },
         });
 
-        this.epicService.getItemById(id).subscribe(
-          epicName => {
+        //traigo las stories de la epica
+        this.storyService.getItems(id).subscribe({
+          next: (stories) => {
+            this.stories = stories;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching stories');
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
+
+        //cambio el nombre del breadcrumb
+        this.epicService.getItemName(id).subscribe((epicName) => {
             this.breadcrumbService.set('@Epic', `${epicName}`);
         });
       }
