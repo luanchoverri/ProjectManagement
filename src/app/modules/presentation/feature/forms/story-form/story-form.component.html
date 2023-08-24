@@ -97,9 +97,9 @@
     </div>
 
     <div mat-dialog-actions align="end">
-        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Story</button>
-        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Save Changes</button>
+        <button  mat-flat-button cdkFocusInitial  mat-dialog-close>Cancel</button>
+        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid"  mat-flat-button color="primary" [mat-dialog-close]="true">Create Story</button>
+        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid"   mat-flat-button color="primary" [mat-dialog-close]="true">Save Changes</button>
     </div>
 
 </form>

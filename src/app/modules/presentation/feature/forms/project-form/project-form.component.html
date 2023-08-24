@@ -1,12 +1,12 @@
 
 
 <div mat-dialog-title class="dialog-title">
-  <h2>{{ isEditing ? "EDIT PROJECT" : "CREATE A NEW PROJECT" }}</h2>
+  <h2>{{ isEditing ? "EDIT PROJECT" : "NEW PROJECT" }}</h2>
    <p> Fill out the form </p>
 </div>
 
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div mat-dialog-content >
+  <div mat-dialog-content class="dialog-content">
 
     <div class="icon-button-container">
     <app-icon-picker 
@@ -17,19 +17,19 @@
     </div>
 
     <mat-form-field appearance="outline">
-      <mat-label>&nbsp;Name&nbsp;</mat-label>
-      <input matInput formControlName="name" />
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="What is the title of the project?.."  formControlName="name" />
       <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
     </mat-form-field>
 
 
     <mat-form-field appearance="outline">
-      <mat-label>&nbsp;Description&nbsp;&nbsp;</mat-label>
-      <input matInput formControlName="description" />
+      <mat-label>Description&nbsp;&nbsp;</mat-label>
+      <input matInput placeholder="Add a description.." formControlName="description" />
     </mat-form-field>
 
     <mat-form-field class="example-chip-list" appearance="outline">
-        <mat-label>&nbsp;Select Memebers&nbsp;</mat-label>
+        <mat-label>Select Memebers&nbsp;&nbsp;&nbsp;</mat-label>
         <mat-chip-grid #chipGrid aria-label="User selection">
           <mat-chip-row *ngFor="let u of selectedUsers"  (removed)="remove(u)">
             {{ u.username }}
@@ -50,14 +50,14 @@
   </div>
 
   <div mat-dialog-actions align="end">
-    <button type="button" mat-raised-button color="warn" mat-dialog-close>
+    <button type="button" mat-flat-button cdkFocusInitial  mat-dialog-close>
       Cancel
     </button>
     <button
       type="submit"
       *ngIf="!isEditing"
       [disabled]="!myForm.valid"
-      mat-raised-button
+      mat-flat-button
       color="primary"
       [mat-dialog-close]="true"
     >
@@ -67,7 +67,7 @@
       type="submit"
       *ngIf="isEditing"
       [disabled]="!myForm.valid"
-      mat-raised-button
+      mat-flat-button
       color="primary"
       [mat-dialog-close]="true"
     >

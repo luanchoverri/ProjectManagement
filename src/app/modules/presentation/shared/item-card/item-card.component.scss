@@ -1,14 +1,24 @@
 .list-item {
   transition: box-shadow 0.3s ease, transform 0.1s ease;
   margin-bottom: 1rem;
-
+  box-sizing: border-box;
   &:hover {
-    box-shadow: 0 2px 4px rgba(63, 81, 181, 0.808);
+    box-shadow: 0 2px 4px rgba(63, 81, 181, 0.80);
   }
 }
 
 .item-header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.item-content:last-child{
+  padding-bottom: 2px;
+}
+
+.item-mat-actions{
+  mat-icon{
+    margin-right: 0;
+  }
 }
 
 a {
@@ -16,3 +26,5 @@ a {
   text-decoration: none;
   outline: none;
 }
+
+

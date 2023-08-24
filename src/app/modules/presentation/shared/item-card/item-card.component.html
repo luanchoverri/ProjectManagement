@@ -6,12 +6,12 @@
 
     <mat-divider></mat-divider>
 
-    <mat-card-content>
+    <mat-card-content class="item-content">
       <p>{{item.description}}</p>
     </mat-card-content>
   </a>
 
-  <mat-card-actions align="end">
+  <mat-card-actions align="end" class="item-mat-actions">
     <button  mat-button (click)="editItem()"><mat-icon>edit</mat-icon></button>
     <button mat-button (click)="deleteItem(item)"><mat-icon>delete</mat-icon></button>
   </mat-card-actions>
