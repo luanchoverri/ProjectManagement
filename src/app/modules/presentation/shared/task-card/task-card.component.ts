@@ -13,10 +13,6 @@ export class TaskCardComponent {
 
   constructor(private ts: TaskService, private dialog: MatDialog) {}
 
-  editTask() {
-    console.log('edit task');
-  }
-
   deleteTask() {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
@@ -29,10 +25,10 @@ export class TaskCardComponent {
     });
   }
 
-  togleDone(){
+  togleDone(){   
     this.task.done = !this.task.done;
-    this.ts.updateItem(this.task);
-    this.ts.updateItem(this.task).subscribe();
+    // this.ts.updateItem(this.task);
+    // this.ts.updateItem(this.task).subscribe();
   }
 
 }
