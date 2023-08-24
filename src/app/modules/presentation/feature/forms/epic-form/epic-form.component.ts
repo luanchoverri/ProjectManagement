@@ -2,8 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
+
 
 @Component({
   selector: 'app-epic-form',
@@ -16,6 +18,7 @@ export class EpicFormComponent implements OnInit {
   isEditing: boolean = false;
 
   constructor(
+    private snackBar: MatSnackBar,
     private fb: FormBuilder, 
     private es: EpicService, 
     private router: Router,
@@ -51,9 +54,23 @@ export class EpicFormComponent implements OnInit {
 
   onSubmit() {
     if (this.isEditing) {    
-      this.es.updateItem(this.myForm.value).subscribe();
+      this.es.updateItem(this.myForm.value).subscribe({
+        next: (epic) => {
+          this.es.getItems(this.projectId).subscribe();
+          this.snackBar.open('Epic updated successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      });
     } else {
-      this.es.createItem(this.myForm.value).subscribe();
+      this.es.createItem(this.myForm.value).subscribe({
+        next: (epic) => {
+          this.es.getItems(this.projectId).subscribe();
+          this.snackBar.open('Epic created successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      });
     }
 
   }

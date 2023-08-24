@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Task } from 'src/app/modules/models/task.model';
-import { LocalStorageService } from '../localStorage/local-storage.service';
 import { ListService } from '../list/list.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
@@ -17,7 +16,6 @@ export class TaskService extends ListService<Task> {
   taskList$ = new Observable<Task[]>();
 
   constructor(
-    private ls: LocalStorageService, 
     private http: HttpClient,
     private snackBar: MatSnackBar
   ) {
@@ -25,11 +23,24 @@ export class TaskService extends ListService<Task> {
     
   }
 
-  override getItems(): Observable<Task[]> {
-    return this.http.get<ApiResponse>(PathRest.GET_TASKS)
+  override getItems(id: string): Observable<Task[]> {
+    return this.http.get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${PathRest.GET_TASKS}`)
     .pipe(map((response) => response.data));
   }
 
+  //no se usan por que no hay pantalla con descripcion de task
+  override getItemById(id: string): Observable<Task> {
+    return this.http.get<ApiResponse>(`${PathRest.GET_TASKS}/${id}`)
+    .pipe(map((response) => response.data));
+  }
+
+  override getItemName(id: string): Observable<string> {
+    return this.getItemById(id).pipe(
+      map((task: Task) => task.name)
+    );
+  }
+  //
+  
   override createItem(item: Task): Observable<Task> {
     return this.http.post<ApiResponse>(PathRest.GET_TASKS, item)
     .pipe(map((response) => response.data));

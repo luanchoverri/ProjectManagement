@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
@@ -25,39 +25,60 @@ export class ProjectComponent implements OnInit {
   project!: Project;
   epics: Epic[] = [];
   formComponent: any;
+  epicSubject = new BehaviorSubject<Epic[]>([]);
+  epics$ = this.epicSubject.asObservable();
+  parentItemId: string | undefined;;
+  
 
   constructor(
     private projectService: ProjectService,
+    private epicService: EpicService,
     private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService
   ) {
     this.formComponent = EpicFormComponent;
   }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('project-id');
 
       if (id) {
-        this.breadcrumbService.set('@Project', `Project`);
-        const info$ = this.projectService.getProjectById(id);
-        const epics$ = this.getEpics(id);
+        this.parentItemId = id;
+        this.projectService.getItemById(id).subscribe({
+          next: (project) => {
+            this.project = project;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching project');
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
 
-        forkJoin([info$, epics$]).subscribe(([info, epics]) => {
-          this.project = info;
-          this.epics = epics;
-          this.loading = false;
+        this.epicService.getItems(id).subscribe({
+          next: (epics) => {
+            this.epics = epics;
+          },
+          error: (error) => {
+            this.loading = false;
+            alert('Error fetching project');
+          },
+          complete: () => {
+            this.loading = false;
+          },
         });
-        
-        this.projectService.getProjectName(id).subscribe(
-          projectName => {
-            this.breadcrumbService.set('@Project', `${projectName}`);
-        });
+
+        this.projectService.getItemName(id).subscribe(
+                projectName => {
+                  this.breadcrumbService.set('@Project', `${projectName}`);
+                }
+        );
+
       }
     });
-  }
-
-  getEpics(id: string) {
-    return this.projectService.getEpicsByProject(id);
   }
 }

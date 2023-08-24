@@ -14,6 +14,7 @@ import {
 })
 export class ItemCardComponent {
   @Input() item!: Item;
+  @Input() parentItemId!: string | undefined;
 
   constructor(
     @Inject(LIST_SERVICE_TOKEN) public service: ListService<Item>,
@@ -40,10 +41,12 @@ export class ItemCardComponent {
       if (result === 'confirm') {
         this.service.deleteItem(item._id).subscribe(
           {
-            next: (item) => {
-              this.service.getItems().subscribe();
-            }
-          }
+            next: () => {
+              if(this.parentItemId)
+              this.service.getItems(this.parentItemId).subscribe();
+              else
+              this.service.getItems("").subscribe();
+            }}
         );
       }
     });

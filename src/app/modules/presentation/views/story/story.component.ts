@@ -40,12 +40,12 @@ export class StoryComponent {
         const tasks$ = this.getTasks(id);
 
         forkJoin([info$, tasks$]).subscribe(([info, tasks]) => {
-          this.story = info;
+          //this.story = info;
           this.tasks = tasks;
           this.loading = false;
         });
 
-        this.storyService.getStoryName(id).subscribe(
+        this.storyService.getItemName(id).subscribe(
           storyName => {
             this.breadcrumbService.set('@Story', `${storyName}`);
         });
@@ -54,7 +54,7 @@ export class StoryComponent {
   }
 
   getSpecificationsById(id: string) {
-    return this.storyService.getStoryById(id);
+    return this.storyService.getItems(id);
   }
 
   getTasks(id: string) {

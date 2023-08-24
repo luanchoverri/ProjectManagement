@@ -29,7 +29,7 @@ export class MyStoriesComponent {
   }
 
   loadStories(): void {
-    this.storyService.getItems().subscribe((stories) => {
+    this.storyService.getStories().subscribe((stories) => {
       this.stories = stories;
       this.loading = false;
       console.log(stories);

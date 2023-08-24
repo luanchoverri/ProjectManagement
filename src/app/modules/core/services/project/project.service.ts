@@ -29,7 +29,7 @@ export class ProjectService extends ListService<Project> {
   }
 
   //abstract methods
-  override getItems(): Observable<Project[]> {
+  override getItems(id : string): Observable<Project[]> {
     const sub = this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
       map((response) => response.data),catchError(() => of([]))).subscribe({
         next: (projects) => {
@@ -40,6 +40,19 @@ export class ProjectService extends ListService<Project> {
   });
     return this.projects$;
   }
+
+  override getItemById(id: string): Observable<Project> {
+    return this.http
+    .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
+    .pipe(map((response) => response.data));
+  }
+
+  override getItemName(id: string): Observable<string> {
+    return this.getItemById(id).pipe(
+      map((project: Project) => project.name)
+    );
+  }
+  
 
   override createItem(item: Project): Observable<Project> { 
       return this.http
@@ -92,25 +105,14 @@ export class ProjectService extends ListService<Project> {
     );
   }
 
-  getProjectById(id: string): Observable<Project> {
-    return this.http
-      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
-      .pipe(map((response) => response.data));
-  }
-
+  //se usa para que el detele sepa si hay epics asociados
   getEpicsByProject(id: string): Observable<Epic[]> {
     return this.http
       .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}${endpoint.EPICS}`)
       .pipe(
         map((response) => response.data),
         catchError(() => of([]))
-      );
-  }
-
-  getProjectName(id: string): Observable<string> {
-    return this.getProjectById(id).pipe(
-      map((project: Project) => project.name)
-    );
+      )
   }
 
 }

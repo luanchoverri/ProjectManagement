@@ -28,7 +28,7 @@ export class StoryDetailsComponent {
   ngOnInit(): void {
     if (this.item) {
       this.es
-        .getEpicById(this.item.epic)
+        .getItemById(this.item.epic)
         .subscribe((epic) => (this.epicName = epic.name));
 
       this.us

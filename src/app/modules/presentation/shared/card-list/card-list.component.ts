@@ -11,6 +11,7 @@ import { puffAnimation } from 'src/assets/styles/animations';
 })
 export class CardListComponent implements OnInit {
   @Input() list: Item[] | undefined;
+  @Input() parentId: string | undefined;
 
   constructor(private snackBar: MatSnackBar) {}
 

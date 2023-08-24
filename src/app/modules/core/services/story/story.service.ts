@@ -30,10 +30,27 @@ export class StoryService extends ListService<Story> {
     super();
   }
 
-  override getItems(): Observable<Story[]> {
-    return this.http.get<ApiResponse>(PathRest.GET_STORIES).pipe(
-      map((response) => response.data),
-      catchError(() => of([]))
+  getStories(): Observable<Story[]> {
+    return this.http
+      .get<ApiResponse>(PathRest.GET_STORIES)
+      .pipe(map((response) => response.data));
+  }
+
+  override getItems(id: string): Observable<Story[]> {
+    return this.http
+      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
+      .pipe(map((response) => response.data));
+  }
+
+  override getItemById(id: string): Observable<Story> {
+    return this.http
+    .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
+    .pipe(map((response) => response.data));
+  }
+
+  override getItemName(id: string): Observable<string> {
+    return this.getItemById(id).pipe(
+      map((story: Story) => story.name)
     );
   }
 
@@ -92,11 +109,11 @@ export class StoryService extends ListService<Story> {
     );
   }
 
-  getStoryById(id: string): Observable<Story> {
-    return this.http
-      .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
-      .pipe(map((response) => response.data));
-  }
+  // getStoryById(id: string): Observable<Story> {
+  //   return this.http
+  //     .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}`)
+  //     .pipe(map((response) => response.data));
+  // }
 
   getTasksByStory(id: string): Observable<Task[]> {  
     return this.http.get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`).pipe(
@@ -105,9 +122,9 @@ export class StoryService extends ListService<Story> {
     );
   }
 
-  getStoryName(id: string): Observable<string> {
-    return this.getStoryById(id).pipe(
-      map((story: Story) => story.name)
-    );
-  }
+  // getStoryName(id: string): Observable<string> {
+  //   return this.getStoryById(id).pipe(
+  //     map((story: Story) => story.name)
+  //   );
+  // }
 }

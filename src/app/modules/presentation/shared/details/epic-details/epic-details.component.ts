@@ -16,18 +16,13 @@ export class EpicDetailsComponent {
   projectName !:string;
 
   constructor(
-    private projecT: ProjectService
+    private project: ProjectService
   ) {}
 
   ngOnInit(): void {
     if (this.item) {
-     this.projecT.getProjectById(this.item.project).subscribe( project => this.projectName = project.name );
-   
-   
-   
+     this.project.getItemById(this.item.project).subscribe( project => this.projectName = project.name );
     }
-
-
   }
 
 }

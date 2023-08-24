@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
-import { LocalStorageService } from '../localStorage/local-storage.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
@@ -17,22 +16,49 @@ import { EpicFormComponent } from 'src/app/modules/presentation/feature/forms/ep
   providedIn: 'root'
 })
 export class EpicService extends ListService<Epic>{
-  private readonly EPIC_KEY = 'epics';
-  private epicsList$ = new Observable<Epic[]>();
+
+  private epicsSubject = new BehaviorSubject<Epic[]>([]);
+  epics$ = this.epicsSubject.asObservable();
+  epicList: Epic[] = [];
 
   constructor(
-    private storage: LocalStorageService, 
     private http:HttpClient,
     private snackBar: MatSnackBar,
     private dialog: MatDialog  
-  ) {
-    // this.storage.updateItem(this.EPIC_KEY, this.epicsList);  
+  ) { 
     super();
   }
 
-  override getItems(): Observable<Epic[]> {
-    throw new Error('Method not implemented.');
+  override getItems(id: string): Observable<Epic[]> {
+    const sub = this.http
+      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}${endpoint.EPICS}`)
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of([])
+      )
+    ).subscribe({
+      next: (epics) => {
+        sub.unsubscribe();
+        if (this.epicsSubject) {
+          this.epicsSubject.next(epics);
+        }
+      }
+    });
+    return this.epics$;
   }
+
+  override getItemById(id: string): Observable<Epic> {
+    return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`).pipe(
+      map(response => response.data)
+    );
+  }
+
+  override getItemName(id: string): Observable<string> {
+    return this.getItemById(id).pipe(
+      map((epic: Epic) => epic.name)
+    );
+  }
+
   override createItem(item: Epic): Observable<Epic> {
     return this.http
     .post<ApiResponse>(PathRest.GET_EPICS, item)
@@ -83,26 +109,11 @@ export class EpicService extends ListService<Epic>{
   }
 
   // API 
-  getEpicById(id: string): Observable<Epic> {
-      return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}`).pipe(
-        map(response => response.data)
-      );
-
-  }
-  
+  //se necesita para el delete para saber si tiene stories asociadas
   getStoriesByEpic(id: string): Observable<Story[]> {
-
     return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}${endpoint.STORIES}`).pipe(
       map(response => response.data),
       catchError(() => of([])) 
     );
-  
   }
-
-  getEpicName(id: string): Observable<string> {
-    return this.getEpicById(id).pipe(
-      map((epic: Epic) => epic.name)
-    );
-  }
-  
 }

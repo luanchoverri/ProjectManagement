@@ -4,7 +4,6 @@ import { ProjectService } from 'src/app/modules/core/services/project/project.se
 import { Project } from 'src/app/modules/models/project.model';
 import { ProjectFormComponent } from '../../feature/forms/project-form/project-form.component';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
-import { puffAnimation } from 'src/assets/styles/animations';
 
 @Component({
   selector: 'app-my-projects',
@@ -25,7 +24,7 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projects$ = this.projectService.getItems().subscribe((projects) => {
+    this.projects$ = this.projectService.getItems("").subscribe((projects) => {
       this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
       this.loading = false;
     });

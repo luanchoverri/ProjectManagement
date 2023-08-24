@@ -1,16 +1,13 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, map, startWith } from 'rxjs';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { UserService } from 'src/app/modules/core/services/user/user.service';
-import { Project } from 'src/app/modules/models/project.model';
 import { User } from 'src/app/modules/models/user';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-project-form',
@@ -21,8 +18,6 @@ export class ProjectFormComponent implements OnInit{
   myForm!: FormGroup;
   members: User[] = [];
   members$: Observable<User[]>;
-  projectList: Project[] = [];
-  projectList$ : Observable<Project[]>;
   isEditing: boolean = false;
   isMobile: boolean = false;
   fruitCtrl = new FormControl();
@@ -31,19 +26,19 @@ export class ProjectFormComponent implements OnInit{
   selectedUsers: User[] = [];
 
   constructor(
+    private snackBar: MatSnackBar,
     private fb: FormBuilder, 
     private ps: ProjectService, 
     private us: UserService,
-    @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
+    @Inject(MAT_DIALOG_DATA) public data: any) 
+    {
+
     this.members$ = us.getUsers();
     if (this.members$) {
       this.members$.subscribe((data) => {
         this.members = data;
       });
     }
-
-    this.projectList$ = new Observable<Project[]>();
   }
 
   ngOnInit() {
@@ -76,20 +71,25 @@ export class ProjectFormComponent implements OnInit{
     console.log(this.myForm.value);
     if (this.isEditing) {    
       this.ps.updateItem(this.myForm.value).subscribe({
-        next: (project) => {
-          this.ps.getItems().subscribe();
+        next: () => {
+          this.ps.getItems("");
+          this.snackBar.open('Project updated successfully', 'Close', {
+            duration: 5000,
+          });
         }
       }
       );
     } else {
       this.ps.createItem(this.myForm.value).subscribe({
-        next: (project) => {
-          this.ps.getItems().subscribe();
+        next: () => {
+         this.ps.getItems("");
+          this.snackBar.open('Project created successfully', 'Close', {
+            duration: 5000,
+          });
         }
       }
       );
     }
-
   }
 
   toggleIsEditing() {

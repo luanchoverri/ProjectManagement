@@ -51,7 +51,7 @@ export class EpicComponent implements OnInit {
           this.loading = false;
         });
 
-        this.epicService.getEpicName(id).subscribe(
+        this.epicService.getItemById(id).subscribe(
           epicName => {
             this.breadcrumbService.set('@Epic', `${epicName}`);
         });
@@ -60,7 +60,7 @@ export class EpicComponent implements OnInit {
   }
 
   getSpecificationsById(id: string) {
-    return this.epicService.getEpicById(id);
+    return this.epicService.getItemById(id);
   }
 
   getStories(id: string) {

@@ -8,7 +8,11 @@ export const LIST_SERVICE_TOKEN = new InjectionToken<ListService<Item>>(
 
 export abstract class ListService<Item> {
   
-  abstract getItems(): Observable<Item[]>;
+  abstract getItems(parentId: string): Observable<Item[]>;
+
+  abstract getItemById(id: string): Observable<Item>;
+
+  abstract getItemName(id: string): Observable<string>;
 
   abstract createItem(item: Item): Observable<Item>;
 
