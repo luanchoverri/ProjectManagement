@@ -20,7 +20,14 @@ const helper = new JwtHelperService();
 export class AuthService {
   private readonly TOKEN_KEY = 'token'; // Clave para guardar el token en el almacenamiento local
   private currentUser: User | null = null;
+  private authStatusSubject = new BehaviorSubject<boolean>(this.isSessionActive());
+  authStatus$ = this.authStatusSubject.asObservable();
+
   constructor(private router: Router, private http: HttpClient) {}
+  
+  private updateAuthStatus(isAuthenticated: boolean): void {
+    this.authStatusSubject.next(isAuthenticated);
+  }
 
   login(authData: UserCredentials): Observable<boolean | void> {
     return this.http.post<UserResponse>(`${PathRest.GET_LOGIN}`, authData).pipe(
@@ -28,6 +35,7 @@ export class AuthService {
         if (response.success) {
           this.saveToken(response.token);
           this.currentUser = response.user;
+          this.updateAuthStatus(true);
         }
         return response.success;
       }),
@@ -39,6 +47,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
+    this.currentUser = null;
+    this.updateAuthStatus(false);
     this.router.navigate([endpoint.LOGIN]);
   }
 
