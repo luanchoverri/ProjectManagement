@@ -81,12 +81,4 @@ export class EpicComponent implements OnInit {
       }
     });
   }
-
-  getSpecificationsById(id: string) {
-    return this.epicService.getItemById(id);
-  }
-
-  getStories(id: string) {
-    return this.epicService.getStoriesByEpic(id);
-  }
 }

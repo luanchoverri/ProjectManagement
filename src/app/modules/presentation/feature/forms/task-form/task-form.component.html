@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-    <h1> NEW TASK </h1>
+    <h1>{{ isEditing ? 'EDIT TASK' : 'NEW TASK' }}</h1>
 </div>
 
 <form [formGroup]=myForm (ngSubmit)="onSubmit()">
@@ -18,30 +18,23 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Created</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="created">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field >
             <mat-label>Due date</mat-label>
-            <input matInput  [matDatepicker]="picker2" formControlName="dueDate">
+            <input matInput [matDatepicker]="picker2" formControlName="due">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
-            <mat-error *ngIf="myForm.get('dueDate')?.hasError('dueDateInvalid')">Due date must be after creation date</mat-error>
-          </mat-form-field>
+            <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
+                date</mat-error>
+        </mat-form-field>
 
-          <mat-checkbox formControlName="done">Done</mat-checkbox>
+        <mat-checkbox formControlName="done">Done</mat-checkbox>
 
     </div>
 
     <div mat-dialog-actions align="end">
-        <button mat-flat-button cdkFocusInitial mat-dialog-close>Cancel</button>
-        <button type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary"
-            [mat-dialog-close]="true">Create Story</button>
+        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Task</button>
+        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Save Changes</button>
     </div>
 
 </form>

@@ -1,31 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { Task } from 'src/app/modules/models/task.model';
 import { ListService } from '../list/list.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from 'src/app/modules/models/apiResponse';
 import { PathRest } from 'src/app/modules/api-rest/enviroments/path-rest';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TaskFormComponent } from 'src/app/modules/presentation/feature/forms/task-form/task-form.component';
+import { MatDialog } from '@angular/material/dialog';
+import { endpoint } from 'src/app/modules/api-rest/enviroments/endpoints';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService extends ListService<Task> {
 
-  private readonly TASK_KEY = 'tasks';
-  taskList$ = new Observable<Task[]>();
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
+  taskList: Task[] = [];
 
   constructor(
     private http: HttpClient,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     super();
     
   }
 
   override getItems(id: string): Observable<Task[]> {
-    return this.http.get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${PathRest.GET_TASKS}`)
-    .pipe(map((response) => response.data));
+    const sub = this.http
+    .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`)
+    .pipe(map((response) => response.data),
+    catchError(() => of([])))
+    .subscribe({
+      next: (tasks) => {
+        sub.unsubscribe();
+        if (this.tasksSubject) {
+          this.tasksSubject.next(tasks);
+        }
+      }
+    });
+  return this.tasks$;
   }
 
   //no se usan por que no hay pantalla con descripcion de task
@@ -45,13 +61,22 @@ export class TaskService extends ListService<Task> {
     return this.http.post<ApiResponse>(PathRest.GET_TASKS, item)
     .pipe(map((response) => response.data));
   }
-  override updateItem(item: Task): Observable<Task> {
-    console.log("voy a actualizar el task");
-    return new Observable<Task>;
+
+  override editItem(task: Task): void {
+    const dialogRef = this.dialog.open(TaskFormComponent, {
+      data: { initialValues: task },
+    });
+
+    dialogRef.componentInstance.toggleIsEditing();
   }
 
-  override editItem(item: Task): void {
-    throw new Error('Method not implemented.');
+  override updateItem(item: Task): Observable<Task | null> {
+    return this.http
+    .put<ApiResponse>(`${PathRest.GET_TASKS}/${item._id}`, item)
+    .pipe(map((response) => response.data)
+    ,catchError((error) => of(null))
+    ,tap((response) => {console.log(response);}
+    ));
   }
   
   override deleteItem(id: string): Observable<Task | null> {
