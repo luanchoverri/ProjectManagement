@@ -1,8 +1,10 @@
 mat-sidenav-container {
   height: 100vh; // Asegura que la sidenav ocupe toda la altura visible
+  padding-top: 4rem;
 }
 
 mat-sidenav {
+  padding-top: 4rem;
   width: 70%; // Asegura que la sidenav ocupe el 70% del ancho visible
 }
 
