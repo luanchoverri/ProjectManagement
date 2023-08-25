@@ -12,7 +12,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserResponse } from '../../models/userResponse';
 import { UserCredentials } from '../../models/userCredentials';
 import { Router } from '@angular/router';
-import { UserService } from '../../core/services/user/user.service';
+import jwt_decode from 'jwt-decode';
+
 
 const helper = new JwtHelperService();
 @Injectable({
@@ -38,6 +39,7 @@ export class AuthService {
           this.saveToken(response.token);
           localStorage.setItem(this.USER_KEY, response.user._id);
           this.updateAuthStatus(true);
+          this.currentUser = response.user;
         }
         return response.success;
       }),
@@ -73,4 +75,15 @@ export class AuthService {
   getUserId(): string | null {
     return localStorage.getItem(this.USER_KEY);
   }
+
+  getUserData(): User | null {
+    let token = this.getToken();
+    if (token) {
+        let data: any = jwt_decode(token);
+        return data.user;
+      }
+    return null;
+  }
+
 }
+
