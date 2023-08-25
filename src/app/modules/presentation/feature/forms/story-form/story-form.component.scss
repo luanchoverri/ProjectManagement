@@ -1,0 +1,52 @@
+.inline-fields {
+  display: flex;
+  align-items: center;
+
+  // Espaciado entre los campos en linea
+  > * {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+ 
+  
+}
+
+.status-container{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.mat-form-field-inline-points {
+  width: 30%;
+}
+
+
+
+
+@media (max-width: 767px) {
+  .inline-fields {
+    flex-direction: column;
+
+    > * {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  .mat-form-field {
+    &.mat-form-field-inline {
+      flex: none;
+      width: 100%;
+    }
+  }
+
+  .mat-form-field-inline-points {
+    width: 100%;
+  }
+}

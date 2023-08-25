@@ -1,30 +1,48 @@
-<div mat-dialog-title>
-    <h2>{{ isEditing ? 'EDIT EPIC' : 'NEW EPIC' }}</h2>
+<div class="forms-custom-style">
+    <!-- Header -->
+    <div mat-dialog-title class="dialog-title">
+        <p>Fill out the form</p>
+        <h1>{{ isEditing ? "EDIT EPIC" : "NEW EPIC" }}</h1>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+
+        <div mat-dialog-content class="dialog-content">
+            <!-- Icon picker -->
+            <div class="icon-button-container">
+                <app-icon-picker [currentIcon]="myForm.get('icon')?.value" (iconSelected)="onIconSelected($event)"
+                    class="icon-picker"></app-icon-picker>
+            </div>
+
+            <!-- Title -->
+            <mat-form-field appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="What is the title of the new epic?.." formControlName="name" />
+                <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+            </mat-form-field>
+
+            <!-- Description -->
+            <mat-form-field appearance="outline">
+                <mat-label>Description&nbsp;&nbsp;</mat-label>
+                <input matInput placeholder="Add a description.." formControlName="description" />
+            </mat-form-field>
+        </div>
+
+
+        <div mat-dialog-actions align="end">
+            <!-- button cancel -->
+            <button mat-flat-button cdkFocusInitial mat-dialog-close>Cancel</button>
+            <!-- button create -->
+            <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary"
+                [mat-dialog-close]="true">
+                Create Epic
+            </button>
+            <!-- button save -->
+            <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary"
+                [mat-dialog-close]="true">
+                Save Changes
+            </button>
+        </div>
+    </form>
 </div>
-
-<form [formGroup]=myForm (ngSubmit)="onSubmit()">
-
-    <div mat-dialog-content>
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Icon</mat-label>
-            <input matInput formControlName="icon" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" />
-        </mat-form-field>
-    </div>
-
-    <div mat-dialog-actions align="end">
-        <button  mat-flat-button cdkFocusInitial  mat-dialog-close>Cancel</button>
-        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary" [mat-dialog-close]="true">Create Epic</button>
-        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button  color="primary" [mat-dialog-close]="true">Save Changes</button>
-    </div>
-</form>

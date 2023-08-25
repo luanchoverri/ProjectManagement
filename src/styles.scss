@@ -110,8 +110,34 @@ body {
 }
 
 
-.dialog-content{
-  // mat-form-field{
-  // letter-spacing: 0;
-  // }
+//forms 
+
+.form-container{
+  mat-form-field{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+ 
+  .icon-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .icon-picker {
+      margin-left: 10px; 
+    }
+
+
+    mat-error, mat-hint{
+      font-size: 12px;
+      letter-spacing: normal;
+      font-family: sans-serif;
+    }
+
+    .mat-form-field-data {  //Date
+      flex: 1;
+      max-width: 180px;
+    }
 }

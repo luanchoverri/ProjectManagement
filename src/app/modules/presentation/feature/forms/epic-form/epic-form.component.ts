@@ -79,4 +79,9 @@ export class EpicFormComponent implements OnInit {
     this.isEditing = !this.isEditing;
   }  
 
+
+  onIconSelected(icon: string): void {
+    this.myForm.get('icon')?.setValue(icon);
+  }
+
 }

@@ -1,78 +1,72 @@
+<div class="forms-custom-style">
+ <!-- Header -->
+  <div mat-dialog-title class="dialog-title">
+    <p> Fill out the form </p>
+    <h1>{{ isEditing ? "EDIT PROJECT" : "NEW PROJECT" }}</h1>
+  </div>
 
+  <!-- Form -->
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div mat-dialog-content class="dialog-content">
+      <!-- Icon picker -->
+      <div class="icon-button-container">
+        <app-icon-picker [currentIcon]="myForm.get('icon')?.value" (iconSelected)="onIconSelected($event)"
+          class="icon-picker"></app-icon-picker>
+      </div>
 
-<div mat-dialog-title class="dialog-title">
-  <h2>{{ isEditing ? "EDIT PROJECT" : "NEW PROJECT" }}</h2>
-   <p> Fill out the form </p>
-</div>
+      <!-- Title -->
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="What is the title of the project?.." formControlName="name" />
+        <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+      </mat-form-field>
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
-  <div mat-dialog-content class="dialog-content">
+      <!-- Description -->
+      <mat-form-field appearance="outline">
+        <mat-label>Description&nbsp;&nbsp;</mat-label>
+        <input matInput placeholder="Add a description.." formControlName="description" />
+      </mat-form-field>
 
-    <div class="icon-button-container">
-    <app-icon-picker 
-    [currentIcon]="myForm.get('icon')?.value"
-    (iconSelected)="onIconSelected($event)"
-    class="icon-picker"
-    ></app-icon-picker>
-    </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput placeholder="What is the title of the project?.."  formControlName="name" />
-      <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-    </mat-form-field>
-
-
-    <mat-form-field appearance="outline">
-      <mat-label>Description&nbsp;&nbsp;</mat-label>
-      <input matInput placeholder="Add a description.." formControlName="description" />
-    </mat-form-field>
-
-    <mat-form-field class="example-chip-list" appearance="outline">
-        <mat-label>Select Memebers&nbsp;&nbsp;&nbsp;</mat-label>
+      <!-- Select Members  -->
+      <mat-form-field class="example-chip-list" appearance="outline">
+        <mat-label>Select Memebers&nbsp;&nbsp;&nbsp;</mat-label> 
         <mat-chip-grid #chipGrid aria-label="User selection">
-          <mat-chip-row *ngFor="let u of selectedUsers"  (removed)="remove(u)">
+          <mat-chip-row *ngFor="let u of selectedUsers" (removed)="remove(u)">
             {{ u.username }}
             <button matChipRemove [attr.aria-label]="'remove ' + u.username">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-row>
         </mat-chip-grid>
-        <input placeholder="Search Users..."  formControlName="members"
-          [matChipInputFor]="chipGrid" [matAutocomplete]="auto"/>
+        <input placeholder="Search Users..." formControlName="members" [matChipInputFor]="chipGrid"
+          [matAutocomplete]="auto" />
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let member of members" [value]="member">
-                {{ member.username }}
-            </mat-option>
+          <mat-option *ngFor="let member of members" [value]="member">
+            {{ member.username }}
+          </mat-option>
         </mat-autocomplete>
         <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is required</mat-error>
       </mat-form-field>
-  </div>
+    </div>
 
-  <div mat-dialog-actions align="end">
-    <button type="button" mat-flat-button cdkFocusInitial  mat-dialog-close>
-      Cancel
-    </button>
-    <button
-      type="submit"
-      *ngIf="!isEditing"
-      [disabled]="!myForm.valid"
-      mat-flat-button
-      color="primary"
-      [mat-dialog-close]="true"
-    >
-      Create Project
-    </button>
-    <button
-      type="submit"
-      *ngIf="isEditing"
-      [disabled]="!myForm.valid"
-      mat-flat-button
-      color="primary"
-      [mat-dialog-close]="true"
-    >
-      Save Changes
-      
-    </button>
-  </div>
-</form>
+
+    <div mat-dialog-actions align="end"> 
+      <!-- Button Cancel -->
+      <button type="button" mat-flat-button cdkFocusInitial mat-dialog-close>
+        Cancel
+      </button>
+      <!-- Button Create -->
+      <button type="submit" *ngIf="!isEditing" [disabled]="!myForm.valid" mat-flat-button color="primary"
+        [mat-dialog-close]="true">
+        Create Project
+      </button>
+
+      <!-- Button Save -->
+      <button type="submit" *ngIf="isEditing" [disabled]="!myForm.valid" mat-flat-button color="primary"
+        [mat-dialog-close]="true">
+        Save Changes
+
+      </button>
+    </div>
+  </form>
+</div>

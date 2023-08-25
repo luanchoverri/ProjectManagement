@@ -22,6 +22,7 @@ export class TaskFormComponent implements OnInit{
     private ts: TaskService, 
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.storyId = router.url.split('?')[0].split('/').pop()!;
+   
   }
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class TaskFormComponent implements OnInit{
     }
 
     const createdControl = this.myForm.get('created');
-    const dueControl = this.myForm.get('dueDate');
+    const dueControl = this.myForm.get('due');
 
     if (dueControl && createdControl) {
       dueControl.setValidators(dueDateValidator(createdControl));
@@ -90,7 +91,7 @@ export class TaskFormComponent implements OnInit{
 
 export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const creationDate = creationDateControl.value;
+    const creationDate = new Date();
     const dueDate = control.value;
 
     if (creationDate && dueDate && dueDate < creationDate) {

@@ -19,11 +19,11 @@
         <li *ngIf="members.length > 0">
              Members:&nbsp;&nbsp; 
              <div *ngFor="let member of members; let last = last">
-                <mat-chip> <mat-icon matChipAvatar>person</mat-icon> {{member}}</mat-chip>{{ !last ? ', ' : '' }}
+                <mat-chip> <mat-icon matChipAvatar>account_circle</mat-icon> {{member}}</mat-chip>{{ !last ? ', ' : '' }}
              </div>    
         </li>
         <li *ngIf="project.owner">
-            Owner:&nbsp;<mat-chip> <mat-icon matChipAvatar>person</mat-icon>{{ownerName}}</mat-chip>
+            Owner:&nbsp;<mat-chip> <mat-icon matChipAvatar>account_circle</mat-icon>{{ownerName}}</mat-chip>
         </li>
     </ul>
 

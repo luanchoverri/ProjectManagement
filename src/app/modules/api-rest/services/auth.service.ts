@@ -12,6 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserResponse } from '../../models/userResponse';
 import { UserCredentials } from '../../models/userCredentials';
 import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user/user.service';
 
 const helper = new JwtHelperService();
 @Injectable({
@@ -19,6 +20,7 @@ const helper = new JwtHelperService();
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'token'; // Clave para guardar el token en el almacenamiento local
+  private readonly USER_KEY = 'user'; 
   private currentUser: User | null = null;
   private authStatusSubject = new BehaviorSubject<boolean>(this.isSessionActive());
   authStatus$ = this.authStatusSubject.asObservable();
@@ -34,7 +36,7 @@ export class AuthService {
       map((response: UserResponse) => {
         if (response.success) {
           this.saveToken(response.token);
-          this.currentUser = response.user;
+          localStorage.setItem(this.USER_KEY, response.user._id);
           this.updateAuthStatus(true);
         }
         return response.success;
@@ -68,7 +70,7 @@ export class AuthService {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUser ? this.currentUser : null;
+  getUserId(): string | null {
+    return localStorage.getItem(this.USER_KEY);
   }
 }

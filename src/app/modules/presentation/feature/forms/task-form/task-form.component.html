@@ -1,40 +1,57 @@
-<div mat-dialog-title>
-    <h1>{{ isEditing ? 'EDIT TASK' : 'NEW TASK' }}</h1>
+<div class="forms-custom-style">
+    <!-- Header -->
+    <div mat-dialog-title class="dialog-title">
+        <p>Fill out the form</p>
+        <h1>{{ isEditing ? 'EDIT TASK' : 'NEW TASK' }}</h1>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="form-container">
+        <div mat-dialog-content class="dialog-content">
+
+
+            <!-- Title -->
+            <mat-form-field appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="What is the title of the task?.." formControlName="name" />
+                <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+            </mat-form-field>
+
+            <!-- Description -->
+            <mat-form-field appearance="outline">
+                <mat-label>Description&nbsp;&nbsp;</mat-label>
+                <input matInput placeholder="Add a description.." formControlName="description" />
+            </mat-form-field>
+
+            <div class="inline-fields">
+                <!-- Due Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Due&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="due" />
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
+                        date</mat-error>
+                </mat-form-field>
+
+                <!-- Checkbox -->
+                <div class="custom-checkbox">
+                    <mat-label>Is Done?</mat-label>
+                    <mat-checkbox class="checkbox" formControlName="done"></mat-checkbox>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div mat-dialog-actions align="end">
+            <!-- Button Cancel -->
+            <button mat-flat-button cdkFocusInitial mat-dialog-close>Cancel</button>
+            <!-- Button Create -->
+            <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary" [mat-dialog-close]="true">Create Task</button>
+            <!-- Button Save -->
+            <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-buttoncolor="primary" [mat-dialog-close]="true">Save Changes</button>
+        </div>
+    </form>
 </div>
-
-<form [formGroup]=myForm (ngSubmit)="onSubmit()">
-
-    <div mat-dialog-content>
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" />
-            <mat-error *ngIf="myForm.get('description')?.hasError('minlength')">At least 10 characters long</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Due date</mat-label>
-            <input matInput [matDatepicker]="picker2" formControlName="due">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-            <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
-                date</mat-error>
-        </mat-form-field>
-
-        <mat-checkbox formControlName="done">Done</mat-checkbox>
-
-    </div>
-
-    <div mat-dialog-actions align="end">
-        <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Create Task</button>
-        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-raised-button color="primary" [mat-dialog-close]="true">Save Changes</button>
-    </div>
-
-</form>

@@ -1,9 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
@@ -20,12 +22,16 @@ export class StoryFormComponent {
   members$: Observable<User[]>;
   isEditing: boolean = false;
   selectedPoint!: number;
-  
+  selectedUsers: User[] = [];
+  fruitCtrl = new FormControl();
+
+
   constructor(
     private snackBar: MatSnackBar,
     private fb: FormBuilder, 
     private ss: StoryService,
     private us: UserService, 
+    private as: AuthService, 
     private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -36,9 +42,12 @@ export class StoryFormComponent {
         this.members = data;
       });
     }
+ 
   }
 
   ngOnInit() {
+    const ownerId = this.as.getUserId();
+    console.log('owner', ownerId);
     if (this.isEditing) {
       this.selectedPoint = this.data.initialValues.points;
       this.myForm = this.fb.group({
@@ -67,7 +76,7 @@ export class StoryFormComponent {
         ]),
         description: new FormControl(''),
         epic: new FormControl(this.epicId),
-        owner: new FormControl(''),
+        owner: new FormControl(ownerId),
         assignedTo: new FormControl(''),
         points : new FormControl(''),
         created: new FormControl(new Date()),
@@ -128,7 +137,41 @@ export class StoryFormComponent {
     this.isEditing = !this.isEditing;
   }  
 
+  onIconSelected(icon: string): void {
+    this.myForm.get('icon')?.setValue(icon);
+  }
+
+
+
+
+  remove(user: any): void {
+    const index = this.selectedUsers.indexOf(user);
+    if (index >= 0) {
+      this.selectedUsers.splice(index, 1);
+      this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    const selectedUser = event.option.value;
+    if (!this.selectedUsers.includes(selectedUser)) {
+      this.selectedUsers.push(selectedUser);
+      this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
+      this.fruitCtrl.setValue(' '); // Limpiar el campo de entrada
+    }
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
 
 export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -167,4 +210,7 @@ export function finishDateValidator(startDateControl: AbstractControl): Validato
     
     return null;
   };
+
+
+
 }

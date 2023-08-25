@@ -1,105 +1,138 @@
-<div mat-dialog-title>
-    <h1>{{ isEditing ? 'EDIT STORY' : 'NEW STORY' }}</h1>
+<div class="forms-custom-style">
+    <div mat-dialog-title class="dialog-title">
+        <p>Fill out the form</p>
+        <h1>{{ isEditing ? 'EDIT STORY' : 'NEW STORY' }}</h1>
+    </div>
+
+    <form [formGroup]=myForm (ngSubmit)="onSubmit()" class="form-container">
+
+        <div mat-dialog-content class="dialog-content">
+
+
+            <!-- Icon picker -->
+            <div class="icon-button-container">
+                <app-icon-picker [currentIcon]="myForm.get('icon')?.value" (iconSelected)="onIconSelected($event)"
+                    class="icon-picker"></app-icon-picker>
+            </div>
+
+            <!-- Status -->
+            <div class="status-container">
+                <mat-label><b>Status:</b></mat-label>
+                <mat-radio-group formControlName="status">
+                    <mat-radio-button value="todo"
+                        [checked]="myForm.get('status')?.value === 'todo'">Todo</mat-radio-button>
+                    <mat-radio-button value="running"
+                        [checked]="myForm.get('status')?.value === 'running'">Running</mat-radio-button>
+                    <mat-radio-button value="done"
+                        [checked]="myForm.get('status')?.value === 'done'">Done</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!-- Title -->
+            <mat-form-field class="mat-form-field-inline" appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="What is the title of the story?.." formControlName="name" />
+                <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+            </mat-form-field>
+
+            <!-- Description -->
+            <mat-form-field class="mat-form-field-inline" appearance="outline">
+                <mat-label>Description&nbsp;&nbsp;</mat-label>
+                <input matInput placeholder="Add a description.." formControlName="description" />
+            </mat-form-field>
+
+
+            <div class="inline-fields">   <!-- Inline  -->
+                <!-- Select Members  -->
+                <mat-form-field class="chip-list" appearance="outline">
+                    <mat-label>Select Memebers&nbsp;&nbsp;&nbsp;</mat-label>
+                    <mat-chip-grid #chipGrid aria-label="User selection">
+                        <mat-chip-row *ngFor="let u of selectedUsers" (removed)="remove(u)">
+                            {{ u.username }}
+                            <button matChipRemove [attr.aria-label]="'remove ' + u.username">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+                    </mat-chip-grid>
+                    <input placeholder="Search Users..." formControlName="assignedTo" [matChipInputFor]="chipGrid"
+                        [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let member of members" [value]="member">
+                            {{ member.username }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is
+                        required</mat-error>
+                </mat-form-field>
+
+                <!-- Points -->
+                <mat-form-field class="mat-form-field-inline-points" appearance="outline">
+                    <mat-label>Points&nbsp; </mat-label>
+                    <mat-select [(ngModel)]="selectedPoint" formControlName="points">
+                        <mat-option [value]=0>0</mat-option>
+                        <mat-option [value]=1>1</mat-option>
+                        <mat-option [value]=2>2</mat-option>
+                        <mat-option [value]=3>3</mat-option>
+                        <mat-option [value]=4>4</mat-option>
+                        <mat-option [value]=5>5</mat-option>
+                    </mat-select>
+                    <mat-icon matIconSuffix>star</mat-icon>
+                </mat-form-field>
+
+            </div>
+
+            <div class="inline-fields">     <!-- Dates inline  -->
+                <!-- Create Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Created&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="created">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- Due Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Due&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="due">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
+                        date</mat-error>
+                </mat-form-field>
+
+                <!-- Started Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Started&nbsp;&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker3" formControlName="started">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-error *ngIf="myForm.get('started')?.hasError('startDateInvalid')">Start date must be after
+                        creation date</mat-error>
+                </mat-form-field>
+
+                <!-- Finished Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Finished&nbsp;&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker4" formControlName="finished">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                    <mat-error *ngIf="myForm.get('finished')?.hasError('finishDateInvalid')">Finish date must be after
+                        start date</mat-error>
+                </mat-form-field>
+
+            </div>
+
+
+            <div mat-dialog-actions align="end">
+                <button mat-flat-button cdkFocusInitial mat-dialog-close>Cancel</button>
+                <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary"
+                    [mat-dialog-close]="true">Create Story</button>
+                <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary"
+                    [mat-dialog-close]="true">Save Changes</button>
+            </div>
+        </div>
+    </form>
 </div>
-
-<form [formGroup]=myForm (ngSubmit)="onSubmit()">
-
-    <div mat-dialog-content>
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Owner</mat-label>
-            <mat-select formControlName="owner">
-                <mat-option *ngFor="let member of members" [value]="member._id">
-                    {{member.username}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Assigned to</mat-label>
-            <mat-select formControlName="assignedTo">
-                <mat-option *ngFor="let member of members" [value]="member._id">
-                    {{member.username}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Points</mat-label>
-            <mat-select [(ngModel)]="selectedPoint" formControlName="points">
-                <mat-option [value]=1>1</mat-option>
-                <mat-option [value]=2>2</mat-option>
-                <mat-option [value]=3>3</mat-option>
-                <mat-option [value]=4>4</mat-option>
-                <mat-option [value]=5>5</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Created</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="created">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field >
-            <mat-label>Due</mat-label>
-            <input matInput  [matDatepicker]="picker2" formControlName="due">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-            <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation date</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Started</mat-label>
-            <input matInput [matDatepicker]="picker3" formControlName="started">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-            <mat-error *ngIf="myForm.get('started')?.hasError('startDateInvalid')">Start date must be after creation date</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Finished</mat-label>
-            <input matInput [matDatepicker]="picker4" formControlName="finished">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
-            <mat-datepicker #picker4></mat-datepicker>
-            <mat-error *ngIf="myForm.get('finished')?.hasError('finishDateInvalid')">Finish date must be after start date</mat-error>
-          </mat-form-field>
-
- 
-            <mat-label>Status</mat-label>
-            <mat-radio-group formControlName="status">
-                <mat-radio-button value="todo" [checked]="myForm.get('status')?.value === 'todo'">Todo</mat-radio-button>
-                <mat-radio-button value="running" [checked]="myForm.get('status')?.value === 'running'">Running</mat-radio-button>
-                <mat-radio-button value="done" [checked]="myForm.get('status')?.value === 'done'">Done</mat-radio-button>
-            </mat-radio-group>
-
-
-        <mat-form-field appearance="outline">
-            <mat-label>Icon</mat-label>
-            <input matInput formControlName="icon" />
-        </mat-form-field>
-
-    </div>
-
-    <div mat-dialog-actions align="end">
-        <button  mat-flat-button cdkFocusInitial  mat-dialog-close>Cancel</button>
-        <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid"  mat-flat-button color="primary" [mat-dialog-close]="true">Create Story</button>
-        <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid"   mat-flat-button color="primary" [mat-dialog-close]="true">Save Changes</button>
-    </div>
-
-</form>
