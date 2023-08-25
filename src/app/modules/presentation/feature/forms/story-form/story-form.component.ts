@@ -57,7 +57,7 @@ export class StoryFormComponent {
           Validators.minLength(5)
         ]),
         description: new FormControl(this.data.initialValues.description),
-        epic: new FormControl(this.epicId),
+        epic: new FormControl(this.data.initialValues.epic),
         owner: new FormControl(this.data.initialValues.owner),
         assignedTo: new FormControl(this.data.initialValues.assignedTo),
         points : new FormControl(this.data.initialValues.points),
@@ -115,6 +115,8 @@ export class StoryFormComponent {
       this.ss.updateItem(this.myForm.value).subscribe({
         next: (story) => {
           this.ss.getItems(this.epicId).subscribe();
+          //este get es para para my-stories refresque
+          this.ss.getStories().subscribe();
           this.snackBar.open('Story updated successfully', 'Close', {
             duration: 5000,
           });

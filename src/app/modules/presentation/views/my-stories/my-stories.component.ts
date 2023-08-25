@@ -18,10 +18,10 @@ export class MyStoriesComponent {
   loading: boolean = true;
   stories: Story[] = [];
   stories$: Subscription = new Subscription();
-  storiesServ: any;
+
 
   constructor(private storyService: StoryService) {
-    this.storiesServ = storyService;
+
   }
 
   ngOnInit(): void {
@@ -29,14 +29,15 @@ export class MyStoriesComponent {
   }
 
   loadStories(): void {
-    this.storyService.getStories().subscribe((stories) => {
-      this.stories = stories;
-      this.loading = false;
-      console.log(stories);
-    });
+    this.stories$ = this.storyService.getStories().subscribe(
+      (stories) => {
+        this.stories = stories;
+        this.loading = false;
+      }
+    );
   }
 
   ngOnDestroy(): void {
-    this.stories$.unsubscribe();
+
   }
 }

@@ -30,9 +30,18 @@ export class StoryService extends ListService<Story> {
   }
 
   getStories(): Observable<Story[]> {
-    return this.http
+    const sub = this.http
       .get<ApiResponse>(PathRest.GET_STORIES)
-      .pipe(map((response) => response.data));
+      .pipe(map((response) => response.data))
+      .subscribe({
+        next: (stories) => {
+          sub.unsubscribe();
+          if (this.storiesSubject){
+            this.storiesSubject.next(stories);
+          }
+        }
+      });
+    return this.stories$;
   }
 
   override getItems(id: string): Observable<Story[]> {
@@ -46,6 +55,7 @@ export class StoryService extends ListService<Story> {
           if (this.storiesSubject) {
             this.storiesSubject.next(stories);
           }
+          this.getStories();
         }
       });
     return this.stories$;
@@ -78,6 +88,7 @@ export class StoryService extends ListService<Story> {
   }
 
   override updateItem(item: Story): Observable<Story | null> {
+    console.log(item);
     return this.http
       .put<ApiResponse>(`${PathRest.GET_STORIES}/${item._id}`, item)
       .pipe(
@@ -86,6 +97,7 @@ export class StoryService extends ListService<Story> {
       );
   }
 
+  //cambiar this.getTasksByStory(id) por storyes.lenghts > 0
   override deleteItem(id: string): Observable<Story | null> {
     return this.getTasksByStory(id).pipe(
       switchMap((tasks) => {
