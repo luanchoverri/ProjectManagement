@@ -10,6 +10,7 @@ import { User } from 'src/app/modules/models/user';
 export class SettingsComponent implements OnInit {
   user!: User | null;
   loading: boolean = true;
+  darkMode: boolean = false;
 
 	constructor(private authService: AuthService) { }
 
@@ -21,5 +22,9 @@ export class SettingsComponent implements OnInit {
 	logOut(): void {
     this.authService.logout();
 	}
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+  }
 
 }

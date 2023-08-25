@@ -23,6 +23,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [],
@@ -51,6 +52,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatMenuModule,
     MatAutocompleteModule,
     MatGridListModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatCardModule,
@@ -76,6 +78,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatMenuModule,
     MatAutocompleteModule,
     MatGridListModule,
+    MatSlideToggleModule,
   ],
 })
 export class MaterialModule {}
