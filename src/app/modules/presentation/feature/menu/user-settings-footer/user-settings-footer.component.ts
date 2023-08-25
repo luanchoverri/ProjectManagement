@@ -9,7 +9,7 @@ import { AuthService } from '../../../../api-rest/services/auth.service';
 
 export class UserSettingsFooterComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService) {
+  constructor() {
    
   }
 
@@ -19,10 +19,5 @@ export class UserSettingsFooterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-
-
-  logOut(){
-    this.authService.logout();
-  }
 
 }
