@@ -28,6 +28,7 @@ export class TaskFormComponent implements OnInit{
   ngOnInit() {
     if(this.isEditing){
       this.myForm = this.fb.group({
+        _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, [
           Validators.required,
           Validators.minLength(5)
