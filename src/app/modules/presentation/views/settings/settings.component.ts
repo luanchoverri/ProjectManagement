@@ -17,4 +17,9 @@ export class SettingsComponent implements OnInit {
     this.user = this.authService.getUserData();
     this.loading = false;
   }
+
+	logOut(): void {
+    this.authService.logout();
+	}
+
 }
