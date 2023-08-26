@@ -50,7 +50,7 @@ export class StoryFormComponent {
     const ownerId = this.as.getUserId();
     console.log('owner', ownerId);
     if (this.isEditing) {
-      this.us.getMembersNames(this.data.initialValues.members).subscribe(
+      this.us.getMembersUsernames(this.data.initialValues.assignedTo).subscribe(
         names => {
           this.selectedNames = names
         }
@@ -150,36 +150,50 @@ export class StoryFormComponent {
     this.myForm.get('icon')?.setValue(icon);
   }
 
+  getSelectedItems(): any[] {
+    return this.isEditing ? this.selectedNames : this.selectedUsers;
+  }
+  
+  getDisplayName(item: any): string {
+    return this.isEditing ? item : item.username;
+  }
 
-
-
-  remove(user: any): void {
+  remove(item: any): void {
+    if (this.isEditing) {
+      this.removeEdit(item);
+    } else {
+      this.removeUser(item);
+    }
+  }
+  
+  removeUser(user: any): void {
     const index = this.selectedUsers.indexOf(user);
     if (index >= 0) {
       this.selectedUsers.splice(index, 1);
       this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
     }
   }
-
+  
+  removeEdit(name: any): void {
+    const index = this.selectedNames.indexOf(name);
+    if (index >= 0) {
+      this.selectedNames.splice(index, 1);
+      this.myForm.get('members')?.setValue(this.selectedNames);
+    }
+  }
+  
   selected(event: MatAutocompleteSelectedEvent): void {
-    const selectedUser = event.option.value;
-    if (!this.selectedUsers.includes(selectedUser)) {
-      this.selectedUsers.push(selectedUser);
+    const selectedValue = event.option.value;
+    if (this.isEditing) {
+      this.selectedNames.push(selectedValue.username);
+      this.myForm.get('members')?.setValue(this.selectedNames);
+    } else {
+      this.selectedUsers.push(selectedValue);
       this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
-      this.fruitCtrl.setValue(' '); // Limpiar el campo de entrada
     }
   }
 
 }
-
-
-
-
-
-
-
-
-
 
 
 export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {

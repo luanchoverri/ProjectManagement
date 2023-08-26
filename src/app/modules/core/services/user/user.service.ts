@@ -37,9 +37,15 @@ export class UserService {
     return forkJoin(membersNames$);
   }
 
-
-
-
-
+  getMembersUsernames(memberIds: string[]): Observable<string[]> {
+    const membersNames$: Observable<string>[] = memberIds.map(memberId =>
+      this.getUserById(memberId).pipe(
+        map(user => user ? `${user.username}` : ''),
+        catchError(() => of(''))
+      )
+    );
+    console.log(forkJoin(membersNames$))
+    return forkJoin(membersNames$);
+  }
 
 }

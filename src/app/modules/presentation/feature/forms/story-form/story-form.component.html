@@ -46,19 +46,14 @@
                 <mat-form-field class="chip-list" appearance="outline">
                     <mat-label>Select Members&nbsp;&nbsp;&nbsp;</mat-label>
                     <mat-chip-grid #chipGrid aria-label="User selection">
-                        <mat-chip-row *ngFor="let u of selectedUsers" (removed)="remove(u)">
-                            {{ u.username }}
-                            <button matChipRemove [attr.aria-label]="'remove ' + u.username">
+                        <mat-chip-row *ngFor="let item of getSelectedItems()" (removed)="remove(item)">
+                            {{ getDisplayName(item) }}
+                            <button matChipRemove [attr.aria-label]="'remove ' + getDisplayName(item)">
                                 <mat-icon>cancel</mat-icon>
                             </button>
                         </mat-chip-row>
-
-                        <!-- Selected Members when editing -->
-                        <mat-chip-row *ngFor="let name of selectedNames" [class.show]="isEditing">
-                            {{ name }}
-                        </mat-chip-row>
                     </mat-chip-grid>
-
+                
                     <input placeholder="Search Users..." formControlName="assignedTo" [matChipInputFor]="chipGrid"
                         [matAutocomplete]="auto" />
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
@@ -66,9 +61,8 @@
                             {{ member.username }}
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is
-                        required</mat-error>
-                </mat-form-field>
+                    <mat-error *ngIf="myForm.get('members')?.hasError('required')">At least one member is required</mat-error>
+                </mat-form-field>                
 
                 <!-- Points -->
                 <mat-form-field class="mat-form-field-inline-points" appearance="outline">
