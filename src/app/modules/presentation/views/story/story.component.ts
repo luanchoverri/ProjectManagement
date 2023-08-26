@@ -38,6 +38,9 @@ export class StoryComponent {
         //sirve para el delete que despues de borrar actualice lista
         this.parentItemId = id;
 
+        //nombre inicial del breadcrumb
+        this.breadcrumbService.set('@Story', 'Story ');
+
         //traigo los datos de la story para mostrar la descripción
         this.storyService.getItemById(id).subscribe({
           next: (story) => {

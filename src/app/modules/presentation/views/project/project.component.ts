@@ -43,6 +43,9 @@ export class ProjectComponent implements OnInit {
         //sirve para el delete que despues de borrar actualice lista
         this.parentItemId = id;
 
+        //nombre inicial del breadcrumb
+        this.breadcrumbService.set('@Project', 'Project ');
+
         //traigo los datos del proyecto para mostrar la descripción
         this.projectService.getItemById(id).subscribe({
           next: (project) => {

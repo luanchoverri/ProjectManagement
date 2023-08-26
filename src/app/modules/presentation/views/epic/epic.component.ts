@@ -43,6 +43,9 @@ export class EpicComponent implements OnInit {
         //sirve para el delete que despues de borrar actualice lista
         this.parentItemId = id;
 
+        //nombre inicial del breadcrumb
+        this.breadcrumbService.set('@Epic', 'Epic ');
+
         //traigo los datos del proyecto para mostrar la descripción
         this.epicService.getItemById(id).subscribe({
           next: (epic) => {
