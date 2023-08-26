@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, forkJoin } from 'rxjs';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Project } from 'src/app/modules/models/project.model';
@@ -25,8 +24,6 @@ export class ProjectComponent implements OnInit {
   project!: Project;
   epics: Epic[] = [];
   formComponent: any;
-  epicSubject = new BehaviorSubject<Epic[]>([]);
-  epics$ = this.epicSubject.asObservable();
   parentItemId: string | undefined;
 
   constructor(

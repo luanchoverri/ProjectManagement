@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { Project } from 'src/app/modules/models/project.model';
 import { ProjectFormComponent } from '../../feature/forms/project-form/project-form.component';
@@ -14,17 +13,16 @@ import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.serv
     useExisting: ProjectService,
   }],
 })
-export class MyProjectsComponent implements OnInit, OnDestroy {
+export class MyProjectsComponent implements OnInit {
 
   projects: Project[] = [];
-  projects$: Subscription = new Subscription();
   loading = true;
   formComponent: any;
 
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projects$ = this.projectService.getItems("").subscribe({
+    this.projectService.getItems("").subscribe({
       next: (projects) => {
         this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
         this.loading = false;
@@ -38,10 +36,6 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
       },
     });
     this.formComponent = ProjectFormComponent;
-  }
-
-  ngOnDestroy(): void {
-    this.projects$.unsubscribe();
   }
 
 }

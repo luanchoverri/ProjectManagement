@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, forkJoin } from 'rxjs';
 import { EpicService } from 'src/app/modules/core/services/epic/epic.service';
 import { Epic } from 'src/app/modules/models/epic.model';
 import { Story } from 'src/app/modules/models/story';
@@ -25,8 +24,6 @@ export class EpicComponent implements OnInit {
   epic!: Epic;
   stories: Story[] = [];
   formComponent: any;
-  storySubject = new BehaviorSubject<Story[]>([]);
-  stories$ = this.storySubject.asObservable();
   parentItemId: string | undefined;
 
   constructor(

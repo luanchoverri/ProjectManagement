@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Story } from 'src/app/modules/models/story';
@@ -17,19 +16,11 @@ import { Story } from 'src/app/modules/models/story';
 export class MyStoriesComponent {
   loading: boolean = true;
   stories: Story[] = [];
-  stories$: Subscription = new Subscription();
 
-
-  constructor(private storyService: StoryService) {
-
-  }
+  constructor(private storyService: StoryService) {}
 
   ngOnInit(): void {
-    this.loadStories();
-  }
-
-  loadStories(): void {
-    this.stories$ = this.storyService.getStories().subscribe(
+    this.storyService.getStories().subscribe(
       (stories) => {
         this.stories = stories;
         this.loading = false;
@@ -37,7 +28,4 @@ export class MyStoriesComponent {
     );
   }
 
-  ngOnDestroy(): void {
-    this.stories$.unsubscribe();
-  }
 }

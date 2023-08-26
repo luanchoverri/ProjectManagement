@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, forkJoin } from 'rxjs';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { TaskService } from 'src/app/modules/core/services/task/task.service';
 import { Story } from 'src/app/modules/models/story';
@@ -20,8 +19,6 @@ export class StoryComponent {
   tasks: Task[] = [];
   tasksServ: any;
   formComponent: any;
-  taskSubject = new BehaviorSubject<Task[]>([]);
-  tasks$ = this.taskSubject.asObservable();
   parentItemId: string | undefined;;
 
   constructor(
@@ -30,7 +27,6 @@ export class StoryComponent {
     private breadcrumbService: BreadcrumbService,
     private taskService: TaskService
   ) {
-    this.tasksServ = taskService;
     this.formComponent = TaskFormComponent;
   }
 
@@ -80,6 +76,4 @@ export class StoryComponent {
       }
     });
   }
-
-  ngOnDestroy(): void {}
 }
