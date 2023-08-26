@@ -38,7 +38,6 @@ registerLocaleData(localeEsAr, 'es-AR');
     }),
     PresentationModule,
     CoreModule, 
-    ViewsModule,
     BreadcrumbModule,
 
   ],

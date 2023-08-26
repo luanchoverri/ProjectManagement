@@ -12,7 +12,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserResponse } from '../../models/userResponse';
 import { UserCredentials } from '../../models/userCredentials';
 import { Router } from '@angular/router';
-import jwt_decode from 'jwt-decode';
 
 
 const helper = new JwtHelperService();
@@ -22,7 +21,6 @@ const helper = new JwtHelperService();
 export class AuthService {
   private readonly TOKEN_KEY = 'token'; // Clave para guardar el token en el almacenamiento local
   private readonly USER_KEY = 'user'; 
-  private currentUser: User | null = null;
   private authStatusSubject = new BehaviorSubject<boolean>(this.isSessionActive());
   authStatus$ = this.authStatusSubject.asObservable();
 
@@ -39,7 +37,7 @@ export class AuthService {
           this.saveToken(response.token);
           localStorage.setItem(this.USER_KEY, response.user._id);
           this.updateAuthStatus(true);
-          this.currentUser = response.user;
+     
         }
         return response.success;
       }),
@@ -51,7 +49,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
-    this.currentUser = null;
     this.updateAuthStatus(false);
     this.router.navigate([endpoint.LOGIN]);
   }
@@ -76,14 +73,7 @@ export class AuthService {
     return localStorage.getItem(this.USER_KEY);
   }
 
-  getUserData(): User | null {
-    let token = this.getToken();
-    if (token) {
-        let data: any = jwt_decode(token);
-        return data.user;
-      }
-    return null;
-  }
+
 
 }
 
