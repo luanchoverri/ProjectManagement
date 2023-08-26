@@ -1,8 +1,8 @@
 <mat-expansion-panel class="custom-extension-panel" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <div class="header">
-        <div class="icon-container">
-          <mat-icon class="icon" *ngIf="project.icon">{{project.icon}}</mat-icon>
+        <div class="icon-container" *ngIf="project.icon">
+          <mat-icon class="icon">{{project.icon}}</mat-icon>
         </div>
         <div class="content">
           <mat-panel-title>{{ project.name }}</mat-panel-title>
