@@ -1,16 +1,13 @@
 
 .login-page {
     background-color: #f0eded;
-
     background-size: cover;
-    height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    height: 100vh;
   }
   .header {
     padding: 110px 0;
-    text-align: center;
     // background-image: url(https://img.freepik.com/vector-gratis/fondo-poligonal_52683-8141.jpg?w=740&t=st=1692580971~exp=1692581571~hmac=ef8231c017171c9d06c641f66f67c551e911fac49777ee611ba16e5cb3ea1ed8);
     // background-image: url(https://img.freepik.com/vector-gratis/fondo-geometrico_23-2148045127.jpg?w=740&t=st=1692581144~exp=1692581744~hmac=633b1045d7c52cbb233776f796283637b0b58b279494e5655076776fa250f330);
     background-image: url(https://img.freepik.com/vector-gratis/fondo-abstracto-azul-lineas_23-2147610569.jpg?w=740&t=st=1692581480~exp=1692582080~hmac=cc89d5a55cc0c9fad18bd3e85030e4c006807f52a9e874fffd682a216b776edf);
@@ -18,15 +15,23 @@
     color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    h1{
-        font-size: 36px;
-    }
+  }
+
+  h1{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 2rem;
   }
   
   mat-card {
     width: 500px;
     border-radius: 10px;
     box-shadow: 0px 0px 30px rgba(114, 111, 111, 0.26); 
+    margin-left: 3rem;
+    margin-right: 3rem;
+    height: fit-content;
+    margin-top: 40%;
   }
   
   mat-form-field, mat-checkbox {
@@ -75,4 +80,16 @@
     margin-top: 10px;
   }
   
+//desktop
+@media only screen and (min-width: 768px) {
+  .login-page{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+  }
 
+  mat-card{
+    margin-top: 0;
+  }
+}

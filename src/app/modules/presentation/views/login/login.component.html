@@ -1,7 +1,7 @@
 <div class="login-page">
     <mat-card class="mat-elevation-z12">
         <mat-card-content>
-            <h1 class="welcome-message">Login</h1>
+            <h1 class="welcome-message">Sign in to your account</h1>
             <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
                 <mat-form-field class="username-input">
                     <mat-label>Username</mat-label>
@@ -39,7 +39,7 @@
                 </mat-form-field>
 
                 <button type="submit" mat-raised-button color="primary" class="login-button">
-                    Login
+                    Sign in
                 </button>
                 <div *ngIf="isLoading" class="loading-spinner">
                     <mat-spinner diameter="30"></mat-spinner>
