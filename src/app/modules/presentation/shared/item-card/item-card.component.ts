@@ -45,7 +45,8 @@ export class ItemCardComponent {
               if(this.parentItemId)
               this.service.getItems(this.parentItemId).subscribe();
               else
-              this.service.getItems("").subscribe();
+              //lo usan my-stories y my-projects
+              this.service.getAllItems().subscribe();
             }}
         );
       }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { Story } from 'src/app/modules/models/story';
@@ -20,11 +21,16 @@ export class MyStoriesComponent {
   constructor(private storyService: StoryService) {}
 
   ngOnInit(): void {
-    this.storyService.getStories().subscribe(
-      (stories) => {
+    this.storyService.getAllItems().subscribe({
+      next: (stories) => {
         this.stories = stories;
         this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+        alert('Error fetching stories');
       }
+    }
     );
   }
 

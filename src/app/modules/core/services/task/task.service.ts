@@ -28,6 +28,21 @@ export class TaskService extends ListService<Task> {
     
   }
 
+  //abstract methods
+  override getAllItems(): Observable<Task[]> {
+    const sub = this.http
+      .get<ApiResponse>(PathRest.GET_TASKS)
+      .pipe(map((response) => response.data),
+      catchError(() => of([]))
+      ).subscribe({
+        next: (tasks) => {
+          if (this.tasksSubject)
+          this.tasksSubject.next(tasks);
+        }
+      });
+    return this.tasks$;
+  }
+
   override getItems(id: string): Observable<Task[]> {
     const sub = this.http
     .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`)

@@ -123,7 +123,7 @@ export class StoryFormComponent {
         next: (story) => {
           this.ss.getItems(this.epicId).subscribe();
           //este get es para para my-stories refresque
-          this.ss.getStories().subscribe();
+          this.ss.getAllItems().subscribe();
           this.snackBar.open('Story updated successfully', 'Close', {
             duration: 5000,
           });

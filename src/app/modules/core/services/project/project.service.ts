@@ -29,6 +29,21 @@ export class ProjectService extends ListService<Project> {
   }
 
   //abstract methods
+  override getAllItems(): Observable<Project[]> {
+    const sub = this.http
+      .get<ApiResponse>(PathRest.GET_PROJECTS)
+      .pipe(map((response) => response.data),
+      catchError(() => of([]))
+      ).subscribe({
+        next: (projects) => {
+          if (this.projectsSubject)
+          this.projectsSubject.next(projects);
+        }
+      });
+    return this.projects$;
+  }
+
+
   override getItems(id : string): Observable<Project[]> {
     const sub = this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
       map((response) => response.data),catchError(() => of([]))).subscribe({

@@ -29,6 +29,21 @@ export class EpicService extends ListService<Epic>{
     super();
   }
 
+  //abstract methods
+  override getAllItems(): Observable<Epic[]> {
+    const sub = this.http
+      .get<ApiResponse>(PathRest.GET_EPICS)
+      .pipe(map((response) => response.data),
+      catchError(() => of([]))
+      ).subscribe({
+        next: (epics) => {
+          if (this.epicsSubject)
+          this.epicsSubject.next(epics);
+        }
+      });
+    return this.epics$;
+  }
+
   override getItems(id: string): Observable<Epic[]> {
     const sub = this.http
       .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}${endpoint.EPICS}`)

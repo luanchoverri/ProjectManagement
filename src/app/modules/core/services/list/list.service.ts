@@ -10,6 +10,8 @@ export abstract class ListService<Item> {
   
   abstract getItems(parentId: string): Observable<Item[]>;
 
+  abstract getAllItems(): Observable<Item[]>;
+
   abstract getItemById(id: string): Observable<Item>;
 
   abstract getItemName(id: string): Observable<string>;

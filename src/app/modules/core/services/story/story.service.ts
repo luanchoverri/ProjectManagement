@@ -29,19 +29,20 @@ export class StoryService extends ListService<Story> {
     super();
   }
 
-  getStories(): Observable<Story[]> {
+  //abstract methods
+  override getAllItems(): Observable<Story[]> {
     const sub = this.http
-      .get<ApiResponse>(PathRest.GET_STORIES)
-      .pipe(map((response) => response.data))
-      .subscribe({
-        next: (stories) => {
-          sub.unsubscribe();
-          if (this.storiesSubject){
-            this.storiesSubject.next(stories);
-          }
+    .get<ApiResponse>(PathRest.GET_STORIES)
+    .pipe(map((response) => response.data))
+    .subscribe({
+      next: (stories) => {
+        sub.unsubscribe();
+        if (this.storiesSubject){
+          this.storiesSubject.next(stories);
         }
-      });
-    return this.stories$;
+      }
+    });
+  return this.stories$;
   }
 
   override getItems(id: string): Observable<Story[]> {
@@ -55,7 +56,7 @@ export class StoryService extends ListService<Story> {
           if (this.storiesSubject) {
             this.storiesSubject.next(stories);
           }
-          this.getStories();
+          //this.getStories();
         }
       });
     return this.stories$;

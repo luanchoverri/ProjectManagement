@@ -22,7 +22,7 @@ export class MyProjectsComponent implements OnInit {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.getItems("").subscribe({
+    this.projectService.getAllItems().subscribe({
       next: (projects) => {
         this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
         this.loading = false;
