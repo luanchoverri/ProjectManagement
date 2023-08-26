@@ -38,6 +38,6 @@ export class MyStoriesComponent {
   }
 
   ngOnDestroy(): void {
-
+    this.stories$.unsubscribe();
   }
 }

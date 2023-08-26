@@ -24,9 +24,18 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projects$ = this.projectService.getItems("").subscribe((projects) => {
-      this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
-      this.loading = false;
+    this.projects$ = this.projectService.getItems("").subscribe({
+      next: (projects) => {
+        this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
+        this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+        alert('Error fetching projects');
+      },
+      complete: () => {
+        this.loading = false;
+      },
     });
     this.formComponent = ProjectFormComponent;
   }

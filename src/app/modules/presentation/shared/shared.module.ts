@@ -12,8 +12,7 @@ import { ProjectDetailsComponent } from './details/project-details/project-detai
 import { EpicDetailsComponent } from './details/epic-details/epic-details.component';
 import { StoryDetailsComponent } from './details/story-details/story-details.component';
 import { IconPickerComponent } from './icon-picker/icon-picker.component';
-
-
+import { NoItemsCardComponent } from './no-items-card/no-items-card.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,8 @@ import { IconPickerComponent } from './icon-picker/icon-picker.component';
     EpicDetailsComponent,
     StoryDetailsComponent,
     IconPickerComponent,
-
-
+    NoItemsCardComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -45,6 +44,7 @@ import { IconPickerComponent } from './icon-picker/icon-picker.component';
     EpicDetailsComponent,
     StoryDetailsComponent,
     IconPickerComponent,
+    NoItemsCardComponent,
 
   ]
 }) export class SharedModule { }

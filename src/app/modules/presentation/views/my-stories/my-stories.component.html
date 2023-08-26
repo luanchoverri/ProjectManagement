@@ -1,9 +1,9 @@
 <ng-container *ngIf="loading; else content">
     <div class="loading-progress">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-
     </div>
 </ng-container>
+
 <ng-template #content>
     <app-card-list [list]="stories"></app-card-list>
 </ng-template>
