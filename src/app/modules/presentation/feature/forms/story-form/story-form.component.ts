@@ -23,6 +23,7 @@ export class StoryFormComponent {
   isEditing: boolean = false;
   selectedPoint!: number;
   selectedUsers: User[] = [];
+  selectedNames: string[] = [];
   fruitCtrl = new FormControl();
 
 
@@ -49,6 +50,12 @@ export class StoryFormComponent {
     const ownerId = this.as.getUserId();
     console.log('owner', ownerId);
     if (this.isEditing) {
+      this.us.getMembersNames(this.data.initialValues.members).subscribe(
+        names => {
+          this.selectedNames = names
+        }
+      )
+      
       this.selectedPoint = this.data.initialValues.points;
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),

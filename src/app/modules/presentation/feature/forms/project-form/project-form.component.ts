@@ -24,6 +24,7 @@ export class ProjectFormComponent implements OnInit{
 
 
   selectedUsers: User[] = [];
+  selectedNames: string[] = [];
 
   constructor(
     private snackBar: MatSnackBar,
@@ -38,12 +39,17 @@ export class ProjectFormComponent implements OnInit{
       this.members$.subscribe((data) => {
         this.members = data;
       });
-    }
+    }    
   }
 
   ngOnInit() {
-   
-    if (this.isEditing) {
+    
+    if (this.isEditing) {    
+      this.us.getMembersNames(this.data.initialValues.members).subscribe(
+        names => {
+          this.selectedNames = names
+        }
+      )     
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, [
