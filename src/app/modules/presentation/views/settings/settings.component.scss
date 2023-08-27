@@ -1,12 +1,67 @@
-.settings {
-    margin-left: 1.5rem;
+mat-card {
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-card-content {
+  padding: 1rem;
+  max-width: 90%;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+//busque por la consola la propiedad
+//ajusto el espacio entre iconito y descripcion en los list items
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  overflow: visible;
+}
+
+//en mobile sino ponia 3 puntitos, asi colapsa el texto (en este caso mejor)
+.mdc-list-item__primary-text {
+  white-space: wrap;
+}
+
+.btn-togle-theme {
+  mat-slide-toggle{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-      mat-slide-toggle {
-        margin-top: 1rem;
-      }
-      .log-out {
-        margin-top:3rem;
-    }
+    align-items: center;
+    justify-content: center;
   }
+}
+
+.btn-logout {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+}
+
+//desktop
+@media only screen and (min-width: 768px) {
+  mat-card {
+    width: 60%;
+    margin-top: 2rem;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+
+  .btn-logout {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
+  }
+}
