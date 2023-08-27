@@ -21,10 +21,7 @@ export class ProjectFormComponent implements OnInit{
   isEditing: boolean = false;
   isMobile: boolean = false;
   fruitCtrl = new FormControl();
-
-
   selectedUsers: User[] = [];
-  selectedNames: string[] = [];
 
   constructor(
     private snackBar: MatSnackBar,
@@ -45,9 +42,9 @@ export class ProjectFormComponent implements OnInit{
   ngOnInit() {
     
     if (this.isEditing) {    
-      this.us.getMembersUsernames(this.data.initialValues.members).subscribe(
-        names => {
-          this.selectedNames = names
+      this.us.getUsersByIds(this.data.initialValues.members).subscribe(
+        users  => {
+          this.selectedUsers = users
         }
       )     
       this.myForm = this.fb.group({
@@ -108,46 +105,21 @@ export class ProjectFormComponent implements OnInit{
   }
 
 
-  getSelectedItems(): any[] {
-    return this.isEditing ? this.selectedNames : this.selectedUsers;
-  }
-  
-  getDisplayName(item: any): string {
-    return this.isEditing ? item : item.username;
-  }
-
-  remove(item: any): void {
-    if (this.isEditing) {
-      this.removeEdit(item);
-    } else {
-      this.removeUser(item);
-    }
-  }
-  
-  removeUser(user: any): void {
+  remove(user: any): void {
     const index = this.selectedUsers.indexOf(user);
     if (index >= 0) {
       this.selectedUsers.splice(index, 1);
       this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
     }
   }
-  
-  removeEdit(name: any): void {
-    const index = this.selectedNames.indexOf(name);
-    if (index >= 0) {
-      this.selectedNames.splice(index, 1);
-      this.myForm.get('members')?.setValue(this.selectedNames);
-    }
-  }
-  
+
   selected(event: MatAutocompleteSelectedEvent): void {
-    const selectedValue = event.option.value;
-    if (this.isEditing) {
-      this.selectedNames.push(selectedValue.username);
-      this.myForm.get('members')?.setValue(this.selectedNames);
-    } else {
-      this.selectedUsers.push(selectedValue);
+    const selectedUser = event.option.value;
+    if (!this.selectedUsers.includes(selectedUser)) {
+      this.selectedUsers.push(selectedUser);
       this.myForm.get('members')?.setValue(this.selectedUsers.map(user => user._id));
+      this.fruitCtrl.setValue(''); // Limpiar el campo de entrada
     }
   }
+
 }

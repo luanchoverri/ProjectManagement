@@ -37,15 +37,16 @@ export class UserService {
     return forkJoin(membersNames$);
   }
 
-  getMembersUsernames(memberIds: string[]): Observable<string[]> {
-    const membersNames$: Observable<string>[] = memberIds.map(memberId =>
-      this.getUserById(memberId).pipe(
-        map(user => user ? `${user.username}` : ''),
-        catchError(() => of(''))
+  getUsersByIds(ids: string[]): Observable<User[]> {
+    const userObservables$: Observable<User | null>[] = ids.map(id =>
+      this.getUserById(id).pipe(
+        catchError(() => of(null))
       )
     );
-    console.log(forkJoin(membersNames$))
-    return forkJoin(membersNames$);
+  
+    return forkJoin(userObservables$).pipe(
+      map(users => users.filter(user => user !== null) as User[])
+    );
   }
 
 }
