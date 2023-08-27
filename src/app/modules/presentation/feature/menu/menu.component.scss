@@ -13,7 +13,6 @@ app-logo-header {
   width: 70%; // Al ser position fixed, no puedo heredar width del padre
   z-index: 2; // Asegura que el logo se vea por encima del contenido
   background-color: white;
-  border-bottom: 1px solid black;
   height: 4rem;
   display: flex;
   justify-content: center;
@@ -24,7 +23,6 @@ app-user-settings-footer {
   min-width: 70%;
   position: fixed; // User settings at the bottom are fixed
   bottom: 0;
-  border-top: 1px solid black;
 }
 
 //estilos del main content
