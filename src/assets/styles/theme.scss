@@ -25,12 +25,6 @@ $FB-dark-accent:mat-palette($mat-green, A200, A100, A400);
 $FB-dark-warn: mat-palette($mat-deep-orange);
 
 
-
-$FrontendBootcamp-dark-primary: mat-palette($mat-purple);
-$FrontendBootcamp-dark-accent:mat-palette($mat-green, A200, A100, A400);
-$FrontendBootcamp-dark-warn: mat-palette($mat-deep-orange);
-
-
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $FB-theme: mat-light-theme((
@@ -48,10 +42,6 @@ $FB-dark-theme: mat-dark-theme((
     warn: $FB-dark-warn
   )
 ));
-
-// @media(prefers-color-schema: dark){
-//   @include angular-material-theme($FrontendBootcamp-dark-theme)
-// }
 
 
 
