@@ -49,6 +49,10 @@ $FB-dark-theme: mat-dark-theme((
   )
 ));
 
+// @media(prefers-color-schema: dark){
+//   @include angular-material-theme($FrontendBootcamp-dark-theme)
+// }
+
 
 
 
