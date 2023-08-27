@@ -3,7 +3,7 @@
 }
 
 .icon-menu {
-    padding: 0 !important; /* Elimina el relleno predeterminado del menú */
+    padding: 0 !important; 
   }
 
   .icon-grid-tile {
@@ -11,4 +11,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  .icon-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
   }
