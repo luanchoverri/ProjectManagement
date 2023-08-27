@@ -9,7 +9,7 @@ body{
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
+// breadcrums light theme
 .xng-breadcrumb-root {
 
   padding: 0px 16px;
@@ -23,11 +23,11 @@ body{
   }
   
   .xng-breadcrumb-trail {
-    background-color: rgb(248, 163, 35);
+    background-color:rgb(255, 122, 34) ;
     padding: 4px 16px;
     border-radius: 16px;
     color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.404);
 
   }
   
@@ -39,7 +39,7 @@ body{
 }
 
 
-
+// expansion panel: project - story - epic
 .custom-extension-panel {
 
   mat-expansion-panel-header  {
@@ -108,7 +108,7 @@ body{
 }
 
 
-//forms 
+//forms: project -story - epic - task
 
 .form-container{
   mat-form-field{
