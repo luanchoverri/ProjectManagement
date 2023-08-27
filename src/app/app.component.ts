@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from './modules/core/services/theme/theme.service';
 
 const DEFAULT_LANG = 'es-AR';
 
@@ -8,6 +9,13 @@ const DEFAULT_LANG = 'es-AR';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+ 
+  constructor(private ts: ThemeService){}
+ 
+  ngOnInit(): void {
+    
+   this.ts.setDarkTheme(this.ts.isDark);
+  }
 
 }

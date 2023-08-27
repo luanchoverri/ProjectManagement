@@ -5,7 +5,7 @@ import { HostBinding, Injectable, Component } from '@angular/core';
   providedIn: 'root'
 })
 export class ThemeService {
-  public isDark = true;
+  public isDark = false;
   static readonly darkStyleName = 'dark-theme';
   static readonly themeStorageKey = 'selectedTheme';
 
@@ -30,6 +30,14 @@ export class ThemeService {
       document.body.classList.add(ThemeService.darkStyleName);
       localStorage.setItem(ThemeService.themeStorageKey, ThemeService.darkStyleName);
       this.isDark = true;
+    }
+  }
+
+  setDarkTheme(isDark: boolean): void {
+    if (isDark) {
+      document.body.classList.add(ThemeService.darkStyleName);
+    } else {
+      document.body.classList.remove(ThemeService.darkStyleName);
     }
   }
 }
