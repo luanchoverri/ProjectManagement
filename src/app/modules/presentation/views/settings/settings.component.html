@@ -15,7 +15,7 @@
             <p>{{ user.email }}</p>
         
         </div>
-        <mat-slide-toggle color="primary">Dark mode</mat-slide-toggle>
+        <mat-slide-toggle (change)="toggleDarkMode()" [checked]="isDarkMode" color="accent">Dark mode</mat-slide-toggle>
 
         <button type="button"  mat-raised-button color="primary"  class="log-out" (click)="logOut()">Log out</button>
     </ng-template>

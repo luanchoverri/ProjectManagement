@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
+import { ThemeService } from '../../../core/services/theme/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -11,12 +13,13 @@ import { User } from 'src/app/modules/models/user';
 export class SettingsComponent implements OnInit {
   user!: User | null;
   loading: boolean = true;
-  darkMode: boolean = false;
+  isDarkMode: boolean = false;
 
-  constructor(private authService: AuthService, private us: UserService) { }
+  constructor(private authService: AuthService, private us: UserService, private ts: ThemeService) { }
 
   ngOnInit(): void {
 
+    
     const userId = this.authService.getUserId();
     if (userId) {
       this.us.getUserById(userId).subscribe(
@@ -27,7 +30,7 @@ export class SettingsComponent implements OnInit {
       );
     }
 
-
+    this.isDarkMode = this.ts.isDark
   }
 
   logOut(): void {
@@ -35,7 +38,7 @@ export class SettingsComponent implements OnInit {
   }
 
   toggleDarkMode() {
-    this.darkMode = !this.darkMode;
+    this.ts.toggleTheme();
+    this.isDarkMode = this.ts.isDark;
   }
-
 }
