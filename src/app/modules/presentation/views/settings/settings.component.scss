@@ -36,7 +36,9 @@ mat-card-title {
 }
 
 .btn-togle-theme {
+  margin: 10px;
   mat-slide-toggle{
+    padding: 1rem 0rem;
     display: flex;
     align-items: center;
     justify-content: center;

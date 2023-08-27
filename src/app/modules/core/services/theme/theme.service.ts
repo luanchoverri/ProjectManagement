@@ -5,7 +5,7 @@ import { HostBinding, Injectable, Component } from '@angular/core';
   providedIn: 'root'
 })
 export class ThemeService {
-  public isDark = false;
+  public isDark = true;
   static readonly darkStyleName = 'dark-theme';
   static readonly themeStorageKey = 'selectedTheme';
 

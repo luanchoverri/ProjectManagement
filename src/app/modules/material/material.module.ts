@@ -24,6 +24,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
+
 
 @NgModule({
   declarations: [],
@@ -53,6 +56,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatAutocompleteModule,
     MatGridListModule,
     MatSlideToggleModule,
+    MatTooltipModule,
   ],
   exports: [
     MatCardModule,
@@ -79,6 +83,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatAutocompleteModule,
     MatGridListModule,
     MatSlideToggleModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}
