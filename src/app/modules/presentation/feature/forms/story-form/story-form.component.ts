@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/modules/api-rest/services/auth.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
+import { dateLessThan } from '../validation/date.validation';
 
 @Component({
   selector: 'app-story-form',
@@ -72,7 +73,11 @@ export class StoryFormComponent {
         finished: new FormControl(this.data.initialValues.finished),
         status: new FormControl(this.data.initialValues.status),
         icon: new FormControl(this.data.initialValues.icon),
-      });
+      },{ validators: 
+        [dateLessThan('created', 'due'),
+        dateLessThan('created', 'started'),
+        dateLessThan('created', 'finished'),
+        dateLessThan('started', 'finished')]});
     } else {
       this.myForm = this.fb.group({
         name: new FormControl('', [
@@ -84,33 +89,17 @@ export class StoryFormComponent {
         owner: new FormControl(ownerId),
         assignedTo: new FormControl(''),
         points : new FormControl(''),
-        created: new FormControl(new Date()),
+        created: new FormControl(new Date().setHours(0,0,0,0)),
         due: new FormControl(''),
         started: new FormControl(''),
         finished: new FormControl(''),
         status: new FormControl(''),
         icon: new FormControl(''),
-      });
-    }
-
-    const createdControl = this.myForm.get('created');
-    const dueControl = this.myForm.get('due');
-    const startedControl = this.myForm.get('started');
-    const finishedControl = this.myForm.get('finished');
-
-    if (dueControl && createdControl) {
-      dueControl.setValidators(dueDateValidator(createdControl));
-      dueControl.updateValueAndValidity();
-    }
-
-    if (startedControl && createdControl) {
-      startedControl.setValidators(startDateValidator(createdControl));
-      startedControl.updateValueAndValidity();
-    }
-
-    if (finishedControl && startedControl) {
-      finishedControl.setValidators(finishDateValidator(startedControl));
-      finishedControl.updateValueAndValidity();
+      },{ validators: 
+        [dateLessThan('created', 'due'),
+        dateLessThan('created', 'started'),
+        dateLessThan('created', 'finished'),
+        dateLessThan('started', 'finished')]});
     }
 
   }
@@ -164,48 +153,5 @@ export class StoryFormComponent {
       this.fruitCtrl.setValue(''); // Limpiar el campo de entrada
     }
   }
-
-}
-
-
-export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const creationDate = creationDateControl.value;
-    const dueDate = control.value;
-
-    if (creationDate && dueDate && dueDate < creationDate) {
-      return { dueDateInvalid: true };
-    }
-    
-    return null;
-  };
-}
-
-export function startDateValidator(creationDateControl: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const creationDate = creationDateControl.value;
-    const startDate = control.value;
-
-    if (creationDate && startDate && startDate < creationDate) {
-      return { startDateInvalid: true };
-    }
-    
-    return null;
-  };
-}
-
-export function finishDateValidator(startDateControl: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const startDate = startDateControl.value;
-    const finishDate = control.value;
-
-    if (startDate && finishDate && finishDate < startDate) {
-      return { finishDateInvalid: true };
-    }
-    
-    return null;
-  };
-
-
 
 }

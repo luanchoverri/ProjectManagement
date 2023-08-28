@@ -81,25 +81,6 @@
             </div>
 
             <div class="inline-fields">     <!-- Dates inline  -->
-                <!-- Create Date -->
-                <mat-form-field class="mat-form-field-data" appearance="outline">
-                    <mat-label>Created&nbsp;</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="created">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-
-                <!-- Due Date -->
-                <mat-form-field class="mat-form-field-data" appearance="outline">
-                    <mat-label>Due&nbsp;</mat-label>
-                    <input matInput [matDatepicker]="picker2" formControlName="due">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
-                        date</mat-error>
-                </mat-form-field>
 
                 <!-- Started Date -->
                 <mat-form-field class="mat-form-field-data" appearance="outline">
@@ -108,8 +89,8 @@
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('started')?.hasError('startDateInvalid')">Start date must be after
-                        creation date</mat-error>
+                    <mat-error *ngIf="myForm.get('started')?.errors?.['dateLessThan']">Start date must be equal or after
+                        creation date ({{myForm.get('created')?.value | date}})</mat-error>
                 </mat-form-field>
 
                 <!-- Finished Date -->
@@ -119,8 +100,19 @@
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
                     <mat-datepicker #picker4></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('finished')?.hasError('finishDateInvalid')">Finish date must be after
-                        start date</mat-error>
+                    <mat-error *ngIf="myForm.get('finished')?.errors?.['dateLessThan']">Finish date must be equal or after
+                        creation date ({{myForm.get('created')?.value | date}}) and started date (if setted)</mat-error>
+                </mat-form-field>
+
+                <!-- Due Date -->
+                <mat-form-field class="mat-form-field-data" appearance="outline">
+                    <mat-label>Due&nbsp;</mat-label>
+                    <input matInput [matDatepicker]="picker2" formControlName="due">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error *ngIf="myForm.get('due')?.errors?.['dateLessThan']">Due date must be equal or after creation
+                        date ({{myForm.get('created')?.value | date}})</mat-error>
                 </mat-form-field>
 
             </div>
