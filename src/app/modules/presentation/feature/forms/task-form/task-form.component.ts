@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/modules/core/services/task/task.service';
+import { dateLessThan } from '../validation/date.validation';
 
 @Component({
   selector: 'app-task-form',
@@ -35,10 +36,10 @@ export class TaskFormComponent implements OnInit{
         ]),
         description: new FormControl(this.data.initialValues.description, Validators.minLength(10)),
         story: new FormControl(this.storyId),
-        created: new FormControl(new Date()),
-        due: new FormControl(this.data.initialValues.dueDate),
+        created: new FormControl(new Date(this.data.initialValues.created).setHours(0,0,0,0)),
+        due: new FormControl(this.data.initialValues.due),
         done: new FormControl(this.data.initialValues.done),
-      });
+      }, { validators: dateLessThan('created', 'due') });
     }else{
       this.myForm = this.fb.group({
         name: new FormControl('', [
@@ -47,24 +48,15 @@ export class TaskFormComponent implements OnInit{
         ]),
         description: new FormControl('', Validators.minLength(10)),
         story: new FormControl(this.storyId),
-        created: new FormControl(new Date()),
+        created: new FormControl(new Date().setHours(0,0,0,0)),
         due: new FormControl(''),
         done: new FormControl(''),
-      });
-    }
-
-    const createdControl = this.myForm.get('created');
-    const dueControl = this.myForm.get('due');
-
-    if (dueControl && createdControl) {
-      dueControl.setValidators(dueDateValidator(createdControl));
-      dueControl.updateValueAndValidity();
+      }, { validators: dateLessThan('created', 'due') });
     }
   }
 
   onSubmit() {
     if (this.isEditing) {  
-      console.log(this.myForm.value);
       this.ts.updateItem(this.myForm.value).subscribe({
         next: () => {
           this.ts.getItems(this.storyId).subscribe();
@@ -88,17 +80,4 @@ export class TaskFormComponent implements OnInit{
   toggleIsEditing() {
     this.isEditing = !this.isEditing;
   }  
-}
-
-export function dueDateValidator(creationDateControl: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const creationDate = new Date();
-    const dueDate = control.value;
-
-    if (creationDate && dueDate && dueDate < creationDate) {
-      return { dueDateInvalid: true };
-    }
-    
-    return null;
-  };
 }

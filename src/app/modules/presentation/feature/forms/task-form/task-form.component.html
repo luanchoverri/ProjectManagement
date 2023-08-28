@@ -21,6 +21,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Description&nbsp;&nbsp;</mat-label>
                 <input matInput placeholder="Add a description.." formControlName="description" />
+                <mat-error *ngIf="myForm.get('description')?.hasError('minlength')">At least 10 characters long</mat-error>
             </mat-form-field>
 
             <div class="inline-fields">
@@ -31,7 +32,7 @@
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('due')?.hasError('dueDateInvalid')">Due date must be after creation
+                    <mat-error *ngIf="myForm.get('due')?.errors?.['dateLessThan']">Due date must be after creation
                         date</mat-error>
                 </mat-form-field>
 
@@ -51,7 +52,7 @@
             <!-- Button Create -->
             <button *ngIf="!isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary" [mat-dialog-close]="true">Create Task</button>
             <!-- Button Save -->
-            <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-buttoncolor="primary" [mat-dialog-close]="true">Save Changes</button>
+            <button *ngIf="isEditing" type="submit" [disabled]="!myForm.valid" mat-flat-button color="primary" [mat-dialog-close]="true">Save Changes</button>
         </div>
     </form>
 </div>
