@@ -6,21 +6,4 @@ import { Subscription } from 'rxjs';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit, OnDestroy{
-
-
-
-  constructor( ) { 
-
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
-
-
-
-}
-
+export class NavComponent {}

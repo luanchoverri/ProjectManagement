@@ -7,17 +7,4 @@ import { AuthService } from '../../../../api-rest/services/auth.service';
   styleUrls: ['./user-settings-footer.component.scss'],
 })
 
-export class UserSettingsFooterComponent implements OnInit, OnDestroy {
-
-  constructor() {
-   
-  }
-
-  ngOnInit(): void {
-    
-  }
-
-  ngOnDestroy(): void {}
-
-
-}
+export class UserSettingsFooterComponent {}
