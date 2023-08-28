@@ -5,5 +5,14 @@
 </ng-container>
 
 <ng-template #content>
-    <app-card-list [list]="stories"></app-card-list>
+
+    <mat-radio-group >
+        <mat-radio-button value="all" (change)="onChange($event)" checked>All</mat-radio-button>
+        <mat-radio-button value="todo" (change)="onChange($event)">Todo</mat-radio-button>
+        <mat-radio-button value="running" (change)="onChange($event)">Running</mat-radio-button>
+        <mat-radio-button value="done" (change)="onChange($event)">Done</mat-radio-button>
+    </mat-radio-group>
+
+    <app-card-list [list]="selectedStories"></app-card-list>
+    
 </ng-template>

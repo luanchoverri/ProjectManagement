@@ -16,14 +16,16 @@ import { Story } from 'src/app/modules/models/story';
 
 export class MyStoriesComponent {
   loading: boolean = true;
-  stories: Story[] = [];
+  selectedStories: Story[] = [];
+  allstories: Story[] = [];
 
   constructor(private storyService: StoryService) {}
 
   ngOnInit(): void {
     this.storyService.getAllItems().subscribe({
       next: (stories) => {
-        this.stories = stories;
+        this.allstories = stories;
+        this.selectedStories = stories;
         this.loading = false;
       },
       error: (error) => {
@@ -32,6 +34,15 @@ export class MyStoriesComponent {
       }
     }
     );
+  }
+
+  onChange(selected: any) {
+    if (selected.value === 'all') {
+      this.selectedStories = this.allstories;
+    }
+    else {
+      this.selectedStories = this.allstories.filter((story) => story.status === selected.value);
+    }
   }
 
 }
