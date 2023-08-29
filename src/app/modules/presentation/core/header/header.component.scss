@@ -3,5 +3,14 @@ mat-toolbar {
   top: 0;
   z-index: 100; //asegura que siempre quede por encima de los demás elementos
   height: 4rem; //importante que coincida con el padding-top definido en styless.scss
+
+  mat-toolbar-row {
+    overflow-y: hidden;
+
+    app-breadcrumb {
+      flex: none;
+    }
+  }
+
 }
 

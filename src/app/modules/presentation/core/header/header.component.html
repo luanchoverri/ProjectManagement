@@ -1,11 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <button mat-icon-button (click)="toggleMenu()"> <mat-icon>menu</mat-icon> </button>
-
-    <xng-breadcrumb [separator]="iconTemplate" class="breadcrumb-list my-custom-breadcrumb"></xng-breadcrumb>
-    <ng-template #iconTemplate>
-      <mat-icon>chevron_right</mat-icon>
-    </ng-template>
+    <app-breadcrumb></app-breadcrumb>
   </mat-toolbar-row>
 </mat-toolbar>
 
