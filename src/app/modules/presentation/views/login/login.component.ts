@@ -59,8 +59,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-
-
   handleError(error: any) {
     this.isLoading = false;
     this.errorMessage = '*Incorrect username or password';

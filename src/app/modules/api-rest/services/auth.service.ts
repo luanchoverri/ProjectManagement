@@ -37,9 +37,8 @@ export class AuthService {
           this.saveToken(response.token);
           localStorage.setItem(this.USER_KEY, response.user._id);
           this.updateAuthStatus(true);
-     
         }
-        return response.success;
+
       }),
       catchError((error: HttpErrorResponse) => {
         return throwError(() => error);
