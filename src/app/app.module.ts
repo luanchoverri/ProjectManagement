@@ -1,6 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +11,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './modules/material/material.module';
 import { PresentationModule } from './modules/presentation/presentation.module';
 import { CoreModule } from './modules/presentation/core/core.module';
-import { ViewsModule } from './modules/presentation/views/views.module';
 import { AuthInterceptor } from './modules/api-rest/interceptos/auth.interceptor';
 import { BreadcrumbModule, BreadcrumbService } from 'xng-breadcrumb';
 import { NgChartsModule } from 'ng2-charts';

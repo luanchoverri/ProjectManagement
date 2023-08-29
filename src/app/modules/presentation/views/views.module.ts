@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -27,7 +28,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     EpicComponent,
     StoryComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DashboardComponent
   ],
   imports: [
     ReactiveFormsModule,

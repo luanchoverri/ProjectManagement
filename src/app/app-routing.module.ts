@@ -11,12 +11,13 @@ import { BreadcrumbModule } from "xng-breadcrumb";
 import { LoginComponent } from './modules/presentation/views/login/login.component';
 import { AuthGuard } from './modules/presentation/guards/auth.guard';
 import { PageNotFoundComponent } from './modules/presentation/views/page-not-found/page-not-found.component';
+import { DashboardComponent } from './modules/presentation/views/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
-    component: HomeComponent,
+    component: DashboardComponent,
     canActivate: [AuthGuard],
     data: { breadcrumb: 'Home' }
   },
