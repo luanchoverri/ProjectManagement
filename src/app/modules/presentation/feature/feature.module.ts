@@ -12,6 +12,9 @@ import { EpicFormComponent } from './forms/epic-form/epic-form.component';
 import { StoryFormComponent } from './forms/story-form/story-form.component';
 import { TaskFormComponent } from './forms/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CardComponent } from './charts/card/card.component';
+import { CalendarComponent } from './charts/calendar/calendar.component';
+import { DoughnutStoriesComponent } from './charts/doughnut-stories/doughnut-stories.component';
 
 
 @NgModule({
@@ -24,6 +27,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     EpicFormComponent,
     StoryFormComponent,
     TaskFormComponent,
+    CardComponent,
+    CalendarComponent,
+    DoughnutStoriesComponent,
+
   ],
   imports: [
     CommonModule,
@@ -38,6 +45,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     EpicFormComponent,
     StoryFormComponent,
     TaskFormComponent,
+    CardComponent,
+    CalendarComponent,
+    DoughnutStoriesComponent,
   ]
 })
 export class FeatureModule { }

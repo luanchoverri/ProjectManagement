@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FeatureModule } from '../feature/feature.module';
 
 
 
@@ -35,9 +36,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule,
     CommonModule,
     RouterModule, 
+    FeatureModule,
     SharedModule,
     MaterialModule,
-    SharedModule,
     BreadcrumbModule,
   ]
 })
