@@ -24,7 +24,7 @@ export class MyProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.getAllItems().subscribe({
       next: (projects) => {
-        this.projects = projects.sort((a, b) => b._id.localeCompare(a._id)); // sort descendente
+        this.projects = projects;
         this.loading = false;
       },
       error: (error) => {

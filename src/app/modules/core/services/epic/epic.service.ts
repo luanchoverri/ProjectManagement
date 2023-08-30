@@ -19,7 +19,6 @@ export class EpicService extends ListService<Epic>{
 
   private epicsSubject = new BehaviorSubject<Epic[]>([]);
   epics$ = this.epicsSubject.asObservable();
-  epicList: Epic[] = [];
 
   constructor(
     private http:HttpClient,
@@ -31,12 +30,13 @@ export class EpicService extends ListService<Epic>{
 
   //abstract methods
   override getAllItems(): Observable<Epic[]> {
-    const sub = this.http
+    this.http
       .get<ApiResponse>(PathRest.GET_EPICS)
       .pipe(map((response) => response.data),
       catchError(() => of([]))
       ).subscribe({
         next: (epics) => {
+          epics.sort((a: any, b: any) => b._id.localeCompare(a._id));
           if (this.epicsSubject)
           this.epicsSubject.next(epics);
         }
@@ -45,7 +45,7 @@ export class EpicService extends ListService<Epic>{
   }
 
   override getItems(id: string): Observable<Epic[]> {
-    const sub = this.http
+    this.http
       .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}${endpoint.EPICS}`)
       .pipe(
         map((response) => response.data),
@@ -53,7 +53,7 @@ export class EpicService extends ListService<Epic>{
       )
     ).subscribe({
       next: (epics) => {
-        sub.unsubscribe();
+        epics.sort((a: any, b: any) => b._id.localeCompare(a._id));
         if (this.epicsSubject) {
           this.epicsSubject.next(epics);
         }
@@ -123,7 +123,6 @@ export class EpicService extends ListService<Epic>{
     );
   }
 
-  // API 
   //se necesita para el delete para saber si tiene stories asociadas
   getStoriesByEpic(id: string): Observable<Story[]> {
     return this.http.get<ApiResponse>(`${PathRest.GET_EPICS}/${id}${endpoint.STORIES}`).pipe(

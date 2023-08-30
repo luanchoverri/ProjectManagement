@@ -17,7 +17,6 @@ export class TaskService extends ListService<Task> {
 
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
-  taskList: Task[] = [];
 
   constructor(
     private http: HttpClient,
@@ -30,12 +29,13 @@ export class TaskService extends ListService<Task> {
 
   //abstract methods
   override getAllItems(): Observable<Task[]> {
-    const sub = this.http
+    this.http
       .get<ApiResponse>(PathRest.GET_TASKS)
       .pipe(map((response) => response.data),
       catchError(() => of([]))
       ).subscribe({
         next: (tasks) => {
+          tasks.sort((a: any, b: any) => b._id.localeCompare(a._id));
           if (this.tasksSubject)
           this.tasksSubject.next(tasks);
         }
@@ -44,13 +44,13 @@ export class TaskService extends ListService<Task> {
   }
 
   override getItems(id: string): Observable<Task[]> {
-    const sub = this.http
+    this.http
     .get<ApiResponse>(`${PathRest.GET_STORIES}/${id}${endpoint.TASKS}`)
     .pipe(map((response) => response.data),
     catchError(() => of([])))
     .subscribe({
       next: (tasks) => {
-        sub.unsubscribe();
+        tasks.sort((a: any, b: any) => b._id.localeCompare(a._id));
         if (this.tasksSubject) {
           this.tasksSubject.next(tasks);
         }

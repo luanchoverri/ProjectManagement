@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProjectService } from 'src/app/modules/core/services/project/project.service';
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
@@ -75,7 +75,7 @@ export class ProjectFormComponent implements OnInit{
     if (this.isEditing) {    
       this.ps.updateItem(this.myForm.value).subscribe({
         next: () => {
-          this.ps.getItems("");
+          this.ps.getAllItems();
           this.snackBar.open('Project updated successfully', 'Close', {
             duration: 5000,
           });
@@ -85,7 +85,7 @@ export class ProjectFormComponent implements OnInit{
     } else {
       this.ps.createItem(this.myForm.value).subscribe({
         next: () => {
-         this.ps.getItems("");
+         this.ps.getAllItems();
           this.snackBar.open('Project created successfully', 'Close', {
             duration: 5000,
           });

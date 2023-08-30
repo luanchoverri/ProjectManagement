@@ -10,6 +10,7 @@ import { Task } from 'src/app/modules/models/task.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { StoryFormComponent } from 'src/app/modules/presentation/feature/forms/story-form/story-form.component';
+import { Status } from 'src/app/modules/models/enum';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class StoryService extends ListService<Story> {
   
   private storiesSubject = new BehaviorSubject<Story[]>([]);
   stories$ = this.storiesSubject.asObservable();
-  storyList: Story[] = [];
+  filterStatus: Status | undefined;
 
   constructor(
     private http: HttpClient,
@@ -29,14 +30,25 @@ export class StoryService extends ListService<Story> {
     super();
   }
 
+  set filterStatusValue(value: Status | undefined) {
+    this.filterStatus = value;
+  }
+
+  get filterStatusValue(): Status | undefined {
+    return this.filterStatus;
+  }
+
   //abstract methods
   override getAllItems(): Observable<Story[]> {
-    const sub = this.http
+    this.http
     .get<ApiResponse>(PathRest.GET_STORIES)
     .pipe(map((response) => response.data))
     .subscribe({
       next: (stories) => {
-        sub.unsubscribe();
+        stories.sort((a: any, b: any) => b._id.localeCompare(a._id));
+        if (this.filterStatus){
+          stories = stories.filter((story: { status: Status; }) => story.status === this.filterStatus);
+        }
         if (this.storiesSubject){
           this.storiesSubject.next(stories);
         }
@@ -46,17 +58,16 @@ export class StoryService extends ListService<Story> {
   }
 
   override getItems(id: string): Observable<Story[]> {
-    const sub = this.http
+      this.http
       .get<ApiResponse>(`${PathRest.GET_EPICS}/${id}${endpoint.STORIES}`)
       .pipe(map((response) => response.data),
       catchError(() => of([])))
       .subscribe({
         next: (stories) => {
-          sub.unsubscribe();
+          stories.sort((a: any, b: any) => b._id.localeCompare(a._id));
           if (this.storiesSubject) {
             this.storiesSubject.next(stories);
           }
-          //this.getStories();
         }
       });
     return this.stories$;
@@ -98,7 +109,6 @@ export class StoryService extends ListService<Story> {
       );
   }
 
-  //cambiar this.getTasksByStory(id) por storyes.lenghts > 0
   override deleteItem(id: string): Observable<Story | null> {
     return this.getTasksByStory(id).pipe(
       switchMap((tasks) => {

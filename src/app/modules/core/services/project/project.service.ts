@@ -15,10 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
   providedIn: 'root',
 })
 export class ProjectService extends ListService<Project> {
-
   private projectsSubject = new BehaviorSubject<Project[]>([]);
   projects$ = this.projectsSubject.asObservable();
-  projectList: Project[] = [];
 
   constructor(
     private http: HttpClient,
@@ -30,49 +28,51 @@ export class ProjectService extends ListService<Project> {
 
   //abstract methods
   override getAllItems(): Observable<Project[]> {
-    const sub = this.http
+    this.http
       .get<ApiResponse>(PathRest.GET_PROJECTS)
-      .pipe(map((response) => response.data),
-      catchError(() => of([]))
-      ).subscribe({
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of([]))
+      )
+      .subscribe({
         next: (projects) => {
-          if (this.projectsSubject)
-          this.projectsSubject.next(projects);
-        }
+          projects.sort((a: any, b: any) => b._id.localeCompare(a._id));
+          if (this.projectsSubject) this.projectsSubject.next(projects);
+        },
       });
     return this.projects$;
   }
 
-
-  override getItems(id : string): Observable<Project[]> {
-    const sub = this.http.get<ApiResponse>(`${PathRest.GET_PROJECTS}`).pipe(
-      map((response) => response.data),catchError(() => of([]))).subscribe({
+  override getItems(id: string): Observable<Project[]> {
+    this.http
+      .get<ApiResponse>(`${PathRest.GET_PROJECTS}`)
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of([]))
+      )
+      .subscribe({
         next: (projects) => {
-          sub.unsubscribe();
-          if (this.projectsSubject)
-          this.projectsSubject.next(projects);
-        }
-  });
+          projects.sort((a: any, b: any) => b._id.localeCompare(a._id));
+          if (this.projectsSubject) this.projectsSubject.next(projects);
+        },
+      });
     return this.projects$;
   }
 
   override getItemById(id: string): Observable<Project> {
     return this.http
-    .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
-    .pipe(map((response) => response.data));
+      .get<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
+      .pipe(map((response) => response.data));
   }
 
   override getItemName(id: string): Observable<string> {
-    return this.getItemById(id).pipe(
-      map((project: Project) => project.name)
-    );
+    return this.getItemById(id).pipe(map((project: Project) => project.name));
   }
-  
 
-  override createItem(item: Project): Observable<Project> { 
-      return this.http
-        .post<ApiResponse>(PathRest.GET_PROJECTS, item)
-        .pipe(map((response) => response.data));
+  override createItem(item: Project): Observable<Project> {
+    return this.http
+      .post<ApiResponse>(PathRest.GET_PROJECTS, item)
+      .pipe(map((response) => response.data));
   }
 
   override editItem(project: Project): void {
@@ -83,30 +83,30 @@ export class ProjectService extends ListService<Project> {
     dialogRef.componentInstance.toggleIsEditing();
   }
 
-  override updateItem(item: Project): Observable<Project | null>{
+  override updateItem(item: Project): Observable<Project | null> {
     return this.http
       .put<ApiResponse>(`${PathRest.GET_PROJECTS}/${item._id}`, item)
       .pipe(
-        map((response) => 
-           response.data
-        ),
+        map((response) => response.data),
         catchError(() => of(null))
-    );
+      );
   }
 
   override deleteItem(id: string): Observable<Project | null> {
     return this.getEpicsByProject(id).pipe(
-      switchMap(epics => {
+      switchMap((epics) => {
         if (epics.length > 0) {
-          this.snackBar.open('This project has associated epics and cannot be deleted.', 'Close', {
-            duration: 5000,
-          });
-          return of(null); 
+          this.snackBar.open(
+            'This project has associated epics and cannot be deleted.', 'Close', {
+              duration: 5000,
+            });
+          return of(null);
         } else {
-          return this.http.delete<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
+          return this.http
+            .delete<ApiResponse>(`${PathRest.GET_PROJECTS}/${id}`)
             .pipe(
               map((response) => response.data),
-              catchError(error => {
+              catchError((error) => {
                 return of(null);
               }),
               tap(() => {
@@ -127,7 +127,6 @@ export class ProjectService extends ListService<Project> {
       .pipe(
         map((response) => response.data),
         catchError(() => of([]))
-      )
+      );
   }
-
 }

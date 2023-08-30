@@ -1,6 +1,6 @@
 export enum Status {
     Todo = 'todo',
-    Running = 'runnig',
+    Running = 'running',
     Done = 'done',
 }
   

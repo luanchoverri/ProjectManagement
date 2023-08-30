@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LIST_SERVICE_TOKEN } from 'src/app/modules/core/services/list/list.service';
 import { StoryService } from 'src/app/modules/core/services/story/story.service';
+import { Status } from 'src/app/modules/models/enum';
 import { Story } from 'src/app/modules/models/story';
 
 @Component({
@@ -37,12 +38,29 @@ export class MyStoriesComponent {
   }
 
   onChange(selected: any) {
-    if (selected.value === 'all') {
-      this.selectedStories = this.allstories;
+    switch (selected.value) {
+      case 'all':
+        this.storyService.filterStatusValue = undefined;
+        break;
+      case 'todo':
+        this.storyService.filterStatusValue = Status.Todo;
+        break;
+      case 'running':
+        this.storyService.filterStatusValue = Status.Running;
+        break;
+      case 'done':
+        this.storyService.filterStatusValue = Status.Done;
+        break;
+      default:
+        this.storyService.filterStatusValue = undefined;
+        break;
     }
-    else {
-      this.selectedStories = this.allstories.filter((story) => story.status === selected.value);
-    }
+    //el service se encarga de hacer el filtrado segun el valor asignado a filterStatusValue
+    this.storyService.getAllItems().subscribe(
+      stories => {
+        this.selectedStories = stories;
+      }
+    );
   }
 
 }
