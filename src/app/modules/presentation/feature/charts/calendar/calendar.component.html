@@ -1,0 +1,11 @@
+
+  
+<div class="calendar-card">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+        <mat-card-header class="header">
+            <mat-card-subtitle class="subtitle">{{selected}}</mat-card-subtitle>
+
+            <button mat-flat-button color="accent" (click)="goToToday()">Today</button>
+        </mat-card-header>
+</div> 
+   

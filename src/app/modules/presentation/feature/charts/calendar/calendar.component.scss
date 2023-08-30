@@ -1,0 +1,24 @@
+.calendar-card {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    margin: 10px;
+    
+
+
+    .header{
+        display: flex;
+        gap: 1px;
+        flex-wrap: nowrap;
+
+        
+        .subtitle{
+            font-size: 12px;
+            margin-right: 3px;
+        }
+
+
+    }
+  }
