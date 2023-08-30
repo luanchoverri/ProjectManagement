@@ -107,10 +107,15 @@ export class StoryFormComponent {
   onSubmit() {
     if (this.isEditing) {        
       this.ss.updateItem(this.myForm.value).subscribe({
-        next: (story) => {
-          this.ss.getItems(this.epicId).subscribe();
-          //este get es para para my-stories refresque
-          this.ss.getAllItems().subscribe();
+        next: () => {
+          //este get es para que my-stories refresque
+          if (this.epicId == 'my-stories') {
+            this.ss.getAllItems().subscribe();
+          }
+          //este get es para cuando vengo desde my-projects >... a la lista de stories
+          else{
+            this.ss.getItems(this.epicId).subscribe();
+          }         
           this.snackBar.open('Story updated successfully', 'Close', {
             duration: 5000,
           });

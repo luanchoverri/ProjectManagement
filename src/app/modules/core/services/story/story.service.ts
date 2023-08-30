@@ -100,7 +100,6 @@ export class StoryService extends ListService<Story> {
   }
 
   override updateItem(item: Story): Observable<Story | null> {
-    console.log(item);
     return this.http
       .put<ApiResponse>(`${PathRest.GET_STORIES}/${item._id}`, item)
       .pipe(
