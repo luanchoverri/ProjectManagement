@@ -29,13 +29,17 @@ export class EpicFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.isEditing) {
+      let icon = this.data.initialValues.icon;
+      if(this.data.initialValues.icon === null){
+        icon = '';
+      }
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, [
           Validators.required,
           Validators.minLength(5)
         ]),
-        icon: new FormControl(this.data.initialValues.icon),
+        icon: new FormControl(icon),
         description: new FormControl(this.data.initialValues.description),
         project: new FormControl(this.projectId),
       });

@@ -41,7 +41,11 @@ export class ProjectFormComponent implements OnInit{
 
   ngOnInit() {
     
-    if (this.isEditing) {    
+    if (this.isEditing) {   
+      let icon = this.data.initialValues.icon;
+      if(this.data.initialValues.icon === null){
+        icon = '';
+      } 
       this.us.getUsersByIds(this.data.initialValues.members).subscribe(
         users  => {
           this.selectedUsers = users
@@ -53,7 +57,7 @@ export class ProjectFormComponent implements OnInit{
           Validators.required,
           Validators.minLength(5)
         ]),
-        icon: new FormControl(this.data.initialValues.icon),
+        icon: new FormControl(icon),
         description: new FormControl(this.data.initialValues.description),
         members: new FormControl(this.data.initialValues.members, Validators.required),
       });

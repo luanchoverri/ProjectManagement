@@ -50,6 +50,11 @@ export class StoryFormComponent {
   ngOnInit() {
     const ownerId = this.as.getUserId();
     if (this.isEditing) {
+      let icon = this.data.initialValues.icon;
+      if(this.data.initialValues.icon === null){
+        icon = '';
+      }
+      
       this.us.getUsersByIds(this.data.initialValues.assignedTo).subscribe(
         users  => {
           this.selectedUsers = users
@@ -72,7 +77,7 @@ export class StoryFormComponent {
         started: new FormControl(this.data.initialValues.started),
         finished: new FormControl(this.data.initialValues.finished),
         status: new FormControl(this.data.initialValues.status),
-        icon: new FormControl(this.data.initialValues.icon),
+        icon: new FormControl(icon),
       },{ validators: 
         [dateLessThan('created', 'due'),
         dateLessThan('created', 'started'),
