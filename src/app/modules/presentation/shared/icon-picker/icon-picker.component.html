@@ -1,12 +1,8 @@
-
 <button matTooltip="Select icon" type="button" mat-fab extended color="accent" class="button-icon-select" [matMenuTriggerFor]="iconMenu">
   <div class="icon-container">
-    <ng-container *ngIf="currentIcon === ''; else iconTemplate">
-      <span></span>
-    </ng-container>
-    <ng-template #iconTemplate>
+    <div  *ngIf="currentIcon !== ''">
       <img src="../../../../../../../assets/emojis/icons8-{{currentIcon}}-48.png" alt="Icon" width="28" height="28">
-    </ng-template>
+    </div>
   <p>Icon</p>
 </div>
 </button>
