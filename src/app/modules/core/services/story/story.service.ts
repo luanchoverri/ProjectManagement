@@ -30,6 +30,20 @@ export class StoryService extends ListService<Story> {
     super();
   }
 
+  // Para obtener la cantidad de historias en un estado especifico
+  getStoriesCountByStatus(status: Status): Observable<number> {
+    return this.stories$.pipe(
+      map(stories => stories.filter(story => story.status === status).length)
+    );
+
+  }
+
+  getTotalPointsInDone(): number {
+    const doneStories = this.storiesSubject.value.filter(story => story.status === Status.Done);
+    return doneStories.reduce((totalPoints, story) => totalPoints + story.points, 0);
+  }
+  
+
   set filterStatusValue(value: Status | undefined) {
     this.filterStatus = value;
   }

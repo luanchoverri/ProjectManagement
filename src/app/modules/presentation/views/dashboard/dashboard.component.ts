@@ -8,15 +8,18 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+[x: string]: any;
 
+   C : number= 5;
 
   /** Based on the screen size, switch from standard to one column per row */
   cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
         return {
-          miniCard: { cols: 4, rows: 1 },
-          calendar: { cols: 4, rows: 2 },
+          miniCard: { cols: this.C, rows: 1 },
+          chart:    {cols: this.C, rows:1},
+          calendar: { cols: this.C, rows: 2 },
 
         };
       }
@@ -24,7 +27,7 @@ export class DashboardComponent {
       return {
         miniCard: { cols: 1, rows: 1 },
         calendar: { cols: 1, rows: 2 },
-        chart: { cols: 3, rows: 1 },
+        chart: { cols: 2, rows: 1 },
       };
     })
   );

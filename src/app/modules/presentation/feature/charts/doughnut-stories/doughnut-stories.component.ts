@@ -41,11 +41,7 @@ export class DoughnutStoriesComponent implements AfterViewInit {
         },
         options: {
           responsive: true,
-          plugins: {
-            colors: {
-              forceOverride: true
-            }
-          }
+          
         }
       });
     });

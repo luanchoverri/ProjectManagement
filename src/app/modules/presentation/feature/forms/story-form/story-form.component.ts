@@ -23,7 +23,7 @@ export class StoryFormComponent {
   members!: User[];
   members$: Observable<User[]>;
   isEditing: boolean = false;
-  selectedPoint!: number;
+  selectedPoint: number = 0;
   selectedUsers: User[] = [];
   fruitCtrl = new FormControl();
 
@@ -60,7 +60,7 @@ export class StoryFormComponent {
           this.selectedUsers = users
         }
       ) 
-      this.selectedPoint = this.data.initialValues.points;
+        console.log(this.data.initialValues.points)
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, [
@@ -71,7 +71,7 @@ export class StoryFormComponent {
         epic: new FormControl(this.data.initialValues.epic),
         owner: new FormControl(this.data.initialValues.owner),
         assignedTo: new FormControl(this.data.initialValues.assignedTo),
-        points : new FormControl(this.data.initialValues.points),
+        points: new FormControl(this.data.initialValues.points),
         created: new FormControl(this.data.initialValues.created),
         due: new FormControl(this.data.initialValues.due),
         started: new FormControl(this.data.initialValues.started),
@@ -125,7 +125,7 @@ export class StoryFormComponent {
           else{
             this.ss.getItems(this.epicId).subscribe();
           }         
-          this.snackBar.open('Story updated successfully', 'Close', {
+          this.snackBar.open('Story updated successfully', '✅', {
             duration: 5000,
           });
         }
@@ -133,10 +133,11 @@ export class StoryFormComponent {
       console.log(this.ss.updateItem(this.myForm.value));
       
     } else {
+      this.getDefaultPoints();
       this.ss.createItem(this.myForm.value).subscribe({
         next: () => {
           this.ss.getItems(this.epicId).subscribe();
-          this.snackBar.open('Story created successfully', 'Close', {
+          this.snackBar.open('Story created successfully', '✅', {
             duration: 5000,
           });
         }
@@ -184,4 +185,9 @@ export class StoryFormComponent {
     }
   }
 
+
+  getDefaultPoints(){
+      this.myForm.get('points')?.setValue(this.selectedPoint);
+    }
+  
 }

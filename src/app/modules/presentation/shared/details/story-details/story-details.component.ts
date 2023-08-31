@@ -26,6 +26,7 @@ export class StoryDetailsComponent {
   constructor(private es: EpicService, private us: UserService) {}
 
   ngOnInit(): void {
+    console.log(this.item)
     if (this.item) {
       this.es
         .getItemById(this.item.epic)

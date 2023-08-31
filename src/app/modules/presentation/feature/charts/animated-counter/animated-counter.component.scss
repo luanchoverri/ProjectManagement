@@ -1,22 +1,42 @@
 .card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+  border-radius: 8px;
 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .title {
+    font-size: 1.5rem;
   }
-  
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: left;
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+
   .number {
-    font-size: 70px;
-    font-weight: bold;
-    margin-right: 10px;
+    font-size: 7rem;
+    margin: 8px 0px;
+    padding: 10px ;
   }
-  
-  .emoji {
-    font-size: 48px;
-  }
-  
+}
+
+.completed {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.emoji {
+  width: 48px;
+  height: 48px;
+}

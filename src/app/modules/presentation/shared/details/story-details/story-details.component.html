@@ -22,8 +22,8 @@
         </li>
 
 
-        <li *ngIf="item.points">
-          Points:&nbsp;&nbsp; <mat-chip> <mat-icon matChipAvatar [style.color]="'rgb(248, 163, 35)'">star</mat-icon> {{item.points}}</mat-chip>
+        <li *ngIf="item.points >=0">
+          Points:&nbsp;&nbsp; <mat-chip> <mat-icon matChipAvatar [style.color]="'rgb(248, 163, 35)'">star</mat-icon>{{item.points}}</mat-chip>
         </li>
 
 

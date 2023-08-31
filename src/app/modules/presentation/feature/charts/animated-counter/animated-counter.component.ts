@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-animated-counter',
@@ -6,26 +6,32 @@ import { Component, ElementRef, Renderer2, OnInit } from '@angular/core';
   styleUrls: ['./animated-counter.component.scss']
 })
 export class AnimatedCounterComponent implements OnInit{
+  @Input () title: string = '';
+  @Input () targetCompleted: number = 30;
+  @Input () icon:string|undefined = undefined;
 
-  completedTasks = 0;
-  targetCompletedTasks = 50; // Número de tareas completadas objetivo
-  animationDuration = 2000; // Duración de la animación en milisegundos
+  @Input () message1: string = '';
+  @Input () message2: string = '';
+  completed = 0;
+
+  animationDuration = 1000; // Duración de la animación en milisegundos
   animationInterval = 1; // Intervalo de tiempo entre cada incremento
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
   ngOnInit() {
+    if(this.targetCompleted > 0)
     this.startAnimation();
   }
 
   startAnimation() {
-    const interval = this.animationDuration / (this.targetCompletedTasks / this.animationInterval);
+    const interval = this.animationDuration / (this.targetCompleted / this.animationInterval);
     let currentTasks = 0;
 
     const animationInterval = setInterval(() => {
       currentTasks++;
       this.renderer.setProperty(this.elementRef.nativeElement.querySelector('.number'), 'textContent', currentTasks);
-      if (currentTasks >= this.targetCompletedTasks) {
+      if (currentTasks >= this.targetCompleted) {
         clearInterval(animationInterval);
       }
     }, interval);

@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from './charts/card/card.component';
 import { CalendarComponent } from './charts/calendar/calendar.component';
 import { DoughnutStoriesComponent } from './charts/doughnut-stories/doughnut-stories.component';
+import { AnimatedCounterComponent } from './charts/animated-counter/animated-counter.component';
+import { GreetingCardComponent } from './charts/greeting-card/greeting-card.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { DoughnutStoriesComponent } from './charts/doughnut-stories/doughnut-sto
     CardComponent,
     CalendarComponent,
     DoughnutStoriesComponent,
+    AnimatedCounterComponent,
+    GreetingCardComponent,
 
   ],
   imports: [
@@ -48,6 +52,8 @@ import { DoughnutStoriesComponent } from './charts/doughnut-stories/doughnut-sto
     CardComponent,
     CalendarComponent,
     DoughnutStoriesComponent,
+    AnimatedCounterComponent,
+    GreetingCardComponent
   ]
 })
 export class FeatureModule { }
