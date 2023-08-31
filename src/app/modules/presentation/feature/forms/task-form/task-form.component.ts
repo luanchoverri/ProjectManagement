@@ -50,7 +50,7 @@ export class TaskFormComponent implements OnInit{
         story: new FormControl(this.storyId),
         created: new FormControl(new Date().setHours(0,0,0,0)),
         due: new FormControl(''),
-        done: new FormControl(''),
+        done: new FormControl(false),
       }, { validators: dateLessThan('created', 'due') });
     }
   }

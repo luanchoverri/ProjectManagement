@@ -35,12 +35,6 @@
                     <mat-error *ngIf="myForm.get('due')?.errors?.['dateLessThan']">Due date must be after creation
                         date ({{myForm.get('created')?.value | date}})</mat-error>
                 </mat-form-field>
-
-                <!-- Checkbox -->
-                <div class="custom-checkbox">
-                    <mat-label>Is Done?</mat-label>
-                    <mat-checkbox class="checkbox" formControlName="done"></mat-checkbox>
-                </div>
             </div>
         </div>
 

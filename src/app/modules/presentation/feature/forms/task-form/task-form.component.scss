@@ -13,7 +13,7 @@
     align-items: flex-start;
     
     .mat-form-field-data {  
-      max-width: 50%;
+      max-width: 100%;
     }
 }
  
@@ -31,10 +31,6 @@
     .inline-fields {
       flex-direction: column; 
       align-items: stretch; 
-
-      .mat-form-field-data {  
-        max-width: 100%;
-      }
     }
 
 
