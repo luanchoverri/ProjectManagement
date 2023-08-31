@@ -10,6 +10,7 @@ import { StoryService } from 'src/app/modules/core/services/story/story.service'
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
 import { dateLessThan } from '../validation/date.validation';
+import { Status } from 'src/app/modules/models/enum';
 
 @Component({
   selector: 'app-story-form',
@@ -48,7 +49,6 @@ export class StoryFormComponent {
 
   ngOnInit() {
     const ownerId = this.as.getUserId();
-    console.log('owner', ownerId);
     if (this.isEditing) {
       this.us.getUsersByIds(this.data.initialValues.assignedTo).subscribe(
         users  => {
@@ -101,11 +101,15 @@ export class StoryFormComponent {
         dateLessThan('created', 'finished'),
         dateLessThan('started', 'finished')]});
     }
-
+    this.myForm.get('status')?.valueChanges.subscribe((value) => {
+      this.setDates(value);
+    }
+    );
   }
 
   onSubmit() {
-    if (this.isEditing) {        
+
+    if (this.isEditing) {      
       this.ss.updateItem(this.myForm.value).subscribe({
         next: () => {
           //este get es para que my-stories refresque
@@ -121,9 +125,11 @@ export class StoryFormComponent {
           });
         }
       });
+      console.log(this.ss.updateItem(this.myForm.value));
+      
     } else {
       this.ss.createItem(this.myForm.value).subscribe({
-        next: (story) => {
+        next: () => {
           this.ss.getItems(this.epicId).subscribe();
           this.snackBar.open('Story created successfully', 'Close', {
             duration: 5000,
@@ -131,7 +137,21 @@ export class StoryFormComponent {
         }
       });
     }
+  }
 
+  //los valores de started y finished se cargan segun cuando clickea el usuario en el status
+  setDates(status: string) {
+    if (status == 'todo') {
+      this.myForm.get('started')?.reset();
+      this.myForm.get('finished')?.reset();
+    }
+    if (status == 'running') {
+      this.myForm.get('started')?.setValue(new Date().setHours(0,0,0,0));
+      this.myForm.get('finished')?.reset();
+    }
+    if (status == 'done') {
+      this.myForm.get('finished')?.setValue(new Date().setHours(0,0,0,0));
+    }
   }
 
   toggleIsEditing() {

@@ -8,7 +8,6 @@
 
         <div mat-dialog-content class="dialog-content">
 
-
             <!-- Icon picker -->
             <div class="icon-button-container">
                 <app-icon-picker [currentIcon]="myForm.get('icon')?.value" (iconSelected)="onIconSelected($event)"
@@ -27,42 +26,14 @@
                         [checked]="myForm.get('status')?.value === 'done'">Done</mat-radio-button>
                 </mat-radio-group>
             </div>
-            <!-- Title -->
-            <mat-form-field class="mat-form-field-inline" appearance="outline">
-                <mat-label>Title</mat-label>
-                <input matInput placeholder="What is the title of the story?.." formControlName="name" />
-                <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
-            </mat-form-field>
 
-            <!-- Description -->
-            <mat-form-field class="mat-form-field-inline" appearance="outline">
-                <mat-label>Description&nbsp;&nbsp;</mat-label>
-                <input matInput placeholder="Add a description.." formControlName="description" />
-            </mat-form-field>
-
-
-            <div class="inline-fields">   <!-- Inline  -->
-                <!-- Select Members  -->
-                <mat-form-field class="example-chip-list" appearance="outline">
-                    <mat-label>Select Members&nbsp;&nbsp;&nbsp;</mat-label> 
-                    <mat-chip-grid #chipGrid aria-label="User selection">
-                      <mat-chip-row *ngFor="let u of selectedUsers" (removed)="remove(u)">
-                        {{ u.username }}
-                        <button matChipRemove [attr.aria-label]="'remove ' + u.username">
-                          <mat-icon>cancel</mat-icon>
-                        </button>
-                      </mat-chip-row>
-                    </mat-chip-grid>
-                    
-                    <input placeholder="Search Users..." formControlName="assignedTo" [matChipInputFor]="chipGrid"
-                      [matAutocomplete]="auto" />
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                      <mat-option *ngFor="let member of members" [value]="member">
-                        {{ member.username }}
-                      </mat-option>
-                    </mat-autocomplete>
-                    <mat-error *ngIf="myForm.get('assignedTo')?.hasError('required')">At least one member is required</mat-error>
-                  </mat-form-field>                
+            <div class="inline-fields">
+                <!-- Title -->
+                <mat-form-field class="mat-form-field-inline-title" appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="What is the title of the story?.." formControlName="name" />
+                    <mat-error *ngIf="myForm.get('name')?.hasError('minlength')">At least 5 characters long</mat-error>
+                </mat-form-field>
 
                 <!-- Points -->
                 <mat-form-field class="mat-form-field-inline-points" appearance="outline">
@@ -77,31 +48,37 @@
                     </mat-select>
                     <mat-icon matIconSuffix>star</mat-icon>
                 </mat-form-field>
-
             </div>
 
-            <div class="inline-fields">     <!-- Dates inline  -->
+            <!-- Description -->
+            <mat-form-field class="mat-form-field-inline" appearance="outline">
+                <mat-label>Description&nbsp;&nbsp;</mat-label>
+                <input matInput placeholder="Add a description.." formControlName="description" />
+            </mat-form-field>
 
-                <!-- Started Date -->
-                <mat-form-field class="mat-form-field-data" appearance="outline">
-                    <mat-label>Started&nbsp;&nbsp;</mat-label>
-                    <input matInput [matDatepicker]="picker3" formControlName="started">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-                    <mat-datepicker #picker3></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('started')?.errors?.['dateLessThan']">Start date must be equal or after
-                        creation date ({{myForm.get('created')?.value | date}})</mat-error>
-                </mat-form-field>
 
-                <!-- Finished Date -->
-                <mat-form-field class="mat-form-field-data" appearance="outline">
-                    <mat-label>Finished&nbsp;&nbsp;</mat-label>
-                    <input matInput [matDatepicker]="picker4" formControlName="finished">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
-                    <mat-datepicker #picker4></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('finished')?.errors?.['dateLessThan']">Finish date must be equal or after
-                        creation date ({{myForm.get('created')?.value | date}}) and started date (if setted)</mat-error>
+            <div class="inline-fields"> <!-- Inline  -->
+                <!-- Select Members  -->
+                <mat-form-field class="example-chip-list members" appearance="outline">
+                    <mat-label>Select Members&nbsp;&nbsp;&nbsp;</mat-label>
+                    <mat-chip-grid #chipGrid aria-label="User selection">
+                        <mat-chip-row *ngFor="let u of selectedUsers" (removed)="remove(u)">
+                            {{ u.username }}
+                            <button matChipRemove [attr.aria-label]="'remove ' + u.username">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+                    </mat-chip-grid>
+
+                    <input placeholder="Search Users..." formControlName="assignedTo" [matChipInputFor]="chipGrid"
+                        [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let member of members" [value]="member">
+                            {{ member.username }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="myForm.get('assignedTo')?.hasError('required')">At least one member is
+                        required</mat-error>
                 </mat-form-field>
 
                 <!-- Due Date -->
@@ -111,12 +88,12 @@
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
-                    <mat-error *ngIf="myForm.get('due')?.errors?.['dateLessThan']">Due date must be equal or after creation
+                    <mat-error *ngIf="myForm.get('due')?.errors?.['dateLessThan']">Due date must be equal or after
+                        creation
                         date ({{myForm.get('created')?.value | date}})</mat-error>
                 </mat-form-field>
 
             </div>
-
 
             <div mat-dialog-actions align="end">
                 <button mat-flat-button cdkFocusInitial mat-dialog-close>Cancel</button>
