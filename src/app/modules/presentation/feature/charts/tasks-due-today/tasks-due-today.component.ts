@@ -12,6 +12,7 @@ import { TaskService } from 'src/app/modules/core/services/task/task.service';
 })
 export class TasksDueTodayComponent implements OnInit, OnDestroy{
   
+  loading: boolean = false;
   taskList: Task[] = [];
   suscrip: Subscription = new Subscription
   displayedColumns: string[] = ['done', 'name', 'description', 'created', 'actions']; // Define las columnas que deseas mostrar
@@ -29,9 +30,10 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
   
   ngOnInit() {
     // Asigna las tareas a la fuente de datos de la tabla
-    this.suscrip = this.ss.getTasksDoneAndDueToday().subscribe(tasks => {
+    this.suscrip = this.ss.getTasksdDueToday().subscribe(tasks => {
       this.taskList = tasks;
       this.dataSource.data = this.taskList;
+      this.loading = false;
       
     })
   }
@@ -47,6 +49,7 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
     task.done = !task.done;
     this.ts.updateItem(task);
     this.ts.updateItem(task).subscribe();
+
   }
 
 

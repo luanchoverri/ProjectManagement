@@ -19,7 +19,6 @@ export class DoughnutStoriesComponent implements AfterViewInit {
   constructor(private elementRef: ElementRef, private storyService: StoryService) { }
 
 
-
   ngAfterViewInit() {
     const ctx = this.elementRef.nativeElement.querySelector('#doughnutChart');
     this.storyService.stories$.subscribe(stories => {
@@ -27,7 +26,6 @@ export class DoughnutStoriesComponent implements AfterViewInit {
       const runningCount = stories.filter(story => story.status === Status.Running).length;
       const todoCount = stories.filter(story => story.status === Status.Todo).length;
 
-      console.log(doneCount, runningCount, todoCount)
       this.doughnutChart =  new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -46,7 +44,7 @@ export class DoughnutStoriesComponent implements AfterViewInit {
       });
     });
     this.storyService.getAllItems().subscribe(stories => {
-      this.updateChart(stories); // Llama a la función para actualizar los datos del gráfico
+      this.updateChart(stories); // Sirve ara actualizar los datos del grafico
     });
   }
   
@@ -57,8 +55,8 @@ export class DoughnutStoriesComponent implements AfterViewInit {
   
     if (this.doughnutChart) {
       this.doughnutChart.data.datasets[0].data = [doneCount, runningCount, todoCount];
-      this.doughnutChart.update(); // Actualiza el gráfico con los nuevos datos
-      this.doughnutChart.render(); // Vuelve a renderizar el gráfico
+      this.doughnutChart.update(); // Actualiza el grafico con los nuevos datos
+      this.doughnutChart.render(); // Vuelve a renderizar 
     }
   }
 }

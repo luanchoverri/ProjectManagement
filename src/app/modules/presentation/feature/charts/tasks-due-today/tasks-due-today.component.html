@@ -1,43 +1,54 @@
 <mat-card class="card-table">
+    <!-- <ng-container *ngIf="loading; else content">
+        <div class="loading-progress">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+    </ng-container> -->
 
-    <mat-table [dataSource]="dataSource" >
+    <ng-template #content>
+        <mat-table [dataSource]="dataSource">
 
-    <ng-container matColumnDef="done">
-        <mat-header-cell *matHeaderCellDef>Task Due Daily Tracker</mat-header-cell>
-        <mat-cell *matCellDef="let task">  <mat-checkbox [checked]="task.done" (change)="updateTaskDone(task)"></mat-checkbox> </mat-cell>
-        </ng-container>
+            <!-- Column Done -->
+            <ng-container matColumnDef="done">
+                <mat-header-cell *matHeaderCellDef>Task Due Daily Tracker</mat-header-cell>
+                <mat-cell *matCellDef="let task">
+                    <mat-checkbox [checked]="task.done" (change)="updateTaskDone(task)"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Column Name -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+                <mat-cell *matCellDef="let task"> {{ task.name }} </mat-cell>
+            </ng-container>
+
+            <!-- Column Description -->
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+                <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
+            </ng-container>
+
+            <!-- Column Creation Date -->
+            <ng-container matColumnDef="created">
+                <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
+                <mat-cell *matCellDef="let task">{{ task.created | date : "shortDate"   }}</mat-cell>
+            </ng-container>
 
 
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.name }} </mat-cell>
-      </ng-container>
+            <!-- Column Action Button -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                <mat-cell *matCellDef="let task">
+                    <a [routerLink]="['.', task.storyId]">
+                        <button mat-flat-button color="accent">Ver</button></a>
+                </mat-cell>
+            </ng-container>
 
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
 
-
-      <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-        <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef>Creation Date</mat-header-cell>
-        <mat-cell *matCellDef="let task">{{ task.created | date:'shortDate' }}</mat-cell>
-      </ng-container>
-
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-        <mat-cell *matCellDef="let task">
-       
-          <a [routerLink]="['.', task.storyId]"> <button mat-flat-button color="accent">Ver</button></a>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-     
-    </mat-table>
-
-    <mat-paginator [pageSizeOptions]="[3, 7]" aria-label="Select page of tasks"></mat-paginator>
+        <!-- Paginator -->
+        <mat-paginator [pageSizeOptions]="[3, 7]" aria-label="Select page of tasks"></mat-paginator>
+    </ng-template>
 </mat-card>

@@ -27,13 +27,13 @@ export class AnimatedCounterComponent implements OnInit{
   /**
  * Se ejecuta cuando ocurren cambios en las propiedades de entrada de componente
  * @param {SimpleChanges} changes - Cambios.
- * @returns {void} Se fija si la propiedad targetComplet ha cambiado y si no es el primer cambio para volver a ejecutar la animación.
+ * @returns {void} Se fija si la propiedad targetComplet ha cambiado y si no es el primer cambio para volver a ejecutar la animacion.
  */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['targetCompleted'] && !changes['targetCompleted'].isFirstChange()) {
       if (this.targetCompleted > 0) {
-        this.completed = 0; // Reinicia el valor completado
-        this.startAnimation(); // Inicia la animación nuevamente
+        this.completed = 0; // Reinicia 
+        this.startAnimation(); // Inicia 
       }
     }
   }
@@ -55,7 +55,7 @@ export class AnimatedCounterComponent implements OnInit{
       currentTasks++; 
 
       // Actualiza el contenido del elemento HTML que muestra el nro actual de tareas completadas
-      // Crea la ilusión de que el nro aumenta gradualmente
+      // Crea la ilusion
       this.renderer.setProperty(this.elementRef.nativeElement.querySelector('.number'), 'textContent', currentTasks);
 
       // Detiene la animacion cuando el contador de tareas completadas alcanza el objetivo
