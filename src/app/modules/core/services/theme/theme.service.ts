@@ -1,5 +1,5 @@
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { HostBinding, Injectable, Component } from '@angular/core';
+
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'

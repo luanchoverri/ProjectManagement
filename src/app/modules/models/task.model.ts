@@ -3,7 +3,6 @@ import { Story } from "./story";
 
 export class Task extends Item {
 
-    // private _story: Story; 
     private _story: Story;
     private _created?: Date;
     private _dueDate?: Date;
@@ -26,7 +25,7 @@ export class Task extends Item {
         return this._created;
     }
 
-    get dueDate(): Date | undefined {
+    get due(): Date | undefined {
         return this._dueDate;
     }
 

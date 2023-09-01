@@ -5,7 +5,6 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, map, catchError, throwError } from 'rxjs';
-import { User } from '../../models/user';
 import { PathRest } from '../enviroments/path-rest';
 import { endpoint } from '../enviroments/endpoints';
 import { JwtHelperService } from '@auth0/angular-jwt';

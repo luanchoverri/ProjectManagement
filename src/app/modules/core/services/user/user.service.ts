@@ -33,7 +33,7 @@ export class UserService {
         catchError(() => of(''))
       )
     );
-    console.log(forkJoin(membersNames$))
+   
     return forkJoin(membersNames$);
   }
 

@@ -89,9 +89,7 @@ export class TaskService extends ListService<Task> {
     return this.http
     .put<ApiResponse>(`${PathRest.GET_TASKS}/${item._id}`, item)
     .pipe(map((response) => response.data)
-    ,catchError((error) => of(null))
-    ,tap((response) => {console.log(response);}
-    ));
+    ,catchError((error) => of(null)) )
   }
   
   override deleteItem(id: string): Observable<Task | null> {

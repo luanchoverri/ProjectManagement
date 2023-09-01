@@ -10,7 +10,7 @@ import { StoryService } from 'src/app/modules/core/services/story/story.service'
 import { UserService } from 'src/app/modules/core/services/user/user.service';
 import { User } from 'src/app/modules/models/user';
 import { dateLessThan } from '../validation/date.validation';
-import { Status } from 'src/app/modules/models/enum';
+
 
 @Component({
   selector: 'app-story-form',
@@ -25,7 +25,7 @@ export class StoryFormComponent {
   isEditing: boolean = false;
  
   selectedUsers: User[] = [];
-  fruitCtrl = new FormControl();
+
 
 
   constructor(
@@ -136,7 +136,7 @@ export class StoryFormComponent {
           });
         }
       });
-      console.log(this.ss.updateItem(this.myForm.value));
+     
       
     } else {
 
@@ -187,7 +187,6 @@ export class StoryFormComponent {
     if (!this.selectedUsers.includes(selectedUser)) {
       this.selectedUsers.push(selectedUser);
       this.myForm.get('assignedTo')?.setValue(this.selectedUsers.map(user => user._id));
-      this.fruitCtrl.setValue(''); // Limpiar el campo de entrada
     }
   }
 

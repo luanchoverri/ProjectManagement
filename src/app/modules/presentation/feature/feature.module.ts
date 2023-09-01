@@ -17,6 +17,7 @@ import { CalendarComponent } from './charts/calendar/calendar.component';
 import { DoughnutStoriesComponent } from './charts/doughnut-stories/doughnut-stories.component';
 import { AnimatedCounterComponent } from './charts/animated-counter/animated-counter.component';
 import { GreetingCardComponent } from './charts/greeting-card/greeting-card.component';
+import { TasksDueTodayComponent } from './charts/tasks-due-today/tasks-due-today.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { GreetingCardComponent } from './charts/greeting-card/greeting-card.comp
     DoughnutStoriesComponent,
     AnimatedCounterComponent,
     GreetingCardComponent,
+    TasksDueTodayComponent,
 
   ],
   imports: [
@@ -53,7 +55,8 @@ import { GreetingCardComponent } from './charts/greeting-card/greeting-card.comp
     CalendarComponent,
     DoughnutStoriesComponent,
     AnimatedCounterComponent,
-    GreetingCardComponent
+    GreetingCardComponent,
+    TasksDueTodayComponent,
   ]
 })
 export class FeatureModule { }

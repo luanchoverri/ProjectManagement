@@ -2,11 +2,6 @@
 import { Item } from './item.model';
 import { Status } from './enum';
 
-// to-do chequear con los demas que la descripcion pueda no estar
-// to-do atributo icon
-
-//to-do revisar luego tema tipos para enlazar una epica, o un usuario o arrreglo de usuarios
-
 
 export class Story extends Item {
 
@@ -17,7 +12,7 @@ export class Story extends Item {
         _id: string,
         private _epic: string,   
         private _icon?: string | undefined,
-        private _owner?: string | undefined,  //to-do reemplazar por user / nombre de usuario / id usuario
+        private _owner?: string | undefined, 
         private _assignedTo: string[] = [],
         private _points: number = 0,
         private _created: Date = new Date(),
@@ -79,10 +74,9 @@ export class Story extends Item {
     public set points(newValue: number) {
         if (newValue >= 0 && newValue <= 5) {
             this._points = newValue;
-        } else {
-            console.log("Points value must be between 0 and 5.");
         }
     }
+    
     public set due(newDate: Date | undefined) {
         this._due = newDate;
     }

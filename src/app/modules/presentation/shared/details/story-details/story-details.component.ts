@@ -26,7 +26,7 @@ export class StoryDetailsComponent {
   constructor(private es: EpicService, private us: UserService) {}
 
   ngOnInit(): void {
-    console.log(this.item)
+
     if (this.item) {
       this.es
         .getItemById(this.item.epic)
@@ -49,20 +49,4 @@ export class StoryDetailsComponent {
   }
 
 
-  getStatusChipColor(status: string): string {
-    console.log(status);
-    console.log(Status.Todo);
-    switch (status) {
-      case Status.Todo:
-        console.log('aca');
-        return 'todo-chip'; // Clase CSS para estado pendiente
-      case Status.Running:
-        return 'running-chip'; // Clase CSS para estado en progreso
-      case Status.Done:
-        return 'done-chip'; // Clase CSS para estado completado
-      default:
-        console.log('jejox')
-        return ''; 
-    }
-  }
 }
