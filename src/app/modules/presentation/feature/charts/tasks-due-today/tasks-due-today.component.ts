@@ -14,7 +14,7 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
   
   taskList: Task[] = [];
   suscrip: Subscription = new Subscription
-  displayedColumns: string[] = ['done', 'name', 'description']; // Define las columnas que deseas mostrar
+  displayedColumns: string[] = ['done', 'name', 'description', 'created', 'actions']; // Define las columnas que deseas mostrar
   dataSource = new  MatTableDataSource<Task>(this.taskList);;
 
 
@@ -32,7 +32,7 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
     this.suscrip = this.ss.getTasksDoneAndDueToday().subscribe(tasks => {
       this.taskList = tasks;
       this.dataSource.data = this.taskList;
-      console.log('tareas',this.taskList, this.dataSource)
+      
     })
   }
 
