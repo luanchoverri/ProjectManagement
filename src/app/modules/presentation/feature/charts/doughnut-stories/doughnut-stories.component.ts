@@ -35,7 +35,7 @@ export class DoughnutStoriesComponent implements AfterViewInit {
           datasets: [
             {
               data: [doneCount, runningCount, todoCount],
-              backgroundColor: [' #673ab7','#11cab8', '#b86dff']
+              backgroundColor: [' rgb(63, 81, 181)','rgb(233, 30, 99)', 'rgb(255, 193, 7)']
             }
           ]
         },

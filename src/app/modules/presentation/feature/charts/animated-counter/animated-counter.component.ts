@@ -14,8 +14,8 @@ export class AnimatedCounterComponent implements OnInit{
   @Input () message2: string = '';
   completed = 0;
 
-  animationDuration = 1000; // Duración de la animación en milisegundos
-  animationInterval = 1; // Intervalo de tiempo entre cada incremento
+  animationDuration = 2000; // Duración de la animación en milisegundos
+  animationInterval = 0.5; // Intervalo de tiempo entre cada incremento
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 

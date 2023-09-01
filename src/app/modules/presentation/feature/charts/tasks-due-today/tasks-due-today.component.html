@@ -1,0 +1,32 @@
+<mat-card>
+
+    <mat-table [dataSource]="dataSource" >
+
+    <ng-container matColumnDef="done">
+        <mat-header-cell *matHeaderCellDef>Done</mat-header-cell>
+        <mat-cell *matCellDef="let task">  <mat-checkbox [checked]="task.done" (change)="updateTaskDone(task)"></mat-checkbox> </mat-cell>
+        </ng-container>
+
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Task Due Daily Tracker </mat-header-cell>
+        <mat-cell *matCellDef="let task"> {{ task.name }} </mat-cell>
+      </ng-container>
+
+      <!-- Define más columnas aquí si es necesario -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let task"> {{ task.description }} </mat-cell>
+      </ng-container>
+
+
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+     
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[4, 7]" aria-label="Select page of tasks"></mat-paginator>
+</mat-card>
