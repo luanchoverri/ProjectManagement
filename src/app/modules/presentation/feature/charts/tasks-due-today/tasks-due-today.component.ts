@@ -12,10 +12,10 @@ import { TaskService } from 'src/app/modules/core/services/task/task.service';
 })
 export class TasksDueTodayComponent implements OnInit, OnDestroy{
   
-  loading: boolean = false;
+  loading: boolean = true
   taskList: Task[] = [];
   suscrip: Subscription = new Subscription
-  displayedColumns: string[] = ['done', 'name', 'description', 'created', 'actions']; // Define las columnas que deseas mostrar
+  displayedColumns: string[] = ['done', 'name', 'description', 'created' ]; // columnas a mostrar
   dataSource = new  MatTableDataSource<Task>(this.taskList);;
 
 
@@ -32,9 +32,9 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
     // Asigna las tareas a la fuente de datos de la tabla
     this.suscrip = this.ss.getTasksdDueToday().subscribe(tasks => {
       this.taskList = tasks;
+      console.log(tasks)
       this.dataSource.data = this.taskList;
       this.loading = false;
-      
     })
   }
 
@@ -49,7 +49,6 @@ export class TasksDueTodayComponent implements OnInit, OnDestroy{
     task.done = !task.done;
     this.ts.updateItem(task);
     this.ts.updateItem(task).subscribe();
-
   }
 
 
