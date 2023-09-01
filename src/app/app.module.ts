@@ -42,7 +42,7 @@ registerLocaleData(localeEsAr, 'es-AR');
     CoreModule, 
     BreadcrumbModule, 
     NgChartsModule,
-    ViewsModule,
+
 
   ],
   providers: [

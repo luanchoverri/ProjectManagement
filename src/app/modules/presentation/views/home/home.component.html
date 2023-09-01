@@ -1,1 +1,40 @@
-<p>home works!</p>
+<div class="grid-container">
+    <mat-grid-list cols={{C}} rowHeight="300px">
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.chart?.cols" [rowspan]="(cardLayout | async)?.chart?.rows">
+        <app-greeting-card class="dashboard-card"></app-greeting-card>
+  
+      </mat-grid-tile>
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.miniCard?.cols" [rowspan]="(cardLayout | async)?.miniCard?.rows">
+        <app-animated-counter class="dashboard-card" title="Completed Tasks" icon="elemento-fuego"
+          [targetCompleted]="totalDoneTasksCount" message1="You're on fire!"
+          message2="Keep up the good work!"></app-animated-counter>
+      </mat-grid-tile>
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.miniCard?.cols" [rowspan]="(cardLayout | async)?.miniCard?.rows">
+        <app-doughnut-stories class="dashboard-card"></app-doughnut-stories>
+      </mat-grid-tile>
+  
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.calendar?.cols" [rowspan]="(cardLayout | async)?.calendar?.rows">
+        <app-calendar class="dashboard-card" style="display: flex; align-items: center; justify-content: center; box-shadow: none;"></app-calendar>
+      </mat-grid-tile>
+  
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.miniCard?.cols" [rowspan]="(cardLayout | async)?.miniCard?.rows">
+        <app-animated-counter class="dashboard-card" title="US Points Collected" icon="estrella"
+          [targetCompleted]="totalPointsInDone" message1="Nice start!" message2="Keep going!"></app-animated-counter>
+  
+      </mat-grid-tile>
+  
+  
+      <mat-grid-tile [colspan]="(cardLayout | async)?.table?.cols" [rowspan]="(cardLayout | async)?.table?.rows">
+        <app-tasks-due-today class="dashboard-card" style="box-shadow: none; "></app-tasks-due-today>
+      </mat-grid-tile>
+  
+  
+    </mat-grid-list>
+  
+  
+  </div>
