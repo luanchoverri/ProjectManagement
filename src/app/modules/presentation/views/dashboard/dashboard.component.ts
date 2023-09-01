@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { StoryService } from 'src/app/modules/core/services/story/story.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-[x: string]: any;
+export class DashboardComponent implements OnInit {
 
+  
+  private totalPointsInDoneSubscription: Subscription = new Subscription;
+  totalPointsInDone: number = 0;
    C : number= 5;
+
 
   /** Based on the screen size, switch from standard to one column per row */
   cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -32,5 +37,19 @@ export class DashboardComponent {
     })
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private ss: StoryService) {}
+
+
+
+  ngOnInit(){
+    this.totalPointsInDoneSubscription = this.ss.getTotalPointsInDone$().subscribe(points => {
+      this.totalPointsInDone = points;
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this.totalPointsInDoneSubscription.unsubscribe();
+  }
+
 }

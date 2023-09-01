@@ -37,10 +37,12 @@ export class StoryService extends ListService<Story> {
     );
 
   }
-
-  getTotalPointsInDone(): number {
-    const doneStories = this.storiesSubject.value.filter(story => story.status === Status.Done);
-    return doneStories.reduce((totalPoints, story) => totalPoints + story.points, 0);
+  // Para obtener la cantidad de puntos recolectados en historias en done
+  getTotalPointsInDone$(): Observable<number> {
+    return this.storiesSubject.pipe(
+      map(stories => stories.filter(story => story.status === Status.Done)),
+      map(doneStories => doneStories.reduce((totalPoints, story) => totalPoints + story.points, 0))
+    );
   }
   
 

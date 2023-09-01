@@ -23,7 +23,7 @@ export class StoryFormComponent {
   members!: User[];
   members$: Observable<User[]>;
   isEditing: boolean = false;
-  selectedPoint: number = 0;
+ 
   selectedUsers: User[] = [];
   fruitCtrl = new FormControl();
 
@@ -48,8 +48,10 @@ export class StoryFormComponent {
   }
 
   ngOnInit() {
+    
     const ownerId = this.as.getUserId();
     if (this.isEditing) {
+      
       let icon = this.data.initialValues.icon;
       if(this.data.initialValues.icon === null){
         icon = '';
@@ -60,7 +62,7 @@ export class StoryFormComponent {
           this.selectedUsers = users
         }
       ) 
-        console.log(this.data.initialValues.points)
+        
       this.myForm = this.fb.group({
         _id: new FormControl(this.data.initialValues._id),
         name: new FormControl(this.data.initialValues.name, [
@@ -84,6 +86,9 @@ export class StoryFormComponent {
         dateLessThan('created', 'finished'),
         dateLessThan('started', 'finished')]});
     } else {
+
+   
+
       this.myForm = this.fb.group({
         name: new FormControl('', [
           Validators.required,
@@ -93,7 +98,7 @@ export class StoryFormComponent {
         epic: new FormControl(this.epicId),
         owner: new FormControl(ownerId),
         assignedTo: new FormControl(''),
-        points : new FormControl(''),
+        points :  new FormControl(1),
         created: new FormControl(new Date().setHours(0,0,0,0)),
         due: new FormControl(''),
         started: new FormControl(''),
@@ -113,6 +118,7 @@ export class StoryFormComponent {
   }
 
   onSubmit() {
+  
 
     if (this.isEditing) {      
       this.ss.updateItem(this.myForm.value).subscribe({
@@ -133,7 +139,7 @@ export class StoryFormComponent {
       console.log(this.ss.updateItem(this.myForm.value));
       
     } else {
-      this.getDefaultPoints();
+
       this.ss.createItem(this.myForm.value).subscribe({
         next: () => {
           this.ss.getItems(this.epicId).subscribe();
@@ -186,8 +192,4 @@ export class StoryFormComponent {
   }
 
 
-  getDefaultPoints(){
-      this.myForm.get('points')?.setValue(this.selectedPoint);
-    }
-  
 }

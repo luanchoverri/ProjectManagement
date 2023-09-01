@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-animated-counter',
@@ -24,13 +24,41 @@ export class AnimatedCounterComponent implements OnInit{
     this.startAnimation();
   }
 
-  startAnimation() {
-    const interval = this.animationDuration / (this.targetCompleted / this.animationInterval);
-    let currentTasks = 0;
+  /**
+ * Se ejecuta cuando ocurren cambios en las propiedades de entrada de componente
+ * @param {SimpleChanges} changes - Cambios.
+ * @returns {void} Se fija si la propiedad targetComplet ha cambiado y si no es el primer cambio para volver a ejecutar la animación.
+ */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['targetCompleted'] && !changes['targetCompleted'].isFirstChange()) {
+      if (this.targetCompleted > 0) {
+        this.completed = 0; // Reinicia el valor completado
+        this.startAnimation(); // Inicia la animación nuevamente
+      }
+    }
+  }
+  
 
+
+  /**
+   *
+   * Inicia una animación que incrementa gradualmente el número de tareas completadas.
+   * @memberof AnimatedCounterComponent
+   */
+  startAnimation() {
+    // Calcula el intervalo de tiempo entre incrementos en función de la duración total de la animación
+    const interval = this.animationDuration / (this.targetCompleted / this.animationInterval);
+    let currentTasks = 0; // Inicializa la variable para contar las tareas completadas
+
+     // Establece un intervalo para actualizar la animación
     const animationInterval = setInterval(() => {
-      currentTasks++;
+      currentTasks++; 
+
+      // Actualiza el contenido del elemento HTML que muestra el nro actual de tareas completadas
+      // Crea la ilusión de que el nro aumenta gradualmente
       this.renderer.setProperty(this.elementRef.nativeElement.querySelector('.number'), 'textContent', currentTasks);
+
+      // Detiene la animacion cuando el contador de tareas completadas alcanza el objetivo
       if (currentTasks >= this.targetCompleted) {
         clearInterval(animationInterval);
       }
