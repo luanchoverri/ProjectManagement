@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
           miniCard: { cols: this.C, rows: 1 },
           chart:    {cols: this.C, rows:1},
           calendar: { cols: this.C, rows: 2 },
+          table: { cols: this.C, rows:2 },
 
         };
       }
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
         miniCard: { cols: 1, rows: 1 },
         calendar: { cols: 1, rows: 2 },
         chart: { cols: 2, rows: 1 },
-        table: { cols: 3, rows: 1 },
+        table: { cols: 3, rows: 2 },
       };
     })
   );

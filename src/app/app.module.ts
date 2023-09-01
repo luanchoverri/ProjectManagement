@@ -14,7 +14,6 @@ import { CoreModule } from './modules/presentation/core/core.module';
 import { AuthInterceptor } from './modules/api-rest/interceptos/auth.interceptor';
 import { BreadcrumbModule, BreadcrumbService } from 'xng-breadcrumb';
 import { NgChartsModule } from 'ng2-charts';
-
 import { ViewsModule } from './modules/presentation/views/views.module';
 
 
@@ -42,6 +41,7 @@ registerLocaleData(localeEsAr, 'es-AR');
     CoreModule, 
     BreadcrumbModule, 
     NgChartsModule,
+    ViewsModule,
 
 
   ],

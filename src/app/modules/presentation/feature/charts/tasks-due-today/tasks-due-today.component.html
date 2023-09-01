@@ -10,7 +10,7 @@
 
             <!-- Column Done -->
             <ng-container matColumnDef="done">
-                <mat-header-cell *matHeaderCellDef>Task Due Daily Tracker</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>Due Tracker</mat-header-cell>
                 <mat-cell *matCellDef="let task">
                     <mat-checkbox [checked]="task.done" (change)="updateTaskDone(task)"></mat-checkbox>
                 </mat-cell>
