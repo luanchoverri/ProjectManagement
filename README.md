@@ -1,8 +1,4 @@
-# Front-end's Bootcamp
 
-Este proyecto sirve como base para poder implementar las funcionalidades requeridas en el Bootcamp de Front-end. Se provee una estructura inicial de un proyecto de front-end [Angular](https://angular.io) con bibliotecas auxiliares para temas como traducciones, layout, etc.
-
-El proyecto fue creado con [Angular CLI](https://www.npmjs.com/package/@angular/cli#usage). Se recomienda utilizar los comandos de esta herramienta para la creación de los distintos building blocks de Angular.
 
 ## Angular
 
@@ -58,8 +54,5 @@ La estructura de estos módulos está formada por una división en carpetas que 
 3. `services`: Estarán presentes dependiendo si es necesario encapsular logica de una funcionalidad en otro archivo o bien para realizar 
    una comunicacion entre componentes.
 
-##### Idioma
-El código debe estar por defecto escrito en idioma inglés, tener en cuenta principalmente nombres de clases, metodos y variables. Pueden existir excepciones en caso que algun nombre o denominación esté intrinsecamente relacionado con el dominio del sistema.
-Todo texto que será de visibilidad al cliente (principalmente los que se ubiquen en los archivos de extensión html) deberá utilizar archivos de traduccion para ser mostrados en el idioma requerido por el cliente, en este caso español.
-Los nombres de módulos, por lo general correspondientes al dominio del sistema, se definen en español. 
+
 
