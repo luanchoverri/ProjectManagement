@@ -5,10 +5,11 @@ psw: 1234
 
 ![image](https://github.com/user-attachments/assets/d99a7aae-a64e-4749-94bc-8722fe414e5f)
 ![Screenshot 2025-06-03 203055](https://github.com/user-attachments/assets/5553372d-2baf-4e40-be3d-88fd507ce9d0)
-![Screenshot 2025-06-03 203055](https://github.com/user-attachments/assets/0d5d7fa1-4097-4b24-9495-1fc5b0f110b6)
+![Screenshot 2025-06-03 202849](https://github.com/user-attachments/assets/0cb5f230-dacb-427c-9c6a-d7975f49ce10)
 
 
-## Angular![Uploading Screenshot 2025-06-03 202849.png…]()
+
+## Angular!
 
 
 [Angular](https://angular.io/guide/what-is-angular) es un framework de diseño de aplicaciones y una plataforma de desarrollo para construir single-page applications (SPA) construido con [TypeScript](https://www.typescriptlang.org/).
